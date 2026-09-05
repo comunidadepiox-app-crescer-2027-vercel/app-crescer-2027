@@ -1,0 +1,36 @@
+---
+description: Spec-Driven Development obrigatório no WebApp Crescer
+alwaysApply: true
+---
+
+# SDD Crescer
+
+Este projeto usa Spec-Driven Development. A fonte da verdade está em `Specs/`.
+
+## Antes de qualquer mudança de feature
+
+1. Ler `Specs/README.md` e a pasta `Specs/NNN-slug/` da funcionalidade.
+2. Se a spec não existir e a complexidade for média ou alta, criar spec → plan → tasks **antes** do código.
+3. Não implementar tela, coleção Firestore, auth ou CMS “no feeling”.
+
+## Fluxo (média e alta)
+
+`Specification → Plan → Tasks → Implementation → Validation`
+
+Baixa complexidade (typo, espaçamento, copy pontual) pode ir direto só se **não** alterar contrato de dados, auth ou navegação.
+
+## Tasks
+
+- Uma task = uma mudança verificável. Proibido “fazer a tela inteira”.
+- Marcar `[x]` só depois de conferir o critério.
+- Executar na ordem do `tasks.md`.
+
+## Sincronia
+
+Se o comportamento mudar, atualizar `spec.md`, `plan.md` e `tasks.md` na mesma entrega. Não deixar doc atrás do código.
+
+## Ordem de implementação
+
+`000` fundação → `001` auth → `002` home/nav → `003`/`004` → `005` benfeitor → `006` configuração → `007` admin.
+
+Não começar produto antes da `000` extraír tokens oficiais (PDFs + site do evento, nunca o Instituto Crescer).

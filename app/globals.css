@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+:root {
+  /* Paleta oficial extraída dos sites do Crescer e do Benfeitor da Fé (PDFs + páginas ao vivo) */
+  --crescer-roxo: #3a1075; /* fundo do hero e do rodapé */
+  --crescer-roxo-botao: #310073; /* botões e títulos sobre claro */
+  --crescer-roxo-claro: #4c1d90; /* facetas poligonais sobre roxo */
+  --crescer-laranja: #d68130; /* header e seções de destaque */
+  --crescer-laranja-claro: #df9d5b; /* facetas poligonais sobre laranja */
+  --crescer-dourado: #f8d99b; /* símbolo do coração */
+  --crescer-dourado-escuro: #c39a58;
+  --crescer-amarelo: #f4e77e; /* realce sobre roxo */
+  --crescer-fundo: #fcfcfc;
+  --crescer-superficie: #ffffff;
+  --crescer-texto: #111c2d;
+  --crescer-titulo: #310073;
+  --crescer-destaque: #d68130;
+  --crescer-linha: #e0e0e0;
+  --crescer-creme: #fbf6ea;
+  --crescer-verde: #00a584;
+  --crescer-vermelho: #c02231;
+}
+
+@theme inline {
+  --color-fundo: var(--crescer-fundo);
+  --color-superficie: var(--crescer-superficie);
+  --color-texto: var(--crescer-texto);
+  --color-titulo: var(--crescer-titulo);
+  --color-destaque: var(--crescer-destaque);
+  --color-linha: var(--crescer-linha);
+  --color-creme: var(--crescer-creme);
+  --color-verde: var(--crescer-verde);
+  --color-vermelho: var(--crescer-vermelho);
+  --color-roxo: var(--crescer-roxo);
+  --color-roxo-botao: var(--crescer-roxo-botao);
+  --color-laranja: var(--crescer-laranja);
+  --color-dourado: var(--crescer-dourado);
+  --color-amarelo: var(--crescer-amarelo);
+  --font-titulo: var(--font-geometric), "Segoe UI", Georgia, serif;
+  --font-corpo: var(--font-outfit), system-ui, sans-serif;
+  --font-display: var(--font-arcane), Georgia, serif;
+  --radius-crescer: 10px;
+}
+
+@layer base {
+  body {
+    background-color: var(--crescer-fundo);
+    color: var(--crescer-texto);
+    font-family: var(--font-outfit), system-ui, sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-geometric), "Segoe UI", Georgia, serif;
+    color: var(--crescer-titulo);
+  }
+}
+
+/* Fundos com o padrão poligonal dos sites oficiais (facetas low-poly) */
+.fundo-roxo-poligonal {
+  background-color: var(--crescer-roxo);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='720' height='720' viewBox='0 0 720 720'%3E%3Cg fill='none' stroke='%23ffffff' opacity='0.055' stroke-width='34' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M-40 170 220 60 470 210 720 90'/%3E%3Cpath d='M110 720 300 430 80 300'/%3E%3Cpath d='M300 430 560 560 760 420'/%3E%3Cpath d='M560 560 470 210'/%3E%3Cpath d='M220 60 300 430'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 720px 720px;
+}
+
+.fundo-laranja-poligonal {
+  background-color: var(--crescer-laranja);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='720' height='720' viewBox='0 0 720 720'%3E%3Cg fill='none' stroke='%23ffffff' opacity='0.12' stroke-width='34' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M-40 170 220 60 470 210 720 90'/%3E%3Cpath d='M110 720 300 430 80 300'/%3E%3Cpath d='M300 430 560 560 760 420'/%3E%3Cpath d='M560 560 470 210'/%3E%3Cpath d='M220 60 300 430'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 720px 720px;
+}
+
+/* Splash de abertura: o coração do Crescer se monta peça por peça */
+@keyframes splash-metade-esquerda {
+  from {
+    opacity: 0;
+    transform: translateX(-46px) rotate(-8deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) rotate(0);
+  }
+}
+
+@keyframes splash-metade-direita {
+  from {
+    opacity: 0;
+    transform: translateX(46px) rotate(8deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) rotate(0);
+  }
+}
+
+@keyframes splash-arco {
+  from {
+    stroke-dashoffset: 260;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes splash-pulso {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+@keyframes splash-wordmark {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes splash-saida {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.splash-metade-esquerda {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: 50% 60%;
+  animation: splash-metade-esquerda 0.65s cubic-bezier(0.2, 0.9, 0.3, 1.2) 0.25s forwards;
+}
+
+.splash-metade-direita {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: 50% 60%;
+  animation: splash-metade-direita 0.65s cubic-bezier(0.2, 0.9, 0.3, 1.2) 0.45s forwards;
+}
+
+.splash-arco {
+  stroke-dasharray: 260;
+  stroke-dashoffset: 260;
+  animation: splash-arco 0.5s ease-out forwards;
+}
+
+.splash-simbolo-pronto {
+  animation: splash-pulso 1.8s ease-in-out 2.4s infinite;
+}
+
+.splash-wordmark {
+  opacity: 0;
+  animation: splash-wordmark 0.6s ease-out forwards;
+}
+
+.splash-saida {
+  animation: splash-saida 0.45s ease-in forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-metade-esquerda,
+  .splash-metade-direita,
+  .splash-wordmark {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .splash-arco {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .splash-simbolo-pronto {
+    animation: none;
+  }
+}

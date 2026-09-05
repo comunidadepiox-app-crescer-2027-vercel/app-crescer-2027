@@ -1,0 +1,33 @@
+---
+description: Stack Next.js JSX, Firebase e Cloudinary do Crescer
+globs: "{app,lib,components}/**/*.{js,jsx}"
+alwaysApply: false
+---
+
+# Stack Crescer
+
+- Next.js App Router, **JavaScript/JSX** (não criar `.ts`/`.tsx`)
+- Tailwind + variáveis `--crescer-*`
+- Firebase Auth (e-mail/senha + Google) e Cloud Firestore
+- Cloudinary para capa de notícia e mídia de site
+- Papéis: `fiel` (default no cadastro) e `admin` (nunca gravado pelo client)
+
+## Auth e dados
+
+- Cliente em `lib/firebase/client.js` com `NEXT_PUBLIC_*` apenas
+- Cadastro sempre `role: 'fiel'`; `role` imutável nas rules
+- Admin de verdade: Custom Claim ou allowlist **no servidor**, não só o campo no documento
+- Leads Benfeitor (`cpf`, telefone) são LGPD: create pelo próprio `uid`, read só admin
+- Sem gateway de pagamento
+
+## Exemplo
+
+```jsx
+// ❌
+await setDoc(doc(db, "users", uid), { role: "admin" });
+
+// ✅
+await setDoc(doc(db, "users", uid), { role: "fiel", email, createdAt: serverTimestamp() });
+```
+
+Secrets (`CLOUDINARY_API_SECRET`, service account) só em Route Handlers / env de servidor. Nunca no bundle.

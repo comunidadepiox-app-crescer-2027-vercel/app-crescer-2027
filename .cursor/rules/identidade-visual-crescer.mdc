@@ -1,0 +1,39 @@
+---
+description: Identidade visual do evento Crescer e proibições de cara de IA
+globs: **/*.{js,jsx,css}
+alwaysApply: false
+---
+
+# Identidade visual Crescer
+
+Consultar `Specs/DESIGN.md` antes de estilizar. Tokens hex e a fonte oficial só valem depois de extraídos do site [encontrodafamiliacatolica.com.br](https://encontrodafamiliacatolica.com.br/) e dos PDFs do evento.
+
+## Usar
+
+- Fonte do site do **evento** (não Gabarito/DM Sans do Instituto Crescer)
+- Cores `--crescer-*` do `globals.css`
+- Texto à esquerda; foto real do encontro
+- Botões com href ou action real
+
+## Proibido (cara de IA)
+
+- Travessão (`—`) em copy da UI
+- Pílulas, chips, `rounded-full` em nav/filtros
+- Texto centralizado como padrão de página
+- Inter, Roboto, Poppins, Montserrat, Geist, Open Sans como voz da marca
+- Números hero / estatística inflada
+- Gradientes em fundo, botão ou overlay
+- Cards de vidro, mesh, bento de três features iguais
+- Botão sem destino
+
+## Exemplo
+
+```jsx
+// ❌
+<h1 className="text-center font-sans">Sua jornada — 10k famílias</h1>
+<button className="rounded-full bg-gradient-to-r from-purple-500">Começar</button>
+
+// ✅
+<h1 className="text-left font-[family-name:var(--crescer-serif)]">O que acontece hoje</h1>
+<Link href="/cronograma" className="inline-block">Ver a programação</Link>
+```

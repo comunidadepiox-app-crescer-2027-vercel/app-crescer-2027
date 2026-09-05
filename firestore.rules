@@ -1,0 +1,52 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    match /users/{userId} {
+      allow get: if signedIn() && (request.auth.uid == userId || isAdmin());
+      allow list: if isAdmin();
+      allow create: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.data.role == 'fiel';
+      allow update: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.data.role == resource.data.role
+        && request.resource.data.email == resource.data.email;
+      allow delete: if false;
+    }
+
+    match /news/{newsId} {
+      allow read: if signedIn() && (resource.data.published == true || isAdmin());
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /programItems/{itemId} {
+      allow read: if signedIn() && (resource.data.published == true || isAdmin());
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /siteContent/{docId} {
+      allow read: if signedIn();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /benefactorLeads/{leadId} {
+      allow create: if signedIn()
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.lgpdConsent == true
+        && request.resource.data.status == 'novo';
+      allow read, update: if isAdmin();
+      allow delete: if false;
+    }
+  }
+}

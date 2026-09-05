@@ -1,0 +1,49 @@
+# Plan: 004-cronograma Cronograma
+
+- Spec: [spec.md](spec.md)
+- Status: `planned`
+
+## Abordagem
+
+Uma coleção plana `programItems` filtrada por `date` e agrupada no client por `space`. Dias da edição vêm de `edition.js` + datas distintas publicadas. A Home chama `listProgramItemsByDate(date)`.
+
+## Arquivos e rotas previstos
+
+| Caminho | Responsabilidade |
+|---|---|
+| `lib/program/spaces.js` | enum e rótulos oficiais |
+| `lib/program/queries.js` | por data; publicados |
+| `lib/program/day.js` | resolver “hoje / primeiro / último” |
+| `app/(app)/cronograma/page.jsx` | página |
+| `components/program/DaySwitcher.jsx` | troca de dia (não pílula) |
+| `components/program/SpaceSection.jsx` | bloco de um espaço |
+| `firestore.rules` | leitura autenticada de publicados |
+
+## Firestore
+
+| Coleção | Leitura | Escrita | Índice / query |
+|---|---|---|---|
+| `programItems` | autenticado se `published` | admin (007) | `published` + `date` + `order` |
+
+## Cloudinary
+
+Não.
+
+## Ordem de entrega
+
+1. Enum de espaços e labels.
+2. Queries e resolvedor de dia.
+3. Página `/cronograma`.
+4. Ligar seção da Home.
+5. Aviso de alteração.
+
+## Riscos
+
+| Risco | Mitigação |
+|---|---|
+| Edição 2026 vs 2027 | `edition.js` isolado; itens carregam a própria `date` |
+| Muitos itens no Palco Principal | lista simples, sem accordion decorativo obrigatório |
+
+## Fora deste plan
+
+Editor admin, notificações.
