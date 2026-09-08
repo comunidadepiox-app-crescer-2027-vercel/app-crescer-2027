@@ -19,18 +19,17 @@
   - Faz: e-mail/senha (entrar, criar, esqueci a senha) + Google via expo-auth-session no build nativo. No Expo Go o botão Google mostra o bloqueio OAuth em vez de abrir o browser.
   - Verifica: cria doc `users` com role fiel; erros traduzidos; Expo Go não dispara o fluxo Google.
 - [x] **T7 — Abas e Home**
-  - Faz: tab bar roxa com ícones da marca; Home com hero da edição, notícias e programação do dia.
-  - Verifica: recorte "hoje" igual à web.
+  - Faz: tab bar roxa com ícones da marca; Home com hero da edição, até 4 notícias e programação do dia do recorte, em `onSnapshot`.
+  - Verifica: recorte "hoje" igual à web; publicar no admin atualiza sem matar o app.
 - [x] **T8 — Notícias e detalhe**
-  - Faz: lista com capa e data; detalhe com parágrafos.
+  - Faz: lista com capa e data em `onSnapshot`; detalhe com parágrafos.
   - Verifica: só `published == true`.
 - [x] **T9 — Agenda**
-  - Faz: abas de dias da edição, grupos por espaço.
+  - Faz: abas de dias da edição, grupos por espaço, escuta ao vivo.
   - Verifica: dias 05–09/02/2027.
 - [x] **T10 — Benfeitor**
-  - Faz: campanha + formulário com validações e LGPD; confirmação com hero, foto, passos e WhatsApp.
-  - Verifica: lead gravado com status novo.
-  - Verifica: lead gravado com status novo.
+  - Faz: campanha + formulário com máscara de celular/CPF e LGPD; confirmação se já houver lead do uid.
+  - Verifica: lead gravado com status novo; reabrir a aba mostra a confirmação.
 - [x] **T11 — Conta, Galeria e Sobre**
   - Faz: editar nome, sair; links oficiais; institucional.
   - Verifica: sair volta ao login.

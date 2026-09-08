@@ -32,6 +32,11 @@
   - Verifica: link externo explícito; sem travessão.
   - Fora: CRUD de caravana.
 
+- [x] **T7 — Escuta ao vivo**
+  - Faz: Home, Notícias e Cronograma com `onSnapshot` de publicados; Home fatia 4 notícias e o dia do recorte.
+  - Verifica: publicar no admin atualiza a Home sem recarregar; virada de dia é calendário Recife (5 até acabar o 5, depois 6).
+  - Fora: detalhe da notícia.
+
 ## Validação final
 
 - [ ] Aceite de `spec.md`

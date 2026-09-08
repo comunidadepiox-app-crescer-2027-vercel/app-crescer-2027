@@ -17,8 +17,8 @@ Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do event
 - Destinos da nav: Home, Notícias, Cronograma, Benfeitor da Fé, Configuração
 - Destinos extras (prompt: “outras que forem importantes”): Galeria, Sobre
 - `/home` com:
-  - seção de notícias (últimas publicadas, capa + título + data)
-  - seção de cronograma do dia (espaços e horários da data corrente)
+  - seção de notícias (até 4 publicadas, capa + título + data; escuta ao vivo)
+  - seção de cronograma do dia do recorte (todos os espaços e horários daquela data; escuta ao vivo)
 - Páginas-casca de `/galeria` e `/sobre` (conteúdo institucional mínimo; galeria completa pode listar álbuns depois)
 - Estado vazio honesto quando não houver notícia ou quando a data estiver fora do evento
 
@@ -49,13 +49,16 @@ Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do event
 
 Esta spec **lê**, não cria contrato novo. Contratos oficiais: 003, 004 e `siteContent` (textos da Home/Sobre, criado na 007; até lá, copy estática fiel ao site).
 
-Regra de recorte do dia:
+Regra de recorte do dia (calendário civil em `America/Recife`, meia-noite a meia-noite):
 
-- Se hoje está entre as datas da edição → mostrar itens de hoje.
-- Se hoje é antes do evento → mostrar o primeiro dia + aviso “O encontro começa em…”.
-- Se hoje é depois → mostrar o último dia + aviso “Programação da última jornada” sem tom de dashboard.
+- Antes de 5/02/2027: Home mostra a programação do dia **5** (primeiro dia) + aviso de que o encontro ainda não começou.
+- No dia 5: continua o dia 5 até o dia acabar.
+- No dia 6: passa a ser o dia 6; o mesmo para 7, 8 e 9.
+- Depois de 9/02/2027: mostra o último dia + aviso da última jornada.
 
-Datas da edição: [OPEN-QUESTIONS.md](../OPEN-QUESTIONS.md). Enquanto não houver decisão, usar constante documentada em `lib/event/edition.js`.
+A Home lista até 4 notícias publicadas (as mais recentes) e **toda** a programação do dia do recorte. Home, Notícias e Cronograma escutam o Firestore (`onSnapshot`): o que o admin publica aparece sem recarregar o app.
+
+Datas da edição: constante em `lib/event/edition.js` (5 a 9 de fevereiro de 2027).
 
 ## Regras de negócio
 

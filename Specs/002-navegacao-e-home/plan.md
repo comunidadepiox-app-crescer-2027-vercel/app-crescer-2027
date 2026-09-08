@@ -5,7 +5,7 @@
 
 ## Abordagem
 
-Completar `app/(app)/layout.jsx` com header + nav (mobile first: barra inferior com os destinos principais; Galeria e Sobre no menu do header ou no overflow da barra, sem esconder destino). Home em `app/(app)/home/page.jsx` lê notícias publicadas e itens do dia. Enquanto 003/004 não estiverem no Firestore, a Home aceita estado vazio verdadeiro, não mock de mentira.
+Completar `app/(app)/layout.jsx` com header + nav (mobile first: barra inferior com os destinos principais; Galeria e Sobre no menu do header ou no overflow da barra, sem esconder destino). Home em `app/(app)/home/page.jsx` escuta notícias publicadas (até 4) e a programação do dia do recorte. Enquanto 003/004 não tiverem dados, a Home aceita estado vazio verdadeiro, não mock.
 
 ## Arquivos e rotas previstos
 
@@ -24,8 +24,8 @@ Completar `app/(app)/layout.jsx` com header + nav (mobile first: barra inferior 
 
 | Coleção | Leitura | Escrita | Índice / query |
 |---|---|---|---|
-| `news` | autenticado, `published == true` | não nesta spec | `published`, `publishedAt` desc, limit 3–5 |
-| `programItems` | autenticado | não | `date == hoje` (+ `space`, `order`) |
+| `news` | autenticado, `published == true` | não nesta spec | `published`; ordem e limite (4 na Home) no client; `onSnapshot` |
+| `programItems` | autenticado se publicado | não | `published`; recorte `date` no client; `onSnapshot` |
 | `siteContent` | autenticado | não | doc `home` / `about` se existir |
 
 ## Cloudinary

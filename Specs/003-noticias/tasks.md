@@ -8,8 +8,8 @@
   - Fora: formulário admin.
 
 - [x] **T2 — Queries**
-  - Faz: `listPublishedNews` e `getPublishedNewsById`.
-  - Verifica: ordem por `publishedAt` desc.
+  - Faz: `observarNoticiasPublicadas` (sem índice composto) e `getPublishedNewsById`.
+  - Verifica: ordem por `publishedAt` desc no client.
   - Fora: UI.
 
 - [x] **T3 — Lista**
@@ -23,7 +23,7 @@
   - Fora: comentários.
 
 - [x] **T5 — Home consome a query**
-  - Faz: seção de notícias da 002 usa `listPublishedNews` com limit.
+  - Faz: seção de notícias da 002 usa `observarNoticiasPublicadas` com limite 4.
   - Verifica: mesma fonte, sem mock paralelo.
   - Fora: destaques manuais (007).
 

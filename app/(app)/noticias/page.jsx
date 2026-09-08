@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { listPublishedNews } from "@/lib/news/queries";
+import { observarNoticiasPublicadas } from "@/lib/news/queries";
 import { NewsListItem } from "@/components/news/NewsList";
 
 export default function NoticiasPage() {
@@ -9,13 +9,17 @@ export default function NoticiasPage() {
   const [erro, setErro] = useState(false);
 
   useEffect(() => {
-    listPublishedNews(50)
-      .then(setNoticias)
-      .catch((err) => {
+    return observarNoticiasPublicadas(
+      (lista) => {
+        setErro(false);
+        setNoticias(lista);
+      },
+      (err) => {
         console.error("Erro ao carregar notícias:", err);
         setErro(true);
         setNoticias([]);
-      });
+      }
+    );
   }, []);
 
   return (

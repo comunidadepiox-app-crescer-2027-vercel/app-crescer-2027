@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { View, Text, ScrollView, Pressable, StyleSheet } from "react-native";
-import { listProgramItemsByDate, agrupaPorEspaco } from "../../lib/programa";
+import { observarProgramaPublicado, itensDoDia, agrupaPorEspaco } from "../../lib/programa";
 import { EDICAO, resolveDiaRecorte, formataDataCurta, formataDataLonga, diasDaEdicao } from "../../lib/edicao";
 import { ProgramaLista } from "../../components/ProgramaLista";
 import { TituloPagina, Paragrafo } from "../../components/Ui";
@@ -9,19 +9,23 @@ import { CORES, FONTES } from "../../lib/tema";
 export default function AgendaScreen() {
   const dias = useMemo(diasDaEdicao, []);
   const [dia, setDia] = useState(() => resolveDiaRecorte().date);
-  const [itens, setItens] = useState(null);
+  const [todos, setTodos] = useState(null);
   const [erro, setErro] = useState(false);
 
   useEffect(() => {
-    setItens(null);
-    setErro(false);
-    listProgramItemsByDate(dia)
-      .then(setItens)
-      .catch(() => {
+    return observarProgramaPublicado(
+      (lista) => {
+        setErro(false);
+        setTodos(lista);
+      },
+      () => {
         setErro(true);
-        setItens([]);
-      });
-  }, [dia]);
+        setTodos([]);
+      }
+    );
+  }, []);
+
+  const itens = todos ? itensDoDia(todos, dia) : null;
 
   const grupos = itens ? agrupaPorEspaco(itens) : null;
 

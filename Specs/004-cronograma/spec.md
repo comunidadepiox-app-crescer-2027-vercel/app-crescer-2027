@@ -36,7 +36,7 @@ O encontro tem vários espaços no mesmo dia. O fiel precisa ver o que acontece 
 
 1. Abre Cronograma → dia padrão (hoje / primeiro / último, mesma regra da Home).
 2. Troca o dia → lista dos espaços daquele dia.
-3. Home “hoje” usa a mesma query filtrada.
+3. Home “hoje” escuta a mesma coleção e recorta o dia da regra 002.
 
 ## Superfície do produto
 

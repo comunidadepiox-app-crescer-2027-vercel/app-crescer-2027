@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { listProgramItemsByDate, agrupaPorEspaco } from "@/lib/program/queries";
+import { observarProgramaPublicado, itensDoDia, agrupaPorEspaco } from "@/lib/program/queries";
 import { nomeDoEspaco } from "@/lib/program/spaces";
 import {
   EDICAO,
@@ -14,20 +14,24 @@ import {
 export default function CronogramaPage() {
   const dias = useMemo(diasDaEdicao, []);
   const [dia, setDia] = useState(() => resolveDiaRecorte().date);
-  const [itens, setItens] = useState(null);
+  const [todos, setTodos] = useState(null);
   const [erro, setErro] = useState(false);
 
   useEffect(() => {
-    setItens(null);
-    setErro(false);
-    listProgramItemsByDate(dia)
-      .then(setItens)
-      .catch((err) => {
+    return observarProgramaPublicado(
+      (lista) => {
+        setErro(false);
+        setTodos(lista);
+      },
+      (err) => {
         console.error("Erro ao carregar programação:", err);
         setErro(true);
-        setItens([]);
-      });
-  }, [dia]);
+        setTodos([]);
+      }
+    );
+  }, []);
+
+  const itens = todos ? itensDoDia(todos, dia) : null;
 
   const grupos = itens ? agrupaPorEspaco(itens) : null;
 

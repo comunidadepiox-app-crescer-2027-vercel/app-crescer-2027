@@ -45,7 +45,9 @@ service cloud.firestore {
         && request.resource.data.uid == request.auth.uid
         && request.resource.data.lgpdConsent == true
         && request.resource.data.status == 'novo';
-      allow read, update: if isAdmin();
+      allow read: if isAdmin()
+        || (signedIn() && resource.data.uid == request.auth.uid);
+      allow update: if isAdmin();
       allow delete: if false;
     }
   }

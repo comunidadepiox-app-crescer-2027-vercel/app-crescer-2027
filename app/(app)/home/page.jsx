@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { listPublishedNews } from "@/lib/news/queries";
-import { listProgramItemsByDate, agrupaPorEspaco } from "@/lib/program/queries";
+import { observarNoticiasPublicadas } from "@/lib/news/queries";
+import { observarProgramaPublicado, itensDoDia, agrupaPorEspaco } from "@/lib/program/queries";
 import { nomeDoEspaco } from "@/lib/program/spaces";
 import { EDICAO, resolveDiaRecorte, formataDataCurta } from "@/lib/event/edition";
 import { NewsListItem } from "@/components/news/NewsList";
@@ -17,23 +17,34 @@ export default function HomePage() {
   const recorte = resolveDiaRecorte();
 
   useEffect(() => {
-    listPublishedNews(4)
-      .then(setNoticias)
-      .catch((err) => {
+    const pararNoticias = observarNoticiasPublicadas(
+      (lista) => {
+        setErroNoticias(false);
+        setNoticias(lista);
+      },
+      (err) => {
         console.error("Erro ao carregar notícias:", err);
         setErroNoticias(true);
         setNoticias([]);
-      });
-    listProgramItemsByDate(recorte.date)
-      .then(setPrograma)
-      .catch((err) => {
+      },
+      4
+    );
+    const pararPrograma = observarProgramaPublicado(
+      (todos) => {
+        setErroPrograma(false);
+        setPrograma(itensDoDia(todos, recorte.date));
+      },
+      (err) => {
         console.error("Erro ao carregar programação:", err);
         setErroPrograma(true);
         setPrograma([]);
-      });
-    // recorte.date é derivado da data corrente; estável durante a sessão
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      }
+    );
+    return () => {
+      pararNoticias();
+      pararPrograma();
+    };
+  }, [recorte.date]);
 
   const grupos = programa ? agrupaPorEspaco(programa) : null;
 
@@ -104,11 +115,14 @@ export default function HomePage() {
             Cronograma completo
           </Link>
         </div>
+        <p className="mt-1 text-sm text-texto/70">
+          Programação de {formataDataCurta(recorte.date)}.
+        </p>
 
         {recorte.posicao === "antes" && (
           <p className="mt-2 text-sm text-texto/70">
-            O {EDICAO.nome} começa em {formataDataCurta(EDICAO.inicio)}. Veja abaixo o
-            primeiro dia da programação.
+            O {EDICAO.nome} começa em {formataDataCurta(EDICAO.inicio)}. Até lá a Home
+            mostra o primeiro dia, {formataDataCurta(EDICAO.inicio)}.
           </p>
         )}
         {recorte.posicao === "depois" && (

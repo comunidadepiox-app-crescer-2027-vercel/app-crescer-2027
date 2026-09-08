@@ -12,22 +12,21 @@ Página autenticada com bloco editorial + formulário controlado. Validação de
 | Caminho | Responsabilidade |
 |---|---|
 | `app/(app)/benfeitor/page.jsx` | campanha + form + confirmação |
-| `lib/benfeitor/validate.js` | CPF, telefone, campos |
-| `lib/benfeitor/submit.js` | `addDoc` em `benefactorLeads` |
-| `lib/benfeitor/whatsapp.js` | URL opcional |
-| `firestore.rules` | create autenticado do próprio uid; get/list só admin |
+| `lib/benfeitor/validate.js` | CPF, telefone, máscaras, campos |
+| `lib/benfeitor/submit.js` | `addDoc` e `jaTemLead` (próprio uid) |
+| `firestore.rules` | create autenticado do próprio uid; read: admin ou próprio uid |
 
 ## Firestore
 
 | Coleção | Leitura | Escrita | Índice / query |
 |---|---|---|---|
-| `benefactorLeads` | admin | create: `auth.uid == uid` e `lgpdConsent` | `createdAt` desc para o admin |
+| `benefactorLeads` | admin: todos; fiel: só `uid == auth.uid` | create: `auth.uid == uid` e `lgpdConsent` | `createdAt` desc para o admin |
 
 Regras:
 
 - create: autenticado, `uid == request.auth.uid`, `lgpdConsent == true`, `status == 'novo'`
 - update/delete: só admin (007)
-- read: só admin
+- read: admin, ou o fiel só dos docs com o próprio `uid`
 
 ## Cloudinary
 
@@ -46,7 +45,7 @@ Não.
 | Risco | Mitigação |
 |---|---|
 | CPF em texto no Firestore | restringir leitura a admin; política de retenção na OPEN-QUESTIONS |
-| Usuário envia várias vezes | permitir mais de um lead; admin vê duplicatas pelo uid/cpf |
+| Usuário envia várias vezes | a UI mostra a confirmação se já existe lead do uid; admin ainda pode ver duplicatas antigas |
 | Confundir com checkout | copy e UI sem preço, sem Pix QR |
 
 ## Fora deste plan

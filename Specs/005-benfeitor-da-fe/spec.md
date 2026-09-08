@@ -14,8 +14,9 @@ O encontro depende de apoio contínuo. O fiel precisa entender a campanha e deix
 ### Entra
 
 - `/benfeitor` com o conteúdo da campanha (o que é, missão, destino da contribuição, como participar)
-- Formulário: nome, e-mail, celular, CPF, checkbox de consentimento LGPD
+- Formulário: nome, e-mail, celular e CPF com máscara enquanto digita (`(83) 98897-7017` e `000.000.000-00`), checkbox de consentimento LGPD
 - Gravação em `benefactorLeads`
+- Se o fiel já tem lead (`uid` igual ao da sessão), a tela é a de cadastro recebido, não o formulário de novo
 - Tela de confirmação no mesmo idioma visual da campanha (hero roxo, foto do encontro, próximos passos numerados, WhatsApp oficial). Não promete pagamento feito.
 - Link/WhatsApp da comunidade `(83) 98897-7017` como canal oficial, sem fingir que a mensagem já foi enviada se não foi
 - Prefill de nome/e-mail a partir de `users` quando existirem
@@ -29,10 +30,10 @@ O encontro depende de apoio contínuo. O fiel precisa entender a campanha e deix
 
 ## Fluxos
 
-1. Fiel lê a campanha.
-2. Preenche e marca o consentimento.
+1. Fiel lê a campanha. Se já cadastrou, cai na confirmação.
+2. Preenche (celular e CPF já formatados) e marca o consentimento.
 3. Envio cria lead `status: novo`.
-4. Vê confirmação. Se a operação decidir (OPEN-QUESTIONS), um `wa.me` pode abrir com texto pronto. Isso é extra, não substitui o registro no Firestore.
+4. Vê confirmação e, nas próximas visitas, continua nela.
 
 ## Superfície do produto
 
@@ -62,10 +63,10 @@ Coleção `benefactorLeads/{id}`
 ## Regras de negócio
 
 - Sem consentimento, não grava.
-- CPF válido (algoritmo) e celular com DDD.
+- CPF válido (algoritmo) e celular com DDD. A máscara é só visual; no Firestore gravamos só dígitos.
 - O client **não** processa pagamento.
 - Copy alinhada ao site oficial, sem travessão, sem “jornada de doação”.
-- Fiel cria só o próprio lead (`uid == auth.uid`). Não lê a coleção inteira.
+- Fiel cria só o próprio lead (`uid == auth.uid`). Pode ler só os próprios documentos, para a tela saber se já cadastrou. Não lista a coleção inteira.
 
 ## Critérios de aceite
 
@@ -74,7 +75,8 @@ Coleção `benefactorLeads/{id}`
 - [ ] Envio sem LGPD é bloqueado
 - [ ] CPF inválido é recusado
 - [ ] Confirmação não promete débito automático
-- [ ] Nenhum botão “doar agora” que não tenha destino real (o CTA é “Quero participar” / enviar o formulário)
+- [ ] Celular e CPF se formatam na digitação
+- [ ] Quem já enviou o formulário vê a confirmação de novo, não o form
 
 ## Anti-slop
 

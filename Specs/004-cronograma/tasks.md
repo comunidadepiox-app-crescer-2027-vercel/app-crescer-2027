@@ -8,7 +8,7 @@
   - Fora: UI.
 
 - [x] **T2 — Queries e dia**
-  - Faz: listar publicados; filtrar a data e ordenar no client (sem índice composto).
+  - Faz: `observarProgramaPublicado`; filtrar a data e ordenar no client (sem índice composto).
   - Verifica: timezone Recife; fora do evento cai na regra da 002.
   - Fora: página.
 
@@ -23,7 +23,7 @@
   - Fora: edição.
 
 - [x] **T5 — Home consome o recorte**
-  - Faz: seção do dia da 002 usa a mesma função.
+  - Faz: seção do dia da 002 escuta a mesma coleção e filtra o dia.
   - Verifica: mesmo conjunto de itens.
   - Fora: mapa.
 

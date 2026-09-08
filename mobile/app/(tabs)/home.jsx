@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { View, Text, Image, ScrollView, Pressable, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
-import { listPublishedNews } from "../../lib/noticias";
-import { listProgramItemsByDate, agrupaPorEspaco } from "../../lib/programa";
+import { observarNoticiasPublicadas } from "../../lib/noticias";
+import { observarProgramaPublicado, itensDoDia, agrupaPorEspaco } from "../../lib/programa";
 import { EDICAO, resolveDiaRecorte, formataDataCurta } from "../../lib/edicao";
 import { NewsCard } from "../../components/NewsCard";
 import { ProgramaLista } from "../../components/ProgramaLista";
@@ -21,18 +21,31 @@ export default function HomeScreen() {
   const recorte = resolveDiaRecorte();
 
   useEffect(() => {
-    listPublishedNews(4)
-      .then(setNoticias)
-      .catch(() => {
+    const pararNoticias = observarNoticiasPublicadas(
+      (lista) => {
+        setErroNoticias(false);
+        setNoticias(lista);
+      },
+      () => {
         setErroNoticias(true);
         setNoticias([]);
-      });
-    listProgramItemsByDate(recorte.date)
-      .then(setPrograma)
-      .catch(() => {
+      },
+      4
+    );
+    const pararPrograma = observarProgramaPublicado(
+      (todos) => {
+        setErroPrograma(false);
+        setPrograma(itensDoDia(todos, recorte.date));
+      },
+      () => {
         setErroPrograma(true);
         setPrograma([]);
-      });
+      }
+    );
+    return () => {
+      pararNoticias();
+      pararPrograma();
+    };
   }, [recorte.date]);
 
   const grupos = programa ? agrupaPorEspaco(programa) : null;
@@ -82,12 +95,7 @@ export default function HomeScreen() {
             <Text style={estilos.link}>Cronograma</Text>
           </Pressable>
         </View>
-        {recorte.posicao === "antes" ? (
-          <Paragrafo>
-            O {EDICAO.nome} começa em {formataDataCurta(EDICAO.inicio)}. Veja abaixo o
-            primeiro dia da programação.
-          </Paragrafo>
-        ) : null}
+        <Paragrafo>Programação de {formataDataCurta(recorte.date)}.</Paragrafo>
         {recorte.posicao === "depois" ? (
           <Paragrafo>
             O {EDICAO.nome} já aconteceu. Esta é a programação da última jornada, de{" "}

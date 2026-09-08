@@ -5,7 +5,7 @@
 
 ## Abordagem
 
-Uma coleção plana `programItems` filtrada por `date` e agrupada no client por `space`. Dias da edição vêm de `edition.js` + datas distintas publicadas. A Home chama `listProgramItemsByDate(date)`.
+Uma coleção plana `programItems` filtrada por `published` no Firestore e recortada por `date` no client, agrupada por `space`. Dias da edição vêm de `edition.js`. A Home escuta a mesma coleção e mostra o dia do recorte.
 
 ## Arquivos e rotas previstos
 

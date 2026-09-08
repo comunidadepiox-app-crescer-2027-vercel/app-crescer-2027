@@ -16,7 +16,7 @@ Este projeto usa **Spec-Driven Development**. Antes de mudar qualquer funcionali
 1. `npm install`
 2. Copie `.env.example` para `.env.local` e preencha com as chaves do seu projeto Firebase e do Cloudinary.
 3. No console do Firebase, habilite Authentication (E-mail/senha e Google) e o Cloud Firestore, e publique o conteúdo de [`firestore.rules`](firestore.rules).
-4. Crie o índice composto de [`firestore.indexes.json`](firestore.indexes.json) na coleção `news` (`published` crescente + `publishedAt` decrescente). Sem ele a lista de notícias falha. A programação **não** depende mais de índice composto.
+4. A lista de notícias e a programação **não** dependem de índice composto: filtram `published` e ordenam no client. O índice de `news` em [`firestore.indexes.json`](firestore.indexes.json) é opcional.
 5. `npm run dev` e abra http://localhost:3000.
 
 ## Área administrativa (notícias e cronograma)

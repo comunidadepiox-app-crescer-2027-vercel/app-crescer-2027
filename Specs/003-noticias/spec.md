@@ -17,7 +17,7 @@ O fiel precisa ler as novidades da comunidade no próprio app, no mesmo tom do s
 - `/noticias/[id]` mostra título, data, capa e corpo
 - Capa via URL Cloudinary gravada no documento
 - Estado vazio e estado “não encontrada”
-- Home (002) passa a consumir a mesma query de “últimas”
+- Home (002) consome as últimas 4 publicadas com a mesma escuta
 
 ### Não entra
 

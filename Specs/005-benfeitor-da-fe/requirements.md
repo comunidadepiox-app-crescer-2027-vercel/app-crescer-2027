@@ -6,7 +6,8 @@
 - **RF-02** Envia nome, e-mail, celular e CPF com consentimento LGPD.
 - **RF-03** Lead nasce com `status: novo` e `uid` do autor.
 - **RF-04** Não há cobrança no app.
-- **RF-05** Confirmação descreve o próximo passo humano (WhatsApp, boleto ou Pix depois).
+- **RF-06** Celular e CPF recebem máscara na digitação.
+- **RF-07** Se já existe lead do `uid`, a tela é a de cadastro recebido.
 
 ## Não funcionais
 
@@ -20,7 +21,8 @@
 |---|---|---|---|
 | Ver campanha | sim | sim | não |
 | Enviar lead | sim | sim | não |
-| Listar leads | não | 007 | não |
+| Listar todos os leads | não | 007 | não |
+| Ler o próprio lead | sim | sim | não |
 
 ## LGPD
 
@@ -28,7 +30,7 @@
 - Finalidade: contato da comunidade para concluir o cadastro de Benfeitor
 - Aviso: checkbox obrigatório, texto alinhado ao site (“dados usados apenas para esta missão”)
 - Onde: Firestore `benefactorLeads`
-- Quem lê: `admin`
+- Quem lê: `admin`; o titular lê só o próprio documento (para não reabrir o formulário). Não vê CPF de outras pessoas.
 - Titular autenticado: o envio é consciente e vinculado ao `uid`
 
 ## Dependências

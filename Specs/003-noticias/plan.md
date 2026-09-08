@@ -21,7 +21,7 @@ Coleção `news` + queries em `lib/news/`. Páginas de lista e detalhe no grupo 
 
 | Coleção | Leitura | Escrita | Índice / query |
 |---|---|---|---|
-| `news` | autenticado se `published`; admin todos | só admin (007) | `published` + `publishedAt` desc |
+| `news` | autenticado se `published`; admin todos | só admin (007) | `published`; ordem `publishedAt` no client; lista com `onSnapshot` |
 
 ## Cloudinary
 

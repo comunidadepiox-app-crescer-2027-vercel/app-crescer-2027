@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth/AuthProvider";
-import { validaLead } from "@/lib/benfeitor/validate";
-import { submitLead } from "@/lib/benfeitor/submit";
+import { validaLead, formataCelular, formataCpf } from "@/lib/benfeitor/validate";
+import { submitLead, jaTemLead } from "@/lib/benfeitor/submit";
 import { ConfirmacaoBenfeitor } from "@/components/benfeitor/Confirmacao";
 import { IconeCoracaoChama } from "@/components/nav/icones";
 
@@ -19,12 +19,34 @@ export default function BenfeitorPage() {
   const [erro, setErro] = useState("");
   const [enviando, setEnviando] = useState(false);
   const [enviado, setEnviado] = useState(false);
+  const [checando, setChecando] = useState(true);
+
+  useEffect(() => {
+    if (!user?.uid) return;
+    let ativo = true;
+    setChecando(true);
+    jaTemLead(user.uid)
+      .then((existe) => {
+        if (ativo && existe) setEnviado(true);
+      })
+      .catch((err) => {
+        console.error("Erro ao verificar cadastro Benfeitor:", err);
+      })
+      .finally(() => {
+        if (ativo) setChecando(false);
+      });
+    return () => {
+      ativo = false;
+    };
+  }, [user?.uid]);
 
   useEffect(() => {
     if (enviado) window.scrollTo({ top: 0, behavior: "smooth" });
   }, [enviado]);
 
   function atualiza(campo, valor) {
+    if (campo === "phone") valor = formataCelular(valor);
+    if (campo === "cpf") valor = formataCpf(valor);
     setForm((f) => ({ ...f, [campo]: valor }));
   }
 
@@ -45,6 +67,10 @@ export default function BenfeitorPage() {
     } finally {
       setEnviando(false);
     }
+  }
+
+  if (checando) {
+    return <p className="text-sm text-texto/60">Carregando...</p>;
   }
 
   if (enviado) {
@@ -122,7 +148,9 @@ export default function BenfeitorPage() {
             value={form.phone}
             onChange={(e) => atualiza("phone", e.target.value)}
             autoComplete="tel"
-            placeholder="(83) 90000-0000"
+            inputMode="numeric"
+            maxLength={15}
+            placeholder="(83) 98897-7017"
             className="rounded-[10px] border border-linha bg-superficie px-4 py-3 outline-none focus:border-titulo"
           />
         </label>
@@ -132,6 +160,7 @@ export default function BenfeitorPage() {
             type="text"
             required
             inputMode="numeric"
+            maxLength={14}
             value={form.cpf}
             onChange={(e) => atualiza("cpf", e.target.value)}
             placeholder="000.000.000-00"

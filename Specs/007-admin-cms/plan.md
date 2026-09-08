@@ -36,7 +36,7 @@ Como o client em JSX não deve confiar só no campo `users.role` (o fiel poderia
 | `news` | fiel: publicados; admin: todos | só admin |
 | `programItems` | fiel: publicados; admin: todos | só admin |
 | `siteContent` | autenticado | só admin |
-| `benefactorLeads` | só admin | create fiel; update status admin |
+| `benefactorLeads` | admin: todos; fiel: próprio uid | create fiel; update status admin |
 | `users` | próprio; admin pode ler | próprio sem `role`; admin não precisa editar outros nesta v1 |
 
 ## Cloudinary

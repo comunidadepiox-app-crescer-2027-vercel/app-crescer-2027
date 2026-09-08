@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
-import { listPublishedNews } from "../../lib/noticias";
+import { observarNoticiasPublicadas } from "../../lib/noticias";
 import { NewsCard } from "../../components/NewsCard";
 import { TituloPagina, Paragrafo } from "../../components/Ui";
 import { CORES, FONTES } from "../../lib/tema";
@@ -10,12 +10,16 @@ export default function NoticiasScreen() {
   const [erro, setErro] = useState(false);
 
   useEffect(() => {
-    listPublishedNews(50)
-      .then(setNoticias)
-      .catch(() => {
+    return observarNoticiasPublicadas(
+      (lista) => {
+        setErro(false);
+        setNoticias(lista);
+      },
+      () => {
         setErro(true);
         setNoticias([]);
-      });
+      }
+    );
   }, []);
 
   return (

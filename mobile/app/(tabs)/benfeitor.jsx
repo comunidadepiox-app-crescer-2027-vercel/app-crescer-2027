@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, Text, Image, ScrollView, Pressable, Linking, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { useAuth } from "../../lib/authProvider";
-import { validaLead, submitLead, hrefWhatsappCadastro, WHATSAPP_ROTULO } from "../../lib/benfeitor";
+import { validaLead, submitLead, jaTemLead, formataCelular, formataCpf, hrefWhatsappCadastro, WHATSAPP_ROTULO } from "../../lib/benfeitor";
 import { FundoRoxoPoligonal } from "../../components/FundoPoligonal";
 import { IconeCoracaoChama } from "../../components/Icones";
 import { Campo, Botao, TituloSecao, Paragrafo, TextoErro } from "../../components/Ui";
@@ -29,8 +29,28 @@ export default function BenfeitorScreen() {
   const [erro, setErro] = useState("");
   const [enviando, setEnviando] = useState(false);
   const [enviado, setEnviado] = useState(false);
+  const [checando, setChecando] = useState(true);
+
+  useEffect(() => {
+    if (!user?.uid) return;
+    let ativo = true;
+    setChecando(true);
+    jaTemLead(user.uid)
+      .then((existe) => {
+        if (ativo && existe) setEnviado(true);
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (ativo) setChecando(false);
+      });
+    return () => {
+      ativo = false;
+    };
+  }, [user?.uid]);
 
   function atualiza(campo, valor) {
+    if (campo === "phone") valor = formataCelular(valor);
+    if (campo === "cpf") valor = formataCpf(valor);
     setForm((f) => ({ ...f, [campo]: valor }));
   }
 
@@ -50,6 +70,14 @@ export default function BenfeitorScreen() {
     } finally {
       setEnviando(false);
     }
+  }
+
+  if (checando) {
+    return (
+      <View style={[estilos.pagina, { padding: 16 }]}>
+        <Paragrafo>Carregando...</Paragrafo>
+      </View>
+    );
   }
 
   if (enviado) {
@@ -123,7 +151,8 @@ export default function BenfeitorScreen() {
             value={form.phone}
             onChangeText={(v) => atualiza("phone", v)}
             keyboardType="phone-pad"
-            placeholder="(83) 90000-0000"
+            placeholder="(83) 98897-7017"
+            maxLength={15}
           />
           <Campo
             rotulo="CPF"
@@ -131,6 +160,7 @@ export default function BenfeitorScreen() {
             onChangeText={(v) => atualiza("cpf", v)}
             keyboardType="number-pad"
             placeholder="000.000.000-00"
+            maxLength={14}
           />
           <Pressable
             onPress={() => atualiza("lgpdConsent", !form.lgpdConsent)}

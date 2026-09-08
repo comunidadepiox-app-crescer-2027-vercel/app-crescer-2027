@@ -19,8 +19,9 @@ export function hojeISO() {
   return fmt.format(new Date());
 }
 
-// Regra do recorte "hoje no evento" (spec 002):
-// durante o evento usa o dia corrente; antes, o primeiro dia; depois, o último.
+// Regra do recorte "hoje no evento" (spec 002), calendário civil Recife
+// (meia-noite a meia-noite): antes do evento e no dia 5 mostra 2027-02-05;
+// depois que o dia 5 acaba, mostra o 6; no fim da edição, o último dia.
 export function resolveDiaRecorte() {
   const hoje = hojeISO();
   if (hoje < EDICAO.inicio) return { date: EDICAO.inicio, posicao: "antes" };

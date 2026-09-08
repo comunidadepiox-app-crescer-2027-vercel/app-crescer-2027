@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "./firebase";
 
 function ordenaItensPrograma(itens) {
@@ -9,13 +9,21 @@ function ordenaItensPrograma(itens) {
   });
 }
 
-export async function listProgramItemsByDate(date) {
+export function itensDoDia(itens, date) {
+  return ordenaItensPrograma((itens || []).filter((item) => item.date === date));
+}
+
+export function observarProgramaPublicado(onData, onError) {
+  if (!db) {
+    onError?.(new Error("Firebase não configurado"));
+    return () => {};
+  }
   const q = query(collection(db, "programItems"), where("published", "==", true));
-  const snap = await getDocs(q);
-  const doDia = snap.docs
-    .map((d) => ({ id: d.id, ...d.data() }))
-    .filter((item) => item.date === date);
-  return ordenaItensPrograma(doDia);
+  return onSnapshot(
+    q,
+    (snap) => onData(snap.docs.map((d) => ({ id: d.id, ...d.data() }))),
+    (err) => onError?.(err)
+  );
 }
 
 export function agrupaPorEspaco(itens) {
