@@ -19,7 +19,8 @@
 
 | Ação | `fiel` | `admin` | Sem sessão |
 |---|---|---|---|
-| Abrir `/admin` | não | sim | não |
+| Abrir `/admin` (CMS) | recusa | sim | não (vê só o login) |
+| Login da mesa (e-mail/senha) | — | sim | sim (formulário) |
 | Escrever `news` / `programItems` | não | sim | não |
 | Ler leads | não | sim | não |
 

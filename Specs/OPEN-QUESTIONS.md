@@ -10,14 +10,15 @@ Itens que o SDD registra, mas que ainda não têm decisão final. Não bloqueiam
 
 ## Produto
 
-- [x] Edição do app: 30º Crescer, 13 a 17/02/2026, constante em `lib/event/edition.js`. Trocar quando a comunidade definir 2027.
+- [x] Edição do app: 30º Crescer (30 anos), 5 a 9/02/2027, constante em `lib/event/edition.js`. Datas confirmadas pelo responsável em 07/09/2026.
 - [x] Datas do recorte “hoje no evento”: as da constante acima, timezone `America/Recife`
 - [ ] Gating: o SDD assume app inteiro atrás do login. Reabrir só se o produto quiser Home pública.
 
 ## Operação
 
 - [x] Primeiro admin: promoção manual no console do Firebase. Abrir Firestore, coleção `users`, documento do uid desejado, trocar `role` de `fiel` para `admin`. O client nunca grava `admin` (as rules recusam) e o Route Handler de upload revalida o papel a cada chamada.
-- [ ] Projeto Firebase, domínios autorizados do Google OAuth e variáveis de ambiente (preencher `.env.local` a partir de `.env.example` e publicar `firestore.rules` no console)
+- [x] Google no app nativo: no Expo Go o OAuth é recusado pelo Google (Error 400 `invalid_request`, política contra custom scheme). O fiel usa e-mail/senha no Go; Google fica para o development build.
+- [ ] Projeto Firebase, domínios autorizados do Google OAuth (web) e variáveis de ambiente (preencher `.env.local` a partir de `.env.example` e publicar `firestore.rules` no console)
 - [ ] Conta Cloudinary (pasta `news/` usada pelo upload assinado)
 - [x] Destino do lead Benfeitor nesta entrega: só Firestore; a confirmação mostra o link do WhatsApp oficial `(83) 98897-7017` sem envio automático
 - [ ] Texto final da política de privacidade / aviso LGPD (o app usa um aviso curto alinhado ao site oficial; validar com a comunidade)

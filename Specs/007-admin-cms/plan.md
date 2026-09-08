@@ -5,7 +5,7 @@
 
 ## Abordagem
 
-Grupo `app/admin/` com layout que lê `role` do AuthProvider e redireciona o fiel. Regras Firestore são a barreira real. Upload: Route Handler `app/api/upload/route.js` se houver secret; senão unsigned preset só de `news/` documentado no `.env.example`.
+Grupo `app/admin/` com layout que lê `role` do AuthProvider. Sem sessão, o layout mostra login e-mail/senha (e-mail pré-preenchido `admin@crecer.com`); fiel autenticado vê recusa; só `role == admin` vê a mesa. Regras Firestore são a barreira real. Upload: Route Handler `app/api/upload/route.js` se houver secret; senão unsigned preset só de `news/` documentado no `.env.example`.
 
 O primeiro admin **não** nasce pela UI. Implementar o mecanismo escolhido em OPEN-QUESTIONS (allowlist no Handler, custom claim, ou doc manual) como task explícita.
 
@@ -13,7 +13,9 @@ O primeiro admin **não** nasce pela UI. Implementar o mecanismo escolhido em OP
 
 | Caminho | Responsabilidade |
 |---|---|
-| `app/admin/layout.jsx` | guard `admin` |
+| `app/admin/layout.jsx` | guard `admin`; login se sem sessão |
+| `components/admin/LoginAdmin.jsx` | formulário e recusa |
+| `lib/admin/login.js` | e-mail pré-preenchido `admin@crecer.com` |
 | `app/admin/page.jsx` | índice |
 | `app/admin/noticias/page.jsx` | lista + criar |
 | `app/admin/noticias/[id]/page.jsx` | editar |

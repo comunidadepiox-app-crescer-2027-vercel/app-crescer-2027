@@ -16,7 +16,7 @@ O encontro depende de apoio contínuo. O fiel precisa entender a campanha e deix
 - `/benfeitor` com o conteúdo da campanha (o que é, missão, destino da contribuição, como participar)
 - Formulário: nome, e-mail, celular, CPF, checkbox de consentimento LGPD
 - Gravação em `benefactorLeads`
-- Tela de confirmação: a equipe fala no WhatsApp; contribuição mensal é boleto ou Pix no fluxo humano
+- Tela de confirmação no mesmo idioma visual da campanha (hero roxo, foto do encontro, próximos passos numerados, WhatsApp oficial). Não promete pagamento feito.
 - Link/WhatsApp da comunidade `(83) 98897-7017` como canal oficial, sem fingir que a mensagem já foi enviada se não foi
 - Prefill de nome/e-mail a partir de `users` quando existirem
 

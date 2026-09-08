@@ -8,7 +8,7 @@
   - Fora: UI.
 
 - [x] **T2 — Queries e dia**
-  - Faz: listar por data; resolver hoje/primeiro/último.
+  - Faz: listar publicados; filtrar a data e ordenar no client (sem índice composto).
   - Verifica: timezone Recife; fora do evento cai na regra da 002.
   - Fora: página.
 

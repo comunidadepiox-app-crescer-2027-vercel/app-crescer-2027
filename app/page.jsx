@@ -8,6 +8,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signInWithRedirect,
+  getRedirectResult,
   sendPasswordResetEmail,
   updateProfile,
 } from "firebase/auth";
@@ -30,6 +31,16 @@ export default function InicioPage() {
   useEffect(() => {
     if (!loading && user) router.replace("/home");
   }, [loading, user, router]);
+
+  // Volta do login por redirecionamento (fluxo do celular): o sucesso é
+  // tratado pelo AuthProvider; aqui só exibimos o erro, se houver.
+  useEffect(() => {
+    if (!auth) return;
+    getRedirectResult(auth).catch((err) => {
+      console.error("Erro no retorno do login Google:", err);
+      setErro(traduzErroAuth(err));
+    });
+  }, []);
 
   async function entrarComEmail(e) {
     e.preventDefault();
@@ -67,11 +78,19 @@ export default function InicioPage() {
     }
     setEnviando(true);
     try {
+      // Em navegador de celular o popup é instável (fecha sozinho);
+      // usar o fluxo de redirecionamento direto.
+      const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      if (mobile) {
+        await signInWithRedirect(auth, googleProvider);
+        return;
+      }
       const cred = await signInWithPopup(auth, googleProvider);
       await ensureUserDoc(cred.user);
       router.replace("/home");
     } catch (err) {
-      if (err?.code === "auth/popup-blocked") {
+      console.error("Erro no login Google:", err);
+      if (err?.code === "auth/popup-blocked" || err?.code === "auth/cancelled-popup-request") {
         await signInWithRedirect(auth, googleProvider);
         return;
       }

@@ -23,7 +23,7 @@ Uma coleção plana `programItems` filtrada por `date` e agrupada no client por 
 
 | Coleção | Leitura | Escrita | Índice / query |
 |---|---|---|---|
-| `programItems` | autenticado se `published` | admin (007) | `published` + `date` + `order` |
+| `programItems` | autenticado se `published` | admin (007) | `published`; o recorte por `date` e a ordem são no client |
 
 ## Cloudinary
 

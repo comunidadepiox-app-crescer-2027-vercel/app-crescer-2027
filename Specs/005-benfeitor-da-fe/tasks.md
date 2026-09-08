@@ -23,8 +23,8 @@
   - Fora: lista admin.
 
 - [x] **T5 — Confirmação**
-  - Faz: estado pós-envio + canal WhatsApp oficial se aprovado.
-  - Verifica: não afirma que o pagamento ocorreu.
+  - Faz: hero da campanha + foto do encontro + três passos seguintes + WhatsApp oficial e volta à Home. Sem check verde de SaaS.
+  - Verifica: não afirma que o pagamento ocorreu; copy sem travessão.
   - Fora: boleto.
 
 ## Validação final

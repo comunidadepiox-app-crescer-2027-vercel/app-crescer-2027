@@ -23,7 +23,7 @@ Uma família abre o app no dia do encontro e, em poucos toques, sabe o que está
 - Ingressos, credenciamento ou pagamento de inscrição (o encontro não é tratado como e-commerce aqui)
 - Gateway de doação (boleto/Pix do Benfeitor acontece no fluxo oficial, após contato humano)
 - Rede social, chat ou feed de comentários
-- App nativo iOS/Android
+- App nativo: em andamento na spec `008` (Expo em `mobile/`). CMS admin permanece na web.
 - Gestão de caravanas (o site oficial já faz isso; o app só aponta o link)
 - CMS genérico para páginas arbitrárias
 
@@ -50,12 +50,13 @@ Uma família abre o app no dia do encontro e, em poucos toques, sabe o que está
 - `/galeria`
 - `/sobre`
 
-Área admin (role `admin`):
+Área admin (role `admin`), no site, não no app nativo:
 
-- `/admin`
+- `/admin` — sem sessão mostra login simples (`admin@crecer.com` pré-preenchido)
 - `/admin/noticias`
 - `/admin/cronograma`
 - `/admin/destaques`
+- `/admin/leads`
 
 ## Glossário
 

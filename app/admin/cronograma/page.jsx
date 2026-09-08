@@ -1,14 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   createProgramItem,
   deleteProgramItem,
-  listItemsByDateAdmin,
+  listProgramItemsAdmin,
   updateProgramItem,
 } from "@/lib/admin/program";
+import { ordenaItensPrograma } from "@/lib/program/ordenar";
 import { ESPACOS, nomeDoEspaco } from "@/lib/program/spaces";
-import { EDICAO, resolveDiaRecorte, formataDataCurta } from "@/lib/event/edition";
+import {
+  EDICAO,
+  resolveDiaRecorte,
+  formataDataCurta,
+  diasDaEdicao,
+} from "@/lib/event/edition";
 
 const NOVO = {
   time: "",
@@ -21,26 +27,49 @@ const NOVO = {
   published: true,
 };
 
+function mensagemErro(err) {
+  if (err?.code === "permission-denied") {
+    return "Sem permissão para gravar. Confira se o documento users desta conta tem role admin e se as regras do Firestore estão publicadas.";
+  }
+  return err?.message || "Não foi possível concluir.";
+}
+
 export default function AdminCronogramaPage() {
+  const dias = useMemo(diasDaEdicao, []);
   const [dia, setDia] = useState(() => resolveDiaRecorte().date);
-  const [itens, setItens] = useState(null);
-  const [editando, setEditando] = useState(null); // null | "novo" | id
+  const [todos, setTodos] = useState(null);
+  const [editando, setEditando] = useState(null);
   const [form, setForm] = useState(NOVO);
   const [erro, setErro] = useState("");
+  const [erroLista, setErroLista] = useState("");
   const [ocupado, setOcupado] = useState(false);
 
-  async function carregar(d) {
-    setItens(null);
-    const lista = await listItemsByDateAdmin(d).catch(() => []);
-    setItens(lista);
+  const itens = todos ? ordenaItensPrograma(todos.filter((item) => item.date === dia)) : null;
+  const datasFora = todos
+    ? [...new Set(todos.map((item) => item.date).filter((d) => d && !dias.includes(d)))].sort()
+    : [];
+
+  async function carregar() {
+    setErroLista("");
+    try {
+      const lista = await listProgramItemsAdmin();
+      setTodos(lista);
+    } catch (err) {
+      console.error("Erro ao listar programação:", err);
+      setErroLista(mensagemErro(err));
+      setTodos([]);
+    }
   }
 
   useEffect(() => {
-    carregar(dia);
-  }, [dia]);
+    carregar();
+  }, []);
 
   function abrirNovo() {
-    setForm({ ...NOVO, order: (itens?.length || 0) + 1 });
+    const alvo = dias.includes(dia) ? dia : dias[0];
+    const qtd = todos ? todos.filter((item) => item.date === alvo).length : 0;
+    setDia(alvo);
+    setForm({ ...NOVO, order: qtd + 1 });
     setEditando("novo");
     setErro("");
   }
@@ -58,6 +87,7 @@ export default function AdminCronogramaPage() {
     });
     setEditando(item.id);
     setErro("");
+    if (item.date && item.date !== dia) setDia(item.date);
   }
 
   function atualiza(campo, valor) {
@@ -81,9 +111,10 @@ export default function AdminCronogramaPage() {
       if (editando === "novo") await createProgramItem(dados);
       else await updateProgramItem(editando, dados);
       setEditando(null);
-      await carregar(dia);
-    } catch {
-      setErro("Não foi possível salvar.");
+      await carregar();
+    } catch (err) {
+      console.error("Erro ao salvar programação:", err);
+      setErro(mensagemErro(err));
     } finally {
       setOcupado(false);
     }
@@ -91,8 +122,12 @@ export default function AdminCronogramaPage() {
 
   async function excluir(id) {
     if (!confirm("Excluir este item da programação?")) return;
-    await deleteProgramItem(id).catch(() => {});
-    await carregar(dia);
+    try {
+      await deleteProgramItem(id);
+      await carregar();
+    } catch (err) {
+      setErroLista(mensagemErro(err));
+    }
   }
 
   return (
@@ -107,17 +142,31 @@ export default function AdminCronogramaPage() {
           Novo item
         </button>
       </div>
-      <p className="mt-1 text-sm text-texto/60">{EDICAO.nome}</p>
+      <p className="mt-1 text-sm text-texto/60">
+        {EDICAO.nome}. Os fiéis só veem o dia correspondente em Home, Cronograma e no app.
+      </p>
 
-      <label className="mt-4 flex max-w-xs flex-col gap-1">
-        <span className="text-sm font-medium">Dia</span>
-        <input
-          type="date"
-          value={dia}
-          onChange={(e) => setDia(e.target.value)}
-          className="rounded-[10px] border border-linha bg-superficie px-4 py-2 outline-none focus:border-titulo"
-        />
-      </label>
+      <div className="mt-6 flex gap-4 overflow-x-auto border-b border-linha">
+        {[...dias, ...datasFora].map((d) => (
+          <button
+            key={d}
+            type="button"
+            onClick={() => setDia(d)}
+            className={`shrink-0 pb-2 font-titulo text-lg font-bold uppercase ${
+              dia === d ? "border-b-2 border-destaque text-titulo" : "text-texto/60"
+            }`}
+          >
+            {formataDataCurta(d)}
+          </button>
+        ))}
+      </div>
+
+      {datasFora.length > 0 && (
+        <p className="mt-4 text-sm text-texto/80">
+          Há itens gravados fora de 5 a 9 de fevereiro de 2027. O app do fiel não mostra
+          essas datas. Abra o item, escolha um dia do encontro nas abas e salve de novo.
+        </p>
+      )}
 
       {editando !== null && (
         <form
@@ -233,8 +282,10 @@ export default function AdminCronogramaPage() {
         </form>
       )}
 
-      {itens === null ? (
+      {todos === null ? (
         <p className="mt-6 text-sm text-texto/60">Carregando...</p>
+      ) : erroLista ? (
+        <p className="mt-6 text-sm font-medium text-vermelho">{erroLista}</p>
       ) : itens.length === 0 ? (
         <p className="mt-6 text-texto/70">
           Nenhum item em {formataDataCurta(dia)}. Use o botão Novo item.

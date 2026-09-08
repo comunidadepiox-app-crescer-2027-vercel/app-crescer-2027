@@ -70,6 +70,7 @@ Enum `space`: `palco-principal` | `palco-musical` | `autografos` | `palestras` |
 ## Regras de negócio
 
 - Fiel só vê `published == true`.
+- A lista pública filtra `published` no Firestore e recorta `date` / ordem no client, para não depender de índice composto.
 - Espaço sem itens no dia não inventa card vazio decorativo; some ou mostra uma linha “Sem programação neste espaço”.
 - Não transformar espaços em chips redondos.
 

@@ -16,20 +16,23 @@ Este projeto usa **Spec-Driven Development**. Antes de mudar qualquer funcionali
 1. `npm install`
 2. Copie `.env.example` para `.env.local` e preencha com as chaves do seu projeto Firebase e do Cloudinary.
 3. No console do Firebase, habilite Authentication (E-mail/senha e Google) e o Cloud Firestore, e publique o conteúdo de [`firestore.rules`](firestore.rules).
-4. Crie os índices compostos de [`firestore.indexes.json`](firestore.indexes.json) (Firestore, aba Índices). Sem eles, as listas de notícias e do cronograma falham e as telas mostram os avisos de erro:
-   - `news`: `published` (crescente) + `publishedAt` (decrescente)
-   - `programItems`: `date` (crescente) + `published` (crescente) + `order` (crescente)
+4. Crie o índice composto de [`firestore.indexes.json`](firestore.indexes.json) na coleção `news` (`published` crescente + `publishedAt` decrescente). Sem ele a lista de notícias falha. A programação **não** depende mais de índice composto.
 5. `npm run dev` e abra http://localhost:3000.
 
-## Primeiro administrador
+## Área administrativa (notícias e cronograma)
 
-O cadastro sempre cria contas com papel `fiel`. Para promover alguém da equipe:
+O CMS **não** fica no app do celular. É o site: com o Next rodando (`npm run dev`), abra [http://localhost:3000/admin](http://localhost:3000/admin).
+
+O login da mesa é só e-mail e senha. O e-mail já vem preenchido como `admin@crecer.com`. Cadastre essa conta no Firebase Authentication (E-mail/senha) com a senha que vocês combinarem.
+
+O cadastro no Auth **não** torna a pessoa admin. Depois do primeiro login:
 
 1. Abra o console do Firebase, Firestore, coleção `users`.
-2. Localize o documento do uid da pessoa (o e-mail está no documento).
+2. Localize o documento do uid (o e-mail está no documento).
 3. Troque o campo `role` de `fiel` para `admin`.
+4. Recarregue `/admin`.
 
-A pessoa passa a ver o atalho da área administrativa em Configuração.
+Atalhos da mesa: Notícias, Cronograma, Destaques e Benfeitores.
 
 ## Estrutura
 
@@ -38,3 +41,4 @@ A pessoa passa a ver o atalho da área administrativa em Configuração.
 - `components/` navegação e listas compartilhadas
 - `Specs/` documentação SDD: visão, design, questões abertas e uma pasta por funcionalidade
 - `firestore.rules` regras de segurança do Firestore
+- `mobile/` app nativo do fiel (Expo / React Native). Como rodar: [mobile/README.md](mobile/README.md)

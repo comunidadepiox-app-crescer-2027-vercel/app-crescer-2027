@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { validaLead } from "@/lib/benfeitor/validate";
-import { submitLead, WHATSAPP_COMUNIDADE } from "@/lib/benfeitor/submit";
+import { submitLead } from "@/lib/benfeitor/submit";
+import { ConfirmacaoBenfeitor } from "@/components/benfeitor/Confirmacao";
 import { IconeCoracaoChama } from "@/components/nav/icones";
 
 export default function BenfeitorPage() {
@@ -18,6 +19,10 @@ export default function BenfeitorPage() {
   const [erro, setErro] = useState("");
   const [enviando, setEnviando] = useState(false);
   const [enviado, setEnviado] = useState(false);
+
+  useEffect(() => {
+    if (enviado) window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [enviado]);
 
   function atualiza(campo, valor) {
     setForm((f) => ({ ...f, [campo]: valor }));
@@ -43,25 +48,7 @@ export default function BenfeitorPage() {
   }
 
   if (enviado) {
-    return (
-      <div className="max-w-prose">
-        <h1 className="text-3xl font-bold uppercase">Cadastro recebido</h1>
-        <p className="mt-4 leading-relaxed">
-          Obrigado por querer sustentar esta missão. A equipe da Comunidade de
-          São Pio X vai entrar em contato pelo seu WhatsApp para concluir o
-          cadastro. A contribuição mensal é feita por boleto ou Pix, sempre no
-          contato direto com a comunidade.
-        </p>
-        <a
-          href={WHATSAPP_COMUNIDADE}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-6 inline-block rounded-[10px] bg-titulo px-5 py-2.5 font-titulo font-bold uppercase text-white"
-        >
-          Falar com a comunidade no WhatsApp
-        </a>
-      </div>
-    );
+    return <ConfirmacaoBenfeitor />;
   }
 
   return (

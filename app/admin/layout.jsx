@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
+import { signOut } from "firebase/auth";
 import { useAuth } from "@/lib/auth/AuthProvider";
+import { auth } from "@/lib/firebase/client";
+import { LoginAdmin, RecusaAdmin } from "@/components/admin/LoginAdmin";
 
 const MENU = [
   { href: "/admin", label: "Início" },
@@ -19,21 +21,22 @@ export default function AdminLayout({ children }) {
   const pathname = usePathname();
   const isAdmin = profile?.role === "admin";
 
-  useEffect(() => {
-    if (loading) return;
-    if (!user) router.replace("/");
-    else if (!isAdmin) router.replace("/home");
-  }, [loading, user, isAdmin, router]);
+  async function sair() {
+    if (auth) await signOut(auth);
+    router.replace("/admin");
+  }
 
-  if (loading || !user || !isAdmin) {
+  if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p className="text-sm text-texto/60">
-          {loading ? "Carregando..." : "Esta área é restrita à equipe de comunicação."}
-        </p>
+        <p className="text-sm text-texto/60">Carregando...</p>
       </div>
     );
   }
+
+  if (!user) return <LoginAdmin />;
+
+  if (!isAdmin) return <RecusaAdmin onSair={sair} />;
 
   return (
     <div className="min-h-screen">
@@ -57,9 +60,18 @@ export default function AdminLayout({ children }) {
               </Link>
             ))}
           </nav>
-          <Link href="/home" className="ml-auto text-sm font-medium text-texto/60 underline">
-            Voltar ao app
-          </Link>
+          <div className="ml-auto flex items-center gap-4">
+            <Link href="/home" className="text-sm font-medium text-texto/60 underline">
+              Voltar ao app
+            </Link>
+            <button
+              type="button"
+              onClick={sair}
+              className="text-sm font-medium text-texto/60 underline"
+            >
+              Sair
+            </button>
+          </div>
         </div>
       </header>
       <main className="mx-auto max-w-5xl px-4 py-8">{children}</main>

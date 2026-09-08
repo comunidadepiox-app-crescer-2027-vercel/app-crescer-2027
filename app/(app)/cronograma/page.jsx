@@ -8,21 +8,8 @@ import {
   resolveDiaRecorte,
   formataDataCurta,
   formataDataLonga,
+  diasDaEdicao,
 } from "@/lib/event/edition";
-
-function diasDaEdicao() {
-  const dias = [];
-  const [y, m, d] = EDICAO.inicio.split("-").map(Number);
-  const fim = EDICAO.fim;
-  let atual = new Date(Date.UTC(y, m - 1, d, 12));
-  for (let i = 0; i < 14; i++) {
-    const iso = atual.toISOString().slice(0, 10);
-    if (iso > fim) break;
-    dias.push(iso);
-    atual = new Date(atual.getTime() + 24 * 60 * 60 * 1000);
-  }
-  return dias;
-}
 
 export default function CronogramaPage() {
   const dias = useMemo(diasDaEdicao, []);

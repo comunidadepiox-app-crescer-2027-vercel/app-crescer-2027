@@ -1,0 +1,39 @@
+# Tasks: 008-app-react-native
+
+- [x] **T1 — Scaffold Expo em `mobile/`**
+  - Faz: create-expo-app template blank (JS) + dependências via expo install.
+  - Verifica: `mobile/package.json` com expo-router, firebase, expo-video, react-native-svg.
+- [x] **T2 — Fontes e assets da marca**
+  - Faz: converter Geometric Slabserif woff2→TTF; copiar vídeo da splash, logos e foto para `mobile/assets/brand`.
+  - Verifica: TTFs válidos carregando no expo-font; assets no bundle.
+- [x] **T3 — Tema e ícones**
+  - Faz: `mobile/lib/tema.js` com a paleta 000; ícones da marca em react-native-svg.
+  - Verifica: cores hex idênticas ao DESIGN.md.
+- [x] **T4 — Firebase e AuthProvider**
+  - Faz: client com initializeAuth+AsyncStorage; port do AuthProvider e errors; env EXPO_PUBLIC_*.
+  - Verifica: sessão persiste ao recarregar o app.
+- [x] **T5 — Splash com vídeo**
+  - Faz: abertura com `splash-crescer.mp4` sobre roxo, segura até sessão resolver.
+  - Verifica: vídeo roda e libera para login/Home.
+- [x] **T6 — Login**
+  - Faz: e-mail/senha (entrar, criar, esqueci a senha) + Google via expo-auth-session no build nativo. No Expo Go o botão Google mostra o bloqueio OAuth em vez de abrir o browser.
+  - Verifica: cria doc `users` com role fiel; erros traduzidos; Expo Go não dispara o fluxo Google.
+- [x] **T7 — Abas e Home**
+  - Faz: tab bar roxa com ícones da marca; Home com hero da edição, notícias e programação do dia.
+  - Verifica: recorte "hoje" igual à web.
+- [x] **T8 — Notícias e detalhe**
+  - Faz: lista com capa e data; detalhe com parágrafos.
+  - Verifica: só `published == true`.
+- [x] **T9 — Agenda**
+  - Faz: abas de dias da edição, grupos por espaço.
+  - Verifica: dias 05–09/02/2027.
+- [x] **T10 — Benfeitor**
+  - Faz: campanha + formulário com validações e LGPD; confirmação com hero, foto, passos e WhatsApp.
+  - Verifica: lead gravado com status novo.
+  - Verifica: lead gravado com status novo.
+- [x] **T11 — Conta, Galeria e Sobre**
+  - Faz: editar nome, sair; links oficiais; institucional.
+  - Verifica: sair volta ao login.
+- [x] **T12 — Validação e docs**
+  - Faz: bundle sem erro, README do mobile (como rodar no Expo Go), sync das specs.
+  - Verifica: `npx expo export --platform android` gerou o bundle (1458 módulos) sem erro. Teste no Expo Go fica com o responsável.

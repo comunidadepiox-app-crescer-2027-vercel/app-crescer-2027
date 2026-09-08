@@ -14,12 +14,13 @@ A equipe de comunicação precisa publicar notícias, ajustar a programação e 
 ### Entra
 
 - Grupo `/admin` protegido por `role == admin`
+- Login simples em `/admin` (e-mail pré-preenchido `admin@crecer.com`, senha digitada; sem Google e sem cadastro nesta tela)
 - `/admin` painel com atalhos (notícias, cronograma, destaques, leads)
 - CRUD de `news` (rascunho/publicar, capa Cloudinary)
-- CRUD de `programItems`
+- CRUD de `programItems` (abas só dos dias da edição; lista não depende de índice composto)
 - Edição de `siteContent` (textos/destaques da Home e Sobre)
 - Lista de `benefactorLeads` e mudança de `status`
-- Fiel que abrir `/admin` vê recusa e volta à Home (sem vazar dados)
+- Fiel que abrir `/admin` vê recusa (sem vazar dados); atalho para voltar ao app
 
 ### Não entra
 
@@ -30,11 +31,11 @@ A equipe de comunicação precisa publicar notícias, ajustar a programação e 
 
 ## Fluxos
 
-1. Admin entra por Configuração → `/admin`.
+1. Admin abre `/admin` no navegador (não no app nativo). Sem sessão, vê login só e-mail/senha, com e-mail pré-preenchido `admin@crecer.com`. Entra e cai na mesa.
 2. Cria notícia, envia capa ao Cloudinary, publica.
 3. Cria ou edita item de programação.
 4. Marca lead como `contatado`.
-5. Fiel autenticado em `/admin` é barrado.
+5. Fiel autenticado em `/admin` vê recusa (não vê dados). Sem sessão, não é redirecionado para `/`; permanece no login da mesa.
 
 ## Superfície do produto
 
@@ -61,6 +62,8 @@ Chaves iniciais: `home`, `about`, `benfeitor` (se a campanha deixar de ser só e
 ## Regras de negócio
 
 - Toda escrita editorial exige `role == admin` nas rules (não só na UI).
+- O e-mail da mesa (`admin@crecer.com`) é só um atalho de digitação. A conta nasce no Firebase Auth; o papel `admin` continua sendo definido à mão no documento `users/{uid}`.
+- Login da mesa não cria conta e não promove ninguém.
 - Publicar notícia preenche `publishedAt` se ainda vazio.
 - Lead: admin não edita CPF/e-mail; só `status`.
 - Upload Cloudinary usa unsigned preset **restrito** ou signed no server. Preferir signed via Route Handler se houver `CLOUDINARY_API_SECRET`; nunca commitar o secret.

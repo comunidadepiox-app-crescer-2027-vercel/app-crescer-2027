@@ -1,0 +1,47 @@
+{
+  "expo": {
+    "name": "Crescer",
+    "slug": "crescer",
+    "version": "1.0.0",
+    "scheme": "crescer",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#3a1075",
+    "androidNavigationBar": {
+      "backgroundColor": "#000000",
+      "barStyle": "light-content"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "br.org.piox.crescer"
+    },
+    "android": {
+      "package": "br.org.piox.crescer",
+      "adaptiveIcon": {
+        "backgroundColor": "#3a1075",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-status-bar",
+      "expo-font",
+      "expo-video",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#3a1075",
+          "image": "./assets/brand/simbolo-crescer.png",
+          "imageWidth": 160
+        }
+      ],
+      "expo-web-browser"
+    ]
+  }
+}

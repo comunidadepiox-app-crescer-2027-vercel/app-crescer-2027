@@ -1,0 +1,108 @@
+import { useState } from "react";
+import { View, Text, ScrollView, Pressable, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
+import { signOut, updateProfile } from "firebase/auth";
+import { doc, updateDoc } from "firebase/firestore";
+import { auth, db } from "../../lib/firebase";
+import { useAuth } from "../../lib/authProvider";
+import { Campo, Botao, TituloPagina, TituloSecao, Paragrafo, TextoErro, TextoAviso } from "../../components/Ui";
+import { CORES, FONTES } from "../../lib/tema";
+
+export default function ContaScreen() {
+  const { user, profile } = useAuth();
+  const router = useRouter();
+  const [nome, setNome] = useState(profile?.displayName || user?.displayName || "");
+  const [aviso, setAviso] = useState("");
+  const [erro, setErro] = useState("");
+  const [salvando, setSalvando] = useState(false);
+
+  async function salvarNome() {
+    setAviso("");
+    setErro("");
+    setSalvando(true);
+    try {
+      await updateProfile(auth.currentUser, { displayName: nome.trim() });
+      await updateDoc(doc(db, "users", user.uid), { displayName: nome.trim() });
+      setAviso("Nome atualizado.");
+    } catch {
+      setErro("Não foi possível salvar agora. Tente novamente.");
+    } finally {
+      setSalvando(false);
+    }
+  }
+
+  async function sair() {
+    await signOut(auth);
+    router.replace("/");
+  }
+
+  return (
+    <ScrollView contentContainerStyle={estilos.pagina}>
+      <TituloPagina>Configuração</TituloPagina>
+
+      <TituloSecao style={{ marginTop: 24 }}>Sua conta</TituloSecao>
+      <Paragrafo style={{ marginTop: 8 }}>
+        E-mail: <Text style={{ fontFamily: FONTES.corpoMedio }}>{user?.email}</Text>
+      </Paragrafo>
+      <View style={{ gap: 12, marginTop: 14 }}>
+        <Campo rotulo="Nome" value={nome} onChangeText={setNome} />
+        <TextoAviso>{aviso}</TextoAviso>
+        <TextoErro>{erro}</TextoErro>
+        <Botao titulo="Salvar nome" onPress={salvarNome} desabilitado={salvando} />
+      </View>
+
+      <View style={estilos.bloco}>
+        <TituloSecao>Galeria e sobre</TituloSecao>
+        <Pressable onPress={() => router.push("/galeria")} style={{ marginTop: 10 }}>
+          <Text style={estilos.link}>Abrir galeria de fotos</Text>
+        </Pressable>
+        <Pressable onPress={() => router.push("/sobre")} style={{ marginTop: 8 }}>
+          <Text style={estilos.link}>Sobre o Crescer</Text>
+        </Pressable>
+      </View>
+
+      {profile?.role === "admin" ? (
+        <View style={estilos.bloco}>
+          <TituloSecao>Administração</TituloSecao>
+          <Paragrafo style={{ marginTop: 8 }}>
+            A área administrativa continua no site. Abra o WebApp no navegador
+            para publicar notícias e o cronograma.
+          </Paragrafo>
+        </View>
+      ) : null}
+
+      <View style={estilos.bloco}>
+        <TituloSecao>Privacidade</TituloSecao>
+        <Paragrafo style={{ marginTop: 8 }}>
+          Este aplicativo guarda apenas os dados da sua conta (nome e e-mail) e,
+          se você enviou, o cadastro de interesse do Benfeitor da Fé. Nada é
+          compartilhado fora da Comunidade de São Pio X. Para excluir sua conta,
+          fale com a comunidade pelo e-mail contato@piox.org.br.
+        </Paragrafo>
+      </View>
+
+      <Botao
+        titulo="Sair da conta"
+        variante="contornoVermelho"
+        onPress={sair}
+        style={{ marginTop: 24 }}
+      />
+    </ScrollView>
+  );
+}
+
+const estilos = StyleSheet.create({
+  pagina: { padding: 16, paddingBottom: 40, backgroundColor: CORES.fundo },
+  bloco: {
+    marginTop: 28,
+    paddingTop: 20,
+    borderTopWidth: 1,
+    borderTopColor: CORES.linha,
+  },
+  link: {
+    fontFamily: FONTES.corpoSemi,
+    fontSize: 15,
+    color: CORES.destaque,
+    textDecorationLine: "underline",
+  },
+});

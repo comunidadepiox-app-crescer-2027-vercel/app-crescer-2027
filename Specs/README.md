@@ -53,8 +53,9 @@ Pode ir direto ao código só se for **baixa** complexidade e **não** alterar c
 | [005-benfeitor-da-fe](005-benfeitor-da-fe/) | Campanha e lead com LGPD | Alta |
 | [006-configuracao](006-configuracao/) | Conta, perfil, sair | Média |
 | [007-admin-cms](007-admin-cms/) | Publicação de conteúdo | Alta |
+| [008-app-react-native](008-app-react-native/) | App do fiel em Expo/React Native (`mobile/`) | Alta |
 
-Ordem de implementação: `000` → `001` → `002` → (`003` e `004` em paralelo após a Home) → `005` → `006` → `007`.
+Ordem de implementação: `000` → `001` → `002` → (`003` e `004` em paralelo após a Home) → `005` → `006` → `007` → `008`.
 
 A spec `007` pode avançar o plan em paralelo, mas o CMS só entra depois das coleções de notícias e cronograma existirem.
 
