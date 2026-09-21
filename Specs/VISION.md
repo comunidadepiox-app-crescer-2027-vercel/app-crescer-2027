@@ -52,7 +52,7 @@ Uma família abre o app no dia do encontro e, em poucos toques, sabe o que está
 
 Área admin (role `admin`), no site, não no app nativo:
 
-- `/admin` — sem sessão mostra login simples (`admin@crecer.com` pré-preenchido)
+- `/admin` — sem sessão mostra login simples (`crescer-admin@crescer.app` pré-preenchido)
 - `/admin/noticias`
 - `/admin/cronograma`
 - `/admin/destaques`

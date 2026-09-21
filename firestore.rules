@@ -40,6 +40,24 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
+    match /announcements/{id} {
+      allow read: if isAdmin() || (signedIn() && resource.data.active == true);
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /deviceTokens/{id} {
+      allow create: if signedIn()
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.token is string
+        && request.resource.data.token.size() > 0
+        && request.resource.data.token.size() < 400;
+      allow update: if signedIn()
+        && resource.data.uid == request.auth.uid
+        && request.resource.data.uid == request.auth.uid;
+      allow delete: if signedIn() && resource.data.uid == request.auth.uid;
+      allow read: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
+    }
+
     match /benefactorLeads/{leadId} {
       allow create: if signedIn()
         && request.resource.data.uid == request.auth.uid

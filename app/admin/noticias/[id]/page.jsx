@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { useParams, useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import {
@@ -9,9 +10,22 @@ import {
   getNewsById,
   updateNews,
 } from "@/lib/admin/news";
-import { uploadCover } from "@/lib/admin/upload";
+import { uploadMedia } from "@/lib/admin/upload";
+import { artigoTemConteudo, corpoParaEditor, sanitizaArtigo } from "@/lib/news/html";
+import { PreviaNoticia } from "@/components/admin/PreviaNoticia";
 
-const VAZIA = { title: "", body: "", coverUrl: "", coverPublicId: "", published: false };
+const EditorNoticia = dynamic(() => import("@/components/admin/EditorNoticia"), { ssr: false });
+
+const VAZIA = {
+  title: "",
+  body: "<p></p>",
+  coverUrl: "",
+  coverPublicId: "",
+  authorName: "",
+  authorPhotoUrl: "",
+  authorPhotoPublicId: "",
+  published: false,
+};
 
 export default function AdminNoticiaEditorPage() {
   const { id } = useParams();
@@ -23,9 +37,15 @@ export default function AdminNoticiaEditorPage() {
   const [tinhaPublishedAt, setTinhaPublishedAt] = useState(false);
   const [erro, setErro] = useState("");
   const [ocupado, setOcupado] = useState(false);
+  const [previa, setPrevia] = useState(false);
 
   useEffect(() => {
-    if (criando) return;
+    if (criando) {
+      setForm(VAZIA);
+      setTinhaPublishedAt(false);
+      return;
+    }
+    setForm(null);
     getNewsById(id).then((n) => {
       if (!n) {
         setErro("Notícia não encontrada.");
@@ -35,9 +55,12 @@ export default function AdminNoticiaEditorPage() {
       setTinhaPublishedAt(Boolean(n.publishedAt));
       setForm({
         title: n.title || "",
-        body: n.body || "",
+        body: corpoParaEditor(n.body),
         coverUrl: n.coverUrl || "",
         coverPublicId: n.coverPublicId || "",
+        authorName: n.authorName || "",
+        authorPhotoUrl: n.authorPhotoUrl || "",
+        authorPhotoPublicId: n.authorPhotoPublicId || "",
         published: Boolean(n.published),
       });
     });
@@ -49,14 +72,13 @@ export default function AdminNoticiaEditorPage() {
     setForm((f) => ({ ...f, [campo]: valor }));
   }
 
-  async function trocarCapa(e) {
-    const file = e.target.files?.[0];
+  async function enviarArquivo(file, folder, urlCampo, idCampo) {
     if (!file) return;
     setErro("");
     setOcupado(true);
     try {
-      const { url, publicId } = await uploadCover(file);
-      setForm((f) => ({ ...f, coverUrl: url, coverPublicId: publicId }));
+      const { url, publicId } = await uploadMedia(file, { folder, resource: "image" });
+      setForm((f) => ({ ...f, [urlCampo]: url, [idCampo]: publicId }));
     } catch (err) {
       setErro(err.message);
     } finally {
@@ -67,16 +89,18 @@ export default function AdminNoticiaEditorPage() {
   async function salvar(e) {
     e.preventDefault();
     setErro("");
-    if (!form.title.trim() || !form.body.trim()) {
+    const body = sanitizaArtigo(form.body);
+    if (!form.title.trim() || !artigoTemConteudo(body)) {
       setErro("Título e texto são obrigatórios.");
       return;
     }
     setOcupado(true);
+    const dados = { ...form, body };
     try {
       if (criando) {
-        await createNews({ authorUid: user.uid, ...form });
+        await createNews({ authorUid: user.uid, ...dados });
       } else {
-        await updateNews(id, form, tinhaPublishedAt);
+        await updateNews(id, dados, tinhaPublishedAt);
       }
       router.push("/admin/noticias");
     } catch {
@@ -98,7 +122,7 @@ export default function AdminNoticiaEditorPage() {
   }
 
   return (
-    <div className="max-w-2xl">
+    <div className="max-w-4xl">
       <h1 className="text-3xl font-bold uppercase">
         {criando ? "Nova notícia" : "Editar notícia"}
       </h1>
@@ -110,21 +134,57 @@ export default function AdminNoticiaEditorPage() {
             type="text"
             value={form.title}
             onChange={(e) => atualiza("title", e.target.value)}
-            className="rounded-[10px] border border-linha bg-superficie px-4 py-3 outline-none focus:border-titulo"
+            className="border border-linha bg-superficie px-4 py-3 outline-none focus:border-titulo"
           />
         </label>
 
-        <label className="flex flex-col gap-1">
-          <span className="text-sm font-medium">
-            Texto <span className="text-texto/60">(separe parágrafos com linha em branco)</span>
-          </span>
-          <textarea
-            rows={10}
-            value={form.body}
-            onChange={(e) => atualiza("body", e.target.value)}
-            className="rounded-[10px] border border-linha bg-superficie px-4 py-3 outline-none focus:border-titulo"
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className="flex flex-col gap-1">
+            <span className="text-sm font-medium">Quem escreveu</span>
+            <input
+              type="text"
+              value={form.authorName}
+              onChange={(e) => atualiza("authorName", e.target.value)}
+              className="border border-linha bg-superficie px-4 py-3 outline-none focus:border-titulo"
+            />
+          </label>
+          <div className="flex flex-col gap-2">
+            <span className="text-sm font-medium">Foto de quem escreveu</span>
+            <div className="flex items-center gap-3">
+              {form.authorPhotoUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={form.authorPhotoUrl} alt="" className="h-12 w-12 border border-linha object-cover" />
+              ) : (
+                <p className="text-sm text-texto/60">Sem foto.</p>
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) =>
+                  enviarArquivo(
+                    e.target.files?.[0],
+                    "authors",
+                    "authorPhotoUrl",
+                    "authorPhotoPublicId"
+                  )
+                }
+                className="text-sm"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <span className="text-sm font-medium">Texto</span>
+          <EditorNoticia
+            key={String(id)}
+            inicial={form.body}
+            onChange={(html) => atualiza("body", html)}
           />
-        </label>
+          <p className="text-sm text-texto/60">
+            Tab recua o parágrafo ou a lista. Shift+Tab volta. Negrito, itálico e sublinhado também saem com Ctrl+B, Ctrl+I e Ctrl+U.
+          </p>
+        </div>
 
         <div className="flex flex-col gap-2">
           <span className="text-sm font-medium">Capa</span>
@@ -133,12 +193,19 @@ export default function AdminNoticiaEditorPage() {
             <img
               src={form.coverUrl}
               alt=""
-              className="w-full max-w-sm rounded-[10px] border border-linha object-cover"
+              className="w-full max-w-sm border border-linha object-cover"
             />
           ) : (
             <p className="text-sm text-texto/60">Sem capa por enquanto.</p>
           )}
-          <input type="file" accept="image/*" onChange={trocarCapa} className="text-sm" />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) =>
+              enviarArquivo(e.target.files?.[0], "news", "coverUrl", "coverPublicId")
+            }
+            className="text-sm"
+          />
         </div>
 
         <label className="mt-2 flex items-center gap-3">
@@ -153,26 +220,35 @@ export default function AdminNoticiaEditorPage() {
 
         {erro && <p className="text-sm font-medium text-vermelho">{erro}</p>}
 
-        <div className="mt-2 flex gap-3">
+        <div className="mt-2 flex flex-wrap gap-3">
           <button
             type="submit"
             disabled={ocupado}
-            className="rounded-[10px] bg-titulo px-6 py-3 font-titulo font-bold uppercase text-white disabled:opacity-60"
+            className="bg-titulo px-6 py-3 font-titulo font-bold uppercase text-white disabled:opacity-60"
           >
             Salvar
+          </button>
+          <button
+            type="button"
+            onClick={() => setPrevia(true)}
+            className="border border-titulo px-6 py-3 font-titulo font-bold uppercase text-titulo"
+          >
+            Pré-visualizar
           </button>
           {!criando && (
             <button
               type="button"
               onClick={excluir}
               disabled={ocupado}
-              className="rounded-[10px] border border-vermelho px-6 py-3 font-titulo font-bold uppercase text-vermelho disabled:opacity-60"
+              className="border border-vermelho px-6 py-3 font-titulo font-bold uppercase text-vermelho disabled:opacity-60"
             >
               Excluir
             </button>
           )}
         </div>
       </form>
+
+      {previa && <PreviaNoticia noticia={form} onFechar={() => setPrevia(false)} />}
     </div>
   );
 }

@@ -12,7 +12,7 @@ Expo (React Native, JavaScript, sem TypeScript) com expo-router, na pasta `mobil
 | Navegação | expo-router (abas + stack) | Espelha a estrutura de rotas da web |
 | Firebase | SDK JS `firebase` + `initializeAuth` com AsyncStorage | Mesmo projeto e regras; sem SDK nativo por ora |
 | Fontes | Geometric Slabserif convertida woff2→TTF; Outfit via `@expo-google-fonts/outfit` | expo-font não lê woff2 |
-| Splash | `expo-video` com `splash-crescer.mp4` sobre roxo | Mesma abertura da web |
+| Splash | `expo-video` com `splash-crescer.mp4` sobre `#3e1c7a` (tom do vídeo no aparelho), wordmark e logos da diocese e de São Pio X no rodapé | Abertura da web + marcas institucionais no app |
 | Google login | `expo-auth-session` + `signInWithCredential` no build nativo | O Google bloqueia OAuth no Expo Go (custom scheme); e-mail/senha é o caminho no Go |
 | Ícones | Port dos SVGs da marca com `react-native-svg` | Mesma linguagem visual da web |
 | Upload de capa | Fora (app é só do fiel) | Admin fica na web |

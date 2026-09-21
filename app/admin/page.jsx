@@ -4,7 +4,7 @@ const ATALHOS = [
   {
     href: "/admin/noticias",
     titulo: "Notícias",
-    descricao: "Escrever, publicar e despublicar as novidades do encontro.",
+    descricao: "Escrever, pré-visualizar e publicar as novidades do encontro.",
   },
   {
     href: "/admin/cronograma",
@@ -12,14 +12,9 @@ const ATALHOS = [
     descricao: "Manter a programação por dia, espaço e horário.",
   },
   {
-    href: "/admin/destaques",
-    titulo: "Destaques",
-    descricao: "Editar os textos institucionais da Home e do Sobre.",
-  },
-  {
-    href: "/admin/leads",
-    titulo: "Benfeitores",
-    descricao: "Ver os cadastros de interesse e registrar o contato feito.",
+    href: "/admin/anuncios",
+    titulo: "Anúncios",
+    descricao: "Publicar o cartaz que aparece na Home do app.",
   },
 ];
 
@@ -30,16 +25,14 @@ export default function AdminIndexPage() {
       <p className="mt-2 max-w-prose text-texto/80">
         Área da equipe de comunicação da Comunidade de São Pio X.
       </p>
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {ATALHOS.map((a) => (
           <Link
             key={a.href}
             href={a.href}
-            className="rounded-[10px] border border-linha bg-superficie p-5"
+            className="border border-linha bg-superficie p-5"
           >
-            <h2 className="font-titulo text-xl font-bold uppercase text-titulo">
-              {a.titulo}
-            </h2>
+            <h2 className="font-titulo text-xl font-bold uppercase text-titulo">{a.titulo}</h2>
             <p className="mt-1 text-sm text-texto/70">{a.descricao}</p>
           </Link>
         ))}

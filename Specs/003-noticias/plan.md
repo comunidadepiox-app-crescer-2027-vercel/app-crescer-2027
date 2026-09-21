@@ -38,7 +38,7 @@ Exibir `coverUrl`. Transformações de tamanho (ex.: `c_fill,w_1200`) só se o c
 
 | Risco | Mitigação |
 |---|---|
-| HTML inseguro no `body` | Texto simples na v1; se HTML, sanitizar |
+| HTML inseguro no `body` | Sanitizar na gravação e de novo na leitura; texto antigo sem tag continua em parágrafos |
 | Sem índice composto | Criar índice `published` + `publishedAt` |
 
 ## Fora deste plan

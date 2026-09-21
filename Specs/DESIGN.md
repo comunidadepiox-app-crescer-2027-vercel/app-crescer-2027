@@ -12,7 +12,8 @@ Este arquivo é a fonte da verdade visual do app. Tokens extraídos em 04/09/202
 | `banner-fundo.webp` | Fundo do banner do site | Referência de cor |
 | `foto-evento.webp` | Foto real do encontro (velas acesas) | Hero da Home |
 | `benfeitor-meta.jpg` | Arte da landing do Benfeitor da Fé | Referência de cor e lockup |
-| `splash-crescer.mp4` | Vídeo da logo se montando (Jitter, recorte quadrado, fundo branco trocado pelo roxo `#3a1075`) | Splash de abertura |
+| `logo-benfeitor.png` | Lockup oficial (mãos + wordmark branco) | Heroes da campanha Benfeitor da Fé (app e web) |
+| `splash-crescer.mp4` | Vídeo da logo se montando (Jitter, recorte quadrado). No app nativo o fundo da splash é `#3e1c7a` para coincidir com o tom que o vídeo mostra no aparelho | Splash de abertura |
 | `wordmark-crescer-branca.png` | Lettering "Crescer" + subtítulo recortado da logo oficial branca | Splash (sobre roxo) |
 
 O símbolo também existe em vetor: `components/brand/SimboloCrescer.jsx`, redesenhado peça por peça (usado na tela de login; a splash usa o vídeo).
@@ -76,7 +77,7 @@ Contraste conferido: branco sobre `#3a1075` e sobre `#310073` passa AA; branco s
 - Botão secundário: borda `--crescer-roxo-botao`, texto `--crescer-titulo`, mesmo raio.
 - Cartão: superfície branca, borda `--crescer-linha`, raio 14px em blocos grandes, sem sombra pesada.
 - Grupo de programação: faixa de título em roxo `--crescer-roxo-botao` com texto branco.
-- Splash de abertura: fundo roxo `#3a1075`, vídeo `splash-crescer.mp4` da logo se montando, wordmark branco surge perto do final; sai quando o vídeo termina e a sessão do Firebase resolve. Com `prefers-reduced-motion`, mostra o símbolo estático no lugar do vídeo.
+- Splash de abertura: vídeo `splash-crescer.mp4` da logo se montando, wordmark branco surge perto do final; sai quando o vídeo termina e a sessão do Firebase resolve. Com `prefers-reduced-motion`, mostra o símbolo estático no lugar do vídeo. No app nativo (`mobile/`), o fundo da splash (tela e player) é `#3e1c7a`, o tom que o vídeo exibe no aparelho (o restante do app continua no roxo institucional `#3a1075`); o rodapé traz as marcas da Diocese de Campina Grande e da Comunidade de São Pio X (`mobile/assets/brand/diocese.png` e `logo-piox.png`).
 - Navegação mobile: barra roxa fixa com ícones de linha (`components/nav/icones.jsx`), item ativo em dourado.
 
 ## Layout

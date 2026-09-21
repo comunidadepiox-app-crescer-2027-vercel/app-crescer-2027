@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { validaLead, formataCelular, formataCpf } from "@/lib/benfeitor/validate";
 import { submitLead, jaTemLead } from "@/lib/benfeitor/submit";
 import { ConfirmacaoBenfeitor } from "@/components/benfeitor/Confirmacao";
-import { IconeCoracaoChama } from "@/components/nav/icones";
 
 export default function BenfeitorPage() {
   const { user, profile } = useAuth();
@@ -80,10 +80,13 @@ export default function BenfeitorPage() {
   return (
     <div>
       <section className="fundo-roxo-poligonal rounded-[14px] p-6 md:p-10">
-        <IconeCoracaoChama className="h-14 w-14 text-dourado" />
-        <h1 className="mt-4 max-w-xl font-titulo text-3xl font-bold uppercase leading-tight text-white md:text-4xl">
-          Seja um Benfeitor da Fé
-        </h1>
+        <Image
+          src="/brand/logo-benfeitor.png"
+          alt="Benfeitor da Fé"
+          width={320}
+          height={138}
+          className="h-auto w-[260px] md:w-[320px]"
+        />
         <p className="mt-3 max-w-xl text-white/85">
           Ajude a Comunidade de São Pio X a transformar as famílias e contribua
           para a realização do Crescer.

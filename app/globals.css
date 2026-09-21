@@ -65,6 +65,84 @@
   background-size: 720px 720px;
 }
 
+.artigo p,
+.artigo ul,
+.artigo ol,
+.artigo blockquote,
+.artigo h2,
+.artigo h3 {
+  margin: 0.8rem 0;
+}
+
+.artigo h2 {
+  font-size: 1.6rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.artigo h3 {
+  font-size: 1.25rem;
+  line-height: 1.25;
+}
+
+.artigo ul,
+.artigo ol {
+  padding-left: 1.25rem;
+}
+
+.artigo ul {
+  list-style: disc;
+}
+
+.artigo ol {
+  list-style: decimal;
+}
+
+.artigo blockquote {
+  border-left: 3px solid var(--crescer-destaque);
+  padding-left: 1rem;
+  color: var(--crescer-texto);
+}
+
+.artigo a {
+  color: var(--crescer-destaque);
+  text-decoration: underline;
+}
+
+.artigo img,
+.artigo video {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 1rem 0;
+  border: 1px solid var(--crescer-linha);
+}
+
+.artigo a.artigo-botao {
+  display: inline-block;
+  margin: 0.8rem 0;
+  background: var(--crescer-titulo);
+  color: #fff;
+  padding: 0.7rem 1.15rem;
+  border-radius: 10px;
+  font-family: var(--font-geometric), Georgia, serif;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.artigo [data-indent="1"] { margin-left: 1.5rem; }
+.artigo [data-indent="2"] { margin-left: 3rem; }
+.artigo [data-indent="3"] { margin-left: 4.5rem; }
+.artigo [data-indent="4"] { margin-left: 6rem; }
+.artigo [data-indent="5"] { margin-left: 7.5rem; }
+.artigo [data-indent="6"] { margin-left: 9rem; }
+
+.ProseMirror-focused {
+  outline: none;
+}
+
 .fundo-laranja-poligonal {
   background-color: var(--crescer-laranja);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='720' height='720' viewBox='0 0 720 720'%3E%3Cg fill='none' stroke='%23ffffff' opacity='0.12' stroke-width='34' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M-40 170 220 60 470 210 720 90'/%3E%3Cpath d='M110 720 300 430 80 300'/%3E%3Cpath d='M300 430 560 560 760 420'/%3E%3Cpath d='M560 560 470 210'/%3E%3Cpath d='M220 60 300 430'/%3E%3C/g%3E%3C/svg%3E");

@@ -15,15 +15,18 @@ O fiel só acessa o Crescer pelo navegador. A comunidade quer um aplicativo inst
 
 - Projeto Expo (React Native, JavaScript) em `mobile/`, usando expo-router
 - Todas as telas do fiel: início/login, Home, Notícias (lista e detalhe), Agenda (cronograma), Benfeitor da Fé, Conta, Galeria e Sobre
-- Splash de abertura com o vídeo oficial da logo sobre o roxo
-- Mesmo Firestore, mesmas coleções, mesmas regras: nada muda no backend
+- Splash de abertura com o vídeo oficial da logo sobre `#3e1c7a` (mesmo tom do fundo do vídeo no aparelho), wordmark branco e, no rodapé, as logos da Diocese de Campina Grande e da Comunidade de São Pio X
+- Mesmo Firestore e as mesmas regras de leitura do fiel, mais `announcements` (spec 009) e o token de notificação em `deviceTokens`
+- Na Home, pilha de anúncios ativos na primeira abertura do dia (fuso America/Fortaleza)
+- Faixa quando a programação publicada do dia do recorte muda, e um pedido único para ativar notificação
 - Identidade visual completa: paleta 000, fontes oficiais (convertidas para TTF), ícones da marca
 - Login e-mail/senha; login Google via `expo-auth-session` **só em build nativo** (dev/produção). No Expo Go o botão explica o bloqueio da política OAuth do Google
 
 ### Não entra
 
 - Área administrativa (continua na web, spec 007)
-- Notificações push, modo offline e publicação nas lojas (specs futuras)
+- Modo offline e publicação nas lojas
+- Push remoto dentro do Expo Go (no SDK 57 isso pede build de desenvolvimento; a faixa na tela funciona no Expo Go)
 - Pagamentos
 
 ## Fluxos
@@ -37,12 +40,12 @@ O fiel só acessa o Crescer pelo navegador. A comunidade quer um aplicativo inst
 | Tipo | Identificador |
 |---|---|
 | Pasta | `mobile/` (expo-router: `app/index` login, `app/(tabs)/{home,noticias,agenda,benfeitor,conta}`, `app/noticia/[id]`, `app/galeria`, `app/sobre`) |
-| Coleções Firestore | as mesmas: `users`, `news`, `programItems`, `benefactorLeads` |
+| Coleções Firestore | `users`, `news`, `programItems`, `benefactorLeads`, `announcements`, `deviceTokens` |
 | Papel necessário | `fiel` |
 
 ## Dados
 
-Nenhuma coleção ou campo novo. Persistência de sessão via AsyncStorage (token do Firebase Auth no aparelho).
+Persistência de sessão via AsyncStorage (token do Firebase Auth no aparelho). Também no aparelho: o dia em que a pilha de anúncios apareceu, a impressão da programação do recorte e a resposta ao pedido de notificação. O token Expo, quando a pessoa aceita, vai para `deviceTokens`.
 
 ## Regras de negócio
 
@@ -54,7 +57,7 @@ Nenhuma coleção ou campo novo. Persistência de sessão via AsyncStorage (toke
 ## Critérios de aceite
 
 - [ ] `npx expo start` abre sem erro de bundle e o app roda no Expo Go
-- [ ] Splash mostra o vídeo da logo e libera quando a sessão resolve
+- [ ] Splash mostra o vídeo da logo sobre o mesmo roxo da tela, as logos da diocese e de São Pio X no rodapé, e libera quando a sessão resolve
 - [ ] Login e-mail/senha cria/entra e persiste sessão ao reabrir o app
 - [ ] Home, Notícias, detalhe, Agenda, Benfeitor, Conta, Galeria e Sobre funcionais
 - [ ] Formulário Benfeitor grava lead com as mesmas validações da web

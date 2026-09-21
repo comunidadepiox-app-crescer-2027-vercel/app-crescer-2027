@@ -14,36 +14,37 @@ A equipe de comunicação precisa publicar notícias, ajustar a programação e 
 ### Entra
 
 - Grupo `/admin` protegido por `role == admin`
-- Login simples em `/admin` (e-mail pré-preenchido `admin@crecer.com`, senha digitada; sem Google e sem cadastro nesta tela)
-- `/admin` painel com atalhos (notícias, cronograma, destaques, leads)
-- CRUD de `news` (rascunho/publicar, capa Cloudinary)
+- Login simples em `/admin` (e-mail pré-preenchido `crescer-admin@crescer.app`, senha digitada; sem Google e sem cadastro nesta tela)
+- `/admin` com barra lateral: Início, Notícias, Cronograma, Anúncios
+- CRUD de `news` com editor rico (TipTap), autor, capa e pré-visualização antes de publicar
 - CRUD de `programItems` (abas só dos dias da edição; lista não depende de índice composto)
-- Edição de `siteContent` (textos/destaques da Home e Sobre)
-- Lista de `benefactorLeads` e mudança de `status`
+- CRUD de `announcements` (spec 009)
+- Aviso push quando a programação publicada do dia do recorte muda (spec 004 e 008)
 - Fiel que abrir `/admin` vê recusa (sem vazar dados); atalho para voltar ao app
 
 ### Não entra
 
-- Editor WYSIWYG complexo
 - Gestão de usuários além de ver o próprio papel
 - Promoção self-serve para admin (o primeiro admin nasce pela decisão de OPEN-QUESTIONS)
-- Media library completa; upload pontual da capa
+- Media library completa; upload pontual (capa, autor, imagem e vídeo do texto, anúncio)
+- Destaques e Benfeitores no menu da mesa (as rotas `/admin/destaques` e `/admin/leads` continuam no código, fora da navegação)
 
 ## Fluxos
 
-1. Admin abre `/admin` no navegador (não no app nativo). Sem sessão, vê login só e-mail/senha, com e-mail pré-preenchido `admin@crecer.com`. Entra e cai na mesa.
-2. Cria notícia, envia capa ao Cloudinary, publica.
-3. Cria ou edita item de programação.
-4. Marca lead como `contatado`.
+1. Admin abre `/admin` no navegador (não no app nativo). Sem sessão, vê login só e-mail/senha, com e-mail pré-preenchido `crescer-admin@crescer.app`. Entra e cai na mesa.
+2. Cria notícia no editor, envia capa, autor, imagem ou vídeo ao Cloudinary, pré-visualiza e publica.
+3. Cria ou edita item de programação. Se a mudança publicada for do dia do recorte, a mesa dispara o aviso.
+4. Publica anúncio vertical com link opcional.
 5. Fiel autenticado em `/admin` vê recusa (não vê dados). Sem sessão, não é redirecionado para `/`; permanece no login da mesa.
 
 ## Superfície do produto
 
 | Tipo | Identificador |
 |---|---|
-| Rotas | `/admin`, `/admin/noticias`, `/admin/noticias/[id]`, `/admin/cronograma`, `/admin/destaques`, `/admin/leads` |
-| Coleções | `news`, `programItems`, `siteContent`, `benefactorLeads`, `users` (leitura do próprio role) |
-| Cloudinary | `news/`, opcional `site/` |
+| Rotas da mesa | `/admin`, `/admin/noticias`, `/admin/noticias/[id]`, `/admin/cronograma`, `/admin/anuncios` |
+| Rotas fora do menu | `/admin/destaques`, `/admin/leads` |
+| Coleções | `news`, `programItems`, `announcements`, `deviceTokens`, `siteContent`, `benefactorLeads`, `users` (leitura do próprio role) |
+| Cloudinary | `news/`, `authors/`, `announcements/` |
 | Papel | `admin` |
 
 ## Dados
@@ -62,7 +63,7 @@ Chaves iniciais: `home`, `about`, `benfeitor` (se a campanha deixar de ser só e
 ## Regras de negócio
 
 - Toda escrita editorial exige `role == admin` nas rules (não só na UI).
-- O e-mail da mesa (`admin@crecer.com`) é só um atalho de digitação. A conta nasce no Firebase Auth; o papel `admin` continua sendo definido à mão no documento `users/{uid}`.
+- O e-mail da mesa (`crescer-admin@crescer.app`) é só um atalho de digitação. A senha fica no Firebase Auth, nunca no repositório. O papel `admin` continua sendo definido à mão no documento `users/{uid}`, antes do primeiro login (senão o client cria `role: fiel`).
 - Login da mesa não cria conta e não promove ninguém.
 - Publicar notícia preenche `publishedAt` se ainda vazio.
 - Lead: admin não edita CPF/e-mail; só `status`.

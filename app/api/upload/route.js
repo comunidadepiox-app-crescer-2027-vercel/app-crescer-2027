@@ -1,36 +1,13 @@
 import crypto from "crypto";
+import { tokenDoHeader, verificaAdmin } from "@/lib/server/verificaAdmin";
 
-const FIREBASE_API_KEY = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
-const PROJECT_ID = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
 const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 const CLOUDINARY_KEY = process.env.CLOUDINARY_API_KEY;
 const CLOUDINARY_SECRET = process.env.CLOUDINARY_API_SECRET;
 
-// Valida o token do Firebase e confirma o papel admin lendo o próprio
-// documento users/{uid} via REST (as security rules impedem forjar o role).
-async function verificaAdmin(idToken) {
-  const lookup = await fetch(
-    `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${FIREBASE_API_KEY}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ idToken }),
-    }
-  );
-  if (!lookup.ok) return null;
-  const data = await lookup.json();
-  const uid = data.users?.[0]?.localId;
-  if (!uid) return null;
-
-  const docRes = await fetch(
-    `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/users/${uid}`,
-    { headers: { Authorization: `Bearer ${idToken}` } }
-  );
-  if (!docRes.ok) return null;
-  const docData = await docRes.json();
-  const role = docData.fields?.role?.stringValue;
-  return role === "admin" ? uid : null;
-}
+const PASTAS = new Set(["news", "authors", "announcements"]);
+const LIMITE_IMAGEM = 8 * 1024 * 1024;
+const LIMITE_VIDEO = 80 * 1024 * 1024;
 
 export async function POST(request) {
   if (!CLOUD_NAME || !CLOUDINARY_KEY || !CLOUDINARY_SECRET) {
@@ -40,13 +17,7 @@ export async function POST(request) {
     );
   }
 
-  const authHeader = request.headers.get("authorization") || "";
-  const idToken = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : null;
-  if (!idToken) {
-    return Response.json({ error: "Sem credencial." }, { status: 401 });
-  }
-
-  const uid = await verificaAdmin(idToken);
+  const uid = await verificaAdmin(tokenDoHeader(request));
   if (!uid) {
     return Response.json({ error: "Acesso restrito à equipe." }, { status: 403 });
   }
@@ -57,20 +28,35 @@ export async function POST(request) {
     return Response.json({ error: "Arquivo ausente." }, { status: 400 });
   }
 
+  const pasta = String(form.get("folder") || "news");
+  const recurso = form.get("resource") === "video" ? "video" : "image";
+  if (!PASTAS.has(pasta)) {
+    return Response.json({ error: "Pasta de upload inválida." }, { status: 400 });
+  }
+  if (recurso === "video" && pasta !== "news") {
+    return Response.json({ error: "Vídeo só entra no texto da notícia." }, { status: 400 });
+  }
+  const limite = recurso === "video" ? LIMITE_VIDEO : LIMITE_IMAGEM;
+  if (file.size > limite) {
+    return Response.json(
+      { error: recurso === "video" ? "O vídeo passa de 80 MB." : "A imagem passa de 8 MB." },
+      { status: 400 }
+    );
+  }
+
   const timestamp = Math.floor(Date.now() / 1000);
-  const folder = "news";
-  const toSign = `folder=${folder}&timestamp=${timestamp}${CLOUDINARY_SECRET}`;
+  const toSign = `folder=${pasta}&timestamp=${timestamp}${CLOUDINARY_SECRET}`;
   const signature = crypto.createHash("sha1").update(toSign).digest("hex");
 
   const upload = new FormData();
   upload.append("file", file);
   upload.append("api_key", CLOUDINARY_KEY);
   upload.append("timestamp", String(timestamp));
-  upload.append("folder", folder);
+  upload.append("folder", pasta);
   upload.append("signature", signature);
 
   const res = await fetch(
-    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${recurso}/upload`,
     { method: "POST", body: upload }
   );
   if (!res.ok) {

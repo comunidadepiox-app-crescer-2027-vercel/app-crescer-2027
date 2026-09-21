@@ -15,6 +15,7 @@ import {
   formataDataCurta,
   diasDaEdicao,
 } from "@/lib/event/edition";
+import { avisarMudancaPrograma, mudouDiaPublicado } from "@/lib/admin/notificar";
 
 const NOVO = {
   time: "",
@@ -107,11 +108,19 @@ export default function AdminCronogramaPage() {
     }
     setOcupado(true);
     const dados = { ...form, date: dia, order: Number(form.order) || 0 };
+    const antes = editando === "novo" ? null : todos?.find((item) => item.id === editando);
     try {
       if (editando === "novo") await createProgramItem(dados);
       else await updateProgramItem(editando, dados);
       setEditando(null);
       await carregar();
+      if (mudouDiaPublicado(antes, dados)) {
+        try {
+          await avisarMudancaPrograma();
+        } catch {
+          setErroLista("Item salvo. O aviso nos celulares não saiu.");
+        }
+      }
     } catch (err) {
       console.error("Erro ao salvar programação:", err);
       setErro(mensagemErro(err));
@@ -122,9 +131,17 @@ export default function AdminCronogramaPage() {
 
   async function excluir(id) {
     if (!confirm("Excluir este item da programação?")) return;
+    const item = todos?.find((atual) => atual.id === id);
     try {
       await deleteProgramItem(id);
       await carregar();
+      if (item && mudouDiaPublicado(item, { ...item, published: false })) {
+        try {
+          await avisarMudancaPrograma();
+        } catch {
+          setErroLista("Item excluído. O aviso nos celulares não saiu.");
+        }
+      }
     } catch (err) {
       setErroLista(mensagemErro(err));
     }

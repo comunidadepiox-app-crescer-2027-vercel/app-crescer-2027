@@ -14,7 +14,7 @@ O fiel precisa ler as novidades da comunidade no próprio app, no mesmo tom do s
 ### Entra
 
 - `/noticias` lista só itens `published == true`, mais recentes primeiro
-- `/noticias/[id]` mostra título, data, capa e corpo
+- `/noticias/[id]` mostra título, data, capa, autor (nome e foto) e corpo
 - Capa via URL Cloudinary gravada no documento
 - Estado vazio e estado “não encontrada”
 - Home (002) consome as últimas 4 publicadas com a mesma escuta
@@ -48,7 +48,10 @@ Coleção `news/{id}`
 | Campo | Tipo | Obrigatório | Nota |
 |---|---|---|---|
 | `title` | string | sim | |
-| `body` | string | sim | texto simples ou HTML sanitizado mínimo |
+| `body` | string | sim | texto simples antigo, ou HTML sanitizado do editor (007) |
+| `authorName` | string | não | byline |
+| `authorPhotoUrl` | string | não | URL Cloudinary |
+| `authorPhotoPublicId` | string | não | para o admin substituir depois |
 | `coverUrl` | string | não | URL Cloudinary |
 | `coverPublicId` | string | não | para o admin substituir depois |
 | `published` | bool | sim | |
@@ -61,12 +64,13 @@ Coleção `news/{id}`
 
 - Fiel só lê `published == true`.
 - Data exibida em português, formato curto (ex.: 16 de junho de 2026), sem travessão.
-- Corpo não usa markdown de marketing; parágrafos simples.
+- Corpo antigo, sem tag HTML, continua em parágrafos separados por linha em branco.
+- Corpo HTML só entra na tela depois de sanitizar (tags de texto, lista, link, imagem, vídeo e botão). Script não passa.
 
 ## Critérios de aceite
 
 - [ ] Lista mostra só publicadas, ordem decrescente de `publishedAt`
-- [ ] Detalhe renderiza capa, título, data e corpo
+- [ ] Detalhe renderiza capa, título, data, autor (quando houver) e corpo
 - [ ] Rascunho não abre para `fiel`
 - [ ] Estado vazio existe
 - [ ] Cards não são pílulas nem grade de três iguais obrigatória

@@ -54,6 +54,7 @@ Pode ir direto ao código só se for **baixa** complexidade e **não** alterar c
 | [006-configuracao](006-configuracao/) | Conta, perfil, sair | Média |
 | [007-admin-cms](007-admin-cms/) | Publicação de conteúdo | Alta |
 | [008-app-react-native](008-app-react-native/) | App do fiel em Expo/React Native (`mobile/`) | Alta |
+| [009-anuncios](009-anuncios/) | Anúncios em pilha na Home do app | Média |
 
 Ordem de implementação: `000` → `001` → `002` → (`003` e `004` em paralelo após a Home) → `005` → `006` → `007` → `008`.
 

@@ -23,7 +23,7 @@ Este projeto usa **Spec-Driven Development**. Antes de mudar qualquer funcionali
 
 O CMS **não** fica no app do celular. É o site: com o Next rodando (`npm run dev`), abra [http://localhost:3000/admin](http://localhost:3000/admin).
 
-O login da mesa é só e-mail e senha. O e-mail já vem preenchido como `admin@crecer.com`. Cadastre essa conta no Firebase Authentication (E-mail/senha) com a senha que vocês combinarem.
+O login da mesa é só e-mail e senha. O e-mail já vem preenchido como `crescer-admin@crescer.app`. Cadastre essa conta no Firebase Authentication (E-mail/senha) com a senha combinada e, antes do primeiro login, grave `users/{uid}` com `role: admin`.
 
 O cadastro no Auth **não** torna a pessoa admin. Depois do primeiro login:
 

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { getPublishedNewsById } from "@/lib/news/queries";
 import { formataDataFirestore } from "@/lib/news/format";
+import { ArtigoCorpo, Byline } from "@/components/noticias/Artigo";
 
 export default function NoticiaDetalhePage() {
   const { id } = useParams();
@@ -43,22 +44,16 @@ export default function NoticiaDetalhePage() {
     <article className="max-w-prose">
       <p className="text-sm text-texto/60">{formataDataFirestore(noticia.publishedAt)}</p>
       <h1 className="mt-1 text-3xl font-bold uppercase leading-tight">{noticia.title}</h1>
+      <Byline nome={noticia.authorName} fotoUrl={noticia.authorPhotoUrl} />
       {noticia.coverUrl ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={noticia.coverUrl}
           alt=""
-          className="mt-5 w-full rounded-[10px] border border-linha object-cover"
+          className="mt-5 w-full border border-linha object-cover"
         />
       ) : null}
-      <div className="mt-6 flex flex-col gap-4 leading-relaxed">
-        {String(noticia.body || "")
-          .split(/\n{2,}|\r\n\r\n/)
-          .filter((p) => p.trim())
-          .map((paragrafo, i) => (
-            <p key={i}>{paragrafo.trim()}</p>
-          ))}
-      </div>
+      <ArtigoCorpo body={noticia.body} />
       <Link
         href="/noticias"
         className="mt-8 inline-block text-sm font-semibold text-destaque underline"

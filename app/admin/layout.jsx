@@ -11,9 +11,13 @@ const MENU = [
   { href: "/admin", label: "Início" },
   { href: "/admin/noticias", label: "Notícias" },
   { href: "/admin/cronograma", label: "Cronograma" },
-  { href: "/admin/destaques", label: "Destaques" },
-  { href: "/admin/leads", label: "Benfeitores" },
+  { href: "/admin/anuncios", label: "Anúncios" },
 ];
+
+function ativo(pathname, href) {
+  if (href === "/admin") return pathname === "/admin";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export default function AdminLayout({ children }) {
   const { user, profile, loading } = useAuth();
@@ -39,42 +43,49 @@ export default function AdminLayout({ children }) {
   if (!isAdmin) return <RecusaAdmin onSair={sair} />;
 
   return (
-    <div className="min-h-screen">
-      <header className="border-b border-linha bg-superficie">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
-          <span className="font-titulo text-lg font-bold uppercase text-titulo">
-            Crescer Admin
-          </span>
-          <nav className="flex flex-wrap gap-4">
-            {MENU.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`text-sm font-semibold uppercase ${
-                  pathname === item.href
-                    ? "text-destaque underline"
-                    : "text-texto/70"
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-          <div className="ml-auto flex items-center gap-4">
-            <Link href="/home" className="text-sm font-medium text-texto/60 underline">
-              Voltar ao app
-            </Link>
-            <button
-              type="button"
-              onClick={sair}
-              className="text-sm font-medium text-texto/60 underline"
-            >
-              Sair
-            </button>
+    <div className="flex min-h-screen flex-col md:flex-row">
+      <aside className="border-b border-linha bg-superficie md:sticky md:top-0 md:flex md:h-screen md:w-60 md:shrink-0 md:flex-col md:border-b-0 md:border-r">
+        <div className="flex items-center justify-between gap-4 px-5 py-4 md:block">
+          <div>
+            <p className="font-titulo text-lg font-bold uppercase text-titulo">Crescer</p>
+            <p className="text-xs font-semibold uppercase text-texto/50">Mesa</p>
           </div>
+          <button
+            type="button"
+            onClick={sair}
+            className="text-sm font-medium text-texto/60 underline md:hidden"
+          >
+            Sair
+          </button>
         </div>
-      </header>
-      <main className="mx-auto max-w-5xl px-4 py-8">{children}</main>
+        <nav className="flex gap-1 overflow-x-auto px-3 pb-3 md:flex-col">
+          {MENU.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`shrink-0 px-3 py-2 text-sm font-semibold uppercase ${
+                ativo(pathname, item.href) ? "bg-creme text-titulo" : "text-texto/70"
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+        <div className="mt-auto hidden border-t border-linha px-5 py-4 md:block">
+          <p className="truncate text-sm text-texto/60">{user.email}</p>
+          <Link href="/home" className="mt-3 block text-sm font-medium text-texto/60 underline">
+            Voltar ao app
+          </Link>
+          <button
+            type="button"
+            onClick={sair}
+            className="mt-2 text-sm font-medium text-texto/60 underline"
+          >
+            Sair
+          </button>
+        </div>
+      </aside>
+      <main className="min-w-0 flex-1 px-5 py-8 md:px-10">{children}</main>
     </div>
   );
 }

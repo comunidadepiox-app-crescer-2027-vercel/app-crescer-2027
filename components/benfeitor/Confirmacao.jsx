@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { IconeCoracaoChama } from "@/components/nav/icones";
 import { hrefWhatsappCadastro, WHATSAPP_ROTULO } from "@/lib/benfeitor/submit";
 
 const PASSOS = [
@@ -16,10 +15,13 @@ export function ConfirmacaoBenfeitor() {
     <div>
       <section className="fundo-roxo-poligonal grid overflow-hidden rounded-[14px] md:grid-cols-2">
         <div className="flex flex-col justify-center p-6 md:p-8">
-          <IconeCoracaoChama className="h-12 w-12 text-dourado" />
-          <p className="mt-4 font-titulo text-lg font-bold uppercase text-amarelo">
-            Benfeitor da Fé
-          </p>
+          <Image
+            src="/brand/logo-benfeitor.png"
+            alt="Benfeitor da Fé"
+            width={320}
+            height={138}
+            className="h-auto w-[260px]"
+          />
           <h1 className="mt-2 font-titulo text-3xl font-bold uppercase leading-tight text-white md:text-4xl">
             Cadastro recebido
           </h1>

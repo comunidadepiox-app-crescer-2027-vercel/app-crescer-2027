@@ -33,9 +33,24 @@
   - Fora: export CSV.
 
 - [x] **T7 — Login da mesa**
-  - Faz: sem sessão, `/admin` mostra e-mail/senha com `admin@crecer.com` preenchido; fiel vê recusa; admin vê a mesa. Sem Google e sem cadastro nesta tela.
+  - Faz: sem sessão, `/admin` mostra e-mail/senha com `crescer-admin@crescer.app` preenchido; fiel vê recusa; admin vê a mesa. Sem Google e sem cadastro nesta tela.
   - Verifica: conta sem `role: admin` não entra no CMS; sair volta ao formulário.
   - Fora: promoção automática.
+
+- [x] **T8 — Mesa lateral**
+  - Faz: barra com Início, Notícias, Cronograma e Anúncios. Destaques e Benfeitores saem do menu e da mesa.
+  - Verifica: as quatro entradas navegam; as duas retiradas não aparecem.
+  - Fora: apagar as páginas de destaques e leads.
+
+- [x] **T9 — Editor e prévia**
+  - Faz: TipTap com recuo, mídia, botão, autor e pré-visualização do rascunho sem gravar.
+  - Verifica: Tab não tira o foco; prévia não publica.
+  - Fora: biblioteca de mídia.
+
+- [x] **T10 — Aviso da programação**
+  - Faz: ao salvar mudança publicada do dia do recorte, a mesa chama o envio do push.
+  - Verifica: rascunho de outro dia não chama a rota.
+  - Fora: lembrete de cada horário.
 
 ## Validação final
 

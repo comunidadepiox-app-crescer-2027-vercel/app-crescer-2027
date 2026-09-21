@@ -27,7 +27,7 @@ O encontro tem vários espaços no mesmo dia. O fiel precisa ver o que acontece 
 
 ### Não entra
 
-- Lembrete push
+- Lembrete de cada horário (o aviso de mudança do dia publicado está na spec 008)
 - Mapa indoor
 - Edição pelo fiel
 - Import automático da página `/programacao/` do WordPress

@@ -13,8 +13,8 @@
   - Faz: client com initializeAuth+AsyncStorage; port do AuthProvider e errors; env EXPO_PUBLIC_*.
   - Verifica: sessão persiste ao recarregar o app.
 - [x] **T5 — Splash com vídeo**
-  - Faz: abertura com `splash-crescer.mp4` sobre roxo, segura até sessão resolver.
-  - Verifica: vídeo roda e libera para login/Home.
+  - Faz: abertura com `splash-crescer.mp4` sobre `#3e1c7a` (fundo da tela igual ao do vídeo no aparelho), wordmark, logos da diocese e de São Pio X no rodapé; segura até sessão resolver.
+  - Verifica: vídeo roda, marcas visíveis embaixo, libera para login/Home.
 - [x] **T6 — Login**
   - Faz: e-mail/senha (entrar, criar, esqueci a senha) + Google via expo-auth-session no build nativo. No Expo Go o botão Google mostra o bloqueio OAuth em vez de abrir o browser.
   - Verifica: cria doc `users` com role fiel; erros traduzidos; Expo Go não dispara o fluxo Google.
@@ -33,6 +33,16 @@
 - [x] **T11 — Conta, Galeria e Sobre**
   - Faz: editar nome, sair; links oficiais; institucional.
   - Verifica: sair volta ao login.
+- [x] **T13 — Anúncios na Home**
+  - Faz: pilha dos anúncios ativos na primeira abertura do dia.
+  - Verifica: X revela o de trás; o mesmo dia não repete.
+  - Fora: Home do site.
+
+- [x] **T14 — Aviso da programação**
+  - Faz: faixa quando o dia do recorte muda; pedido único para ativar notificação; token em `deviceTokens`.
+  - Verifica: primeira leitura não avisa; "Agora não" não repete o pedido.
+  - Fora: push dentro do Expo Go.
+
 - [x] **T12 — Validação e docs**
   - Faz: bundle sem erro, README do mobile (como rodar no Expo Go), sync das specs.
   - Verifica: `npx expo export --platform android` gerou o bundle (1458 módulos) sem erro. Teste no Expo Go fica com o responsável.

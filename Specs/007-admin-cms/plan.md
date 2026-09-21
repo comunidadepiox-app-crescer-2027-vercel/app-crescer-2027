@@ -5,7 +5,7 @@
 
 ## Abordagem
 
-Grupo `app/admin/` com layout que lê `role` do AuthProvider. Sem sessão, o layout mostra login e-mail/senha (e-mail pré-preenchido `admin@crecer.com`); fiel autenticado vê recusa; só `role == admin` vê a mesa. Regras Firestore são a barreira real. Upload: Route Handler `app/api/upload/route.js` se houver secret; senão unsigned preset só de `news/` documentado no `.env.example`.
+Grupo `app/admin/` com layout que lê `role` do AuthProvider. Sem sessão, o layout mostra login e-mail/senha (e-mail pré-preenchido `crescer-admin@crescer.app`); fiel autenticado vê recusa; só `role == admin` vê a mesa, com barra lateral. Regras Firestore são a barreira real. Upload: Route Handler `app/api/upload/route.js` assina imagem ou vídeo nas pastas `news/`, `authors/` e `announcements/`.
 
 O primeiro admin **não** nasce pela UI. Implementar o mecanismo escolhido em OPEN-QUESTIONS (allowlist no Handler, custom claim, ou doc manual) como task explícita.
 
@@ -13,9 +13,13 @@ O primeiro admin **não** nasce pela UI. Implementar o mecanismo escolhido em OP
 
 | Caminho | Responsabilidade |
 |---|---|
-| `app/admin/layout.jsx` | guard `admin`; login se sem sessão |
+| `app/admin/layout.jsx` | guard `admin`; barra lateral; login se sem sessão |
 | `components/admin/LoginAdmin.jsx` | formulário e recusa |
-| `lib/admin/login.js` | e-mail pré-preenchido `admin@crecer.com` |
+| `lib/admin/login.js` | e-mail pré-preenchido `crescer-admin@crescer.app` |
+| `components/admin/EditorNoticia.jsx` | editor TipTap |
+| `components/noticias/Artigo.jsx` | corpo sanitizado, usado na prévia e no site |
+| `app/admin/anuncios/page.jsx` | anúncios (009) |
+| `app/api/notify-programa/route.js` | push da programação do dia |
 | `app/admin/page.jsx` | índice |
 | `app/admin/noticias/page.jsx` | lista + criar |
 | `app/admin/noticias/[id]/page.jsx` | editar |
@@ -41,7 +45,7 @@ Como o client em JSX não deve confiar só no campo `users.role` (o fiel poderia
 
 ## Cloudinary
 
-Pastas `news/` e `site/`. Public ID estável por notícia.
+Pastas `news/`, `authors/` e `announcements/`. Imagem ou vídeo, conforme o campo do formulário.
 
 ## Ordem de entrega
 
@@ -62,4 +66,4 @@ Pastas `news/` e `site/`. Public ID estável por notícia.
 
 ## Fora deste plan
 
-Analytics, gestão de papéis em massa, editor rico.
+Analytics, gestão de papéis em massa. O editor rico entra nesta revisão. Destaques e leads saem do menu.
