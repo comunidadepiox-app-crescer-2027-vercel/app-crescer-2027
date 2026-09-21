@@ -4,10 +4,10 @@ import { useRouter } from "expo-router";
 import { useAuth } from "../../lib/authProvider";
 import { validaLead, submitLead, jaTemLead, formataCelular, formataCpf, hrefWhatsappCadastro, WHATSAPP_ROTULO } from "../../lib/benfeitor";
 import { FundoRoxoPoligonal } from "../../components/FundoPoligonal";
-import { IconeCoracaoChama } from "../../components/Icones";
 import { Campo, Botao, TituloSecao, Paragrafo, TextoErro } from "../../components/Ui";
 import { CORES, FONTES } from "../../lib/tema";
 
+const logoBenfeitor = require("../../assets/brand/logo-benfeitor.png");
 const foto = require("../../assets/brand/foto-evento.webp");
 
 const PASSOS = [
@@ -84,18 +84,17 @@ export default function BenfeitorScreen() {
     return (
       <ScrollView contentContainerStyle={estilos.pagina}>
         <FundoRoxoPoligonal style={estilos.hero}>
-          <IconeCoracaoChama cor={CORES.dourado} tamanho={48} />
-          <Text style={estilos.kicker}>Benfeitor da Fé</Text>
+          <Image
+            source={logoBenfeitor}
+            style={estilos.logo}
+            resizeMode="contain"
+            accessibilityLabel="Benfeitor da Fé"
+          />
           <Text style={[estilos.heroTitulo, { marginTop: 8 }]}>Cadastro recebido</Text>
           <Text style={estilos.heroTexto}>
             Obrigado por querer sustentar esta missão. A Comunidade de São Pio X
             recebeu seus dados e vai falar com você para concluir o cadastro.
           </Text>
-          <Botao
-            titulo="Falar no WhatsApp"
-            onPress={() => Linking.openURL(hrefWhatsappCadastro())}
-            style={{ marginTop: 16, alignSelf: "stretch" }}
-          />
         </FundoRoxoPoligonal>
 
         <View style={estilos.depois}>
@@ -118,8 +117,12 @@ export default function BenfeitorScreen() {
   return (
     <ScrollView contentContainerStyle={estilos.pagina}>
       <FundoRoxoPoligonal style={estilos.hero}>
-        <IconeCoracaoChama cor={CORES.dourado} tamanho={48} />
-        <Text style={estilos.heroTitulo}>Seja um Benfeitor da Fé</Text>
+        <Image
+          source={logoBenfeitor}
+          style={estilos.logo}
+          resizeMode="contain"
+          accessibilityLabel="Benfeitor da Fé"
+        />
         <Text style={estilos.heroTexto}>
           Ajude a Comunidade de São Pio X a transformar as famílias e contribua
           para a realização do Crescer.
@@ -191,8 +194,12 @@ export default function BenfeitorScreen() {
 }
 
 const estilos = StyleSheet.create({
-  pagina: { paddingBottom: 32, backgroundColor: CORES.fundo },
+  pagina: { paddingBottom: 32 },
   hero: { padding: 22, alignItems: "center" },
+  logo: {
+    width: 260,
+    height: 112,
+  },
   heroTitulo: {
     marginTop: 14,
     fontFamily: FONTES.titulo,
@@ -200,13 +207,6 @@ const estilos = StyleSheet.create({
     lineHeight: 32,
     textTransform: "uppercase",
     color: "#fff",
-  },
-  kicker: {
-    marginTop: 14,
-    fontFamily: FONTES.titulo,
-    fontSize: 16,
-    textTransform: "uppercase",
-    color: CORES.amarelo,
   },
   foto: {
     width: "100%",
@@ -221,7 +221,7 @@ const estilos = StyleSheet.create({
     color: CORES.amarelo,
     textDecorationLine: "underline",
   },
-  depois: { padding: 16, gap: 14 },
+  depois: { padding: 30, gap: 14, paddingTop: 30 },
   passo: { flexDirection: "row", gap: 14, alignItems: "flex-start" },
   passoNum: {
     width: 22,
@@ -230,7 +230,7 @@ const estilos = StyleSheet.create({
     color: CORES.destaque,
   },
   heroTexto: {
-    marginTop: 10,
+    marginTop: 13,
     fontFamily: FONTES.corpo,
     fontSize: 15,
     lineHeight: 22,

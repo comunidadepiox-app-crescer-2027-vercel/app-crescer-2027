@@ -4,6 +4,8 @@ import { observarProgramaPublicado, itensDoDia, agrupaPorEspaco } from "../../li
 import { EDICAO, resolveDiaRecorte, formataDataCurta, formataDataLonga, diasDaEdicao } from "../../lib/edicao";
 import { ProgramaLista } from "../../components/ProgramaLista";
 import { TituloPagina, Paragrafo } from "../../components/Ui";
+import { FaixaPrograma } from "../../components/FaixaPrograma";
+import { useAvisoPrograma } from "../../lib/avisoPrograma";
 import { CORES, FONTES } from "../../lib/tema";
 
 export default function AgendaScreen() {
@@ -26,11 +28,14 @@ export default function AgendaScreen() {
   }, []);
 
   const itens = todos ? itensDoDia(todos, dia) : null;
+  const doRecorte = todos ? itensDoDia(todos, resolveDiaRecorte().date) : null;
+  const aviso = useAvisoPrograma(doRecorte);
 
   const grupos = itens ? agrupaPorEspaco(itens) : null;
 
   return (
-    <ScrollView contentContainerStyle={estilos.pagina}>
+    <ScrollView style={estilos.tela} contentContainerStyle={estilos.pagina}>
+      <FaixaPrograma mudou={aviso.mudou} onEntendi={aviso.entendi} naAgenda />
       <TituloPagina>Cronograma</TituloPagina>
       <Paragrafo style={{ marginTop: 8 }}>
         {EDICAO.nome}, {EDICAO.local}.
@@ -74,7 +79,8 @@ export default function AgendaScreen() {
 }
 
 const estilos = StyleSheet.create({
-  pagina: { padding: 16, paddingBottom: 32, backgroundColor: CORES.fundo },
+  tela: { flex: 1, backgroundColor: "#fff" },
+  pagina: {padding: 16, paddingBottom: 32, backgroundColor: "#fff" },
   diasFaixa: {
     marginTop: 20,
     borderBottomWidth: 1,

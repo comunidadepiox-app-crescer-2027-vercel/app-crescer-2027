@@ -23,7 +23,7 @@ export default function NoticiasScreen() {
   }, []);
 
   return (
-    <ScrollView contentContainerStyle={estilos.pagina}>
+    <ScrollView style={estilos.tela} contentContainerStyle={estilos.pagina}>
       <TituloPagina>Notícias</TituloPagina>
       <Paragrafo style={{ marginTop: 8 }}>
         As novidades do Crescer e da Comunidade de São Pio X.
@@ -48,7 +48,8 @@ export default function NoticiasScreen() {
 }
 
 const estilos = StyleSheet.create({
-  pagina: { padding: 16, paddingBottom: 32, backgroundColor: CORES.fundo },
+  tela: { flex: 1, backgroundColor: "#fff" },
+  pagina: { flexGrow: 1, padding: 16, paddingBottom: 32, backgroundColor: "#fff" },
   erro: {
     marginTop: 20,
     fontFamily: FONTES.corpoMedio,

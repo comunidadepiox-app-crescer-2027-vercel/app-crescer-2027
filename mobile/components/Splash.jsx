@@ -3,6 +3,7 @@
 // terminou e a sessão do Firebase foi resolvida.
 import { useEffect, useRef, useState } from "react";
 import { View, Image, Animated, StyleSheet, useWindowDimensions } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { useAuth } from "../lib/authProvider";
 import { CORES } from "../lib/tema";
@@ -10,13 +11,17 @@ import { CORES } from "../lib/tema";
 const FALLBACK_MS = 6000;
 const MOSTRA_WORDMARK_MS = 2800;
 const DURACAO_SAIDA_MS = 450;
+const ALTURA_MARCA = 72;
 
 const video = require("../assets/brand/splash-crescer.mp4");
 const wordmark = require("../assets/brand/wordmark-crescer-branca.png");
+const diocese = require("../assets/brand/diocese.png");
+const logoPiox = require("../assets/brand/logo-piox.png");
 
 export function Splash() {
   const { loading } = useAuth();
   const { width } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
   const [animacaoCompleta, setAnimacaoCompleta] = useState(false);
   const [oculta, setOculta] = useState(false);
   const opacidade = useRef(new Animated.Value(1)).current;
@@ -65,28 +70,68 @@ export function Splash() {
       pointerEvents={saindo ? "none" : "auto"}
       style={[StyleSheet.absoluteFill, estilos.fundo, { opacity: opacidade }]}
     >
-      <VideoView
-        player={player}
-        nativeControls={false}
-        contentFit="contain"
-        style={{ width: larguraVideo, height: larguraVideo }}
-      />
-      <Animated.View style={{ opacity: opacidadeWordmark }}>
+      <View style={estilos.centro}>
+        <View style={[estilos.videoWrap, { width: larguraVideo, height: larguraVideo }]}>
+          <VideoView
+            player={player}
+            nativeControls={false}
+            contentFit="contain"
+            style={{
+              width: larguraVideo,
+              height: larguraVideo,
+              backgroundColor: CORES.roxoSplash,
+            }}
+          />
+        </View>
+        <Animated.View style={{ opacity: opacidadeWordmark }}>
+          <Image
+            source={wordmark}
+            resizeMode="contain"
+            style={{ width: Math.min(width * 0.6, 240), height: 64, marginTop: 8 }}
+          />
+        </Animated.View>
+      </View>
+      <View style={[estilos.rodape, { paddingBottom: insets.bottom + 40 }]}>
         <Image
-          source={wordmark}
+          source={diocese}
           resizeMode="contain"
-          style={{ width: Math.min(width * 0.6, 240), height: 64, marginTop: 8 }}
+          accessibilityLabel="Diocese de Campina Grande"
+          style={{ width: ALTURA_MARCA * (219 / 256), height: ALTURA_MARCA }}
         />
-      </Animated.View>
+        <Image
+          source={logoPiox}
+          resizeMode="contain"
+          accessibilityLabel="Comunidade de São Pio X"
+          style={{ width: ALTURA_MARCA * (263 / 256), height: ALTURA_MARCA }}
+        />
+      </View>
     </Animated.View>
   );
 }
 
 const estilos = StyleSheet.create({
   fundo: {
-    backgroundColor: CORES.roxo,
+    backgroundColor: CORES.roxoSplash,
+    zIndex: 50,
+  },
+  centro: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    zIndex: 50,
+  },
+  videoWrap: {
+    backgroundColor: CORES.roxoSplash,
+    overflow: "hidden",
+  },
+  rodape: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 28,
+    paddingHorizontal: 24,
   },
 });

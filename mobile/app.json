@@ -7,7 +7,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "backgroundColor": "#3a1075",
+    "backgroundColor": "#3e1c7a",
     "androidNavigationBar": {
       "backgroundColor": "#000000",
       "barStyle": "light-content"
@@ -36,12 +36,18 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#3a1075",
+          "backgroundColor": "#3e1c7a",
           "image": "./assets/brand/simbolo-crescer.png",
           "imageWidth": 160
         }
       ],
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "expo-notifications",
+        {
+          "color": "#3a1075"
+        }
+      ]
     ]
   }
 }

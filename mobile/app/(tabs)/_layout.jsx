@@ -3,6 +3,7 @@ import { Redirect, Tabs } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAuth } from "../../lib/authProvider";
 import { Header } from "../../components/Header";
+import { PedidoNotificacao } from "../../components/PedidoNotificacao";
 import {
   IconeCasa,
   IconeJornal,
@@ -32,6 +33,7 @@ export default function TabsLayout() {
   if (!user) return <Redirect href="/" />;
 
   return (
+    <View style={{ flex: 1 }}>
     <Tabs
       screenOptions={{
         header: () => <Header />,
@@ -89,5 +91,7 @@ export default function TabsLayout() {
         }}
       />
     </Tabs>
+    <PedidoNotificacao uid={user.uid} />
+    </View>
   );
 }

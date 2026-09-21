@@ -49,7 +49,7 @@ export default function RootLayout() {
 const estilos = StyleSheet.create({
   carregando: {
     flex: 1,
-    backgroundColor: CORES.roxo,
+    backgroundColor: CORES.roxoSplash,
     alignItems: "center",
     justifyContent: "center",
   },

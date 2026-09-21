@@ -5,6 +5,8 @@ import { useAuth } from "../../lib/authProvider";
 import { getPublishedNewsById, formataDataFirestore } from "../../lib/noticias";
 import { Voltar } from "../../components/Voltar";
 import { TituloPagina, Paragrafo } from "../../components/Ui";
+import { CorpoNoticia } from "../../components/CorpoNoticia";
+import { corpoEhHtml } from "../../lib/artigoHtml";
 import { CORES, FONTES } from "../../lib/tema";
 
 const simbolo = require("../../assets/brand/simbolo-crescer.png");
@@ -50,9 +52,12 @@ export default function NoticiaDetalheScreen() {
   }
 
   const { noticia } = estado;
-  const paragrafos = String(noticia.body || "")
-    .split(/\n{2,}|\r\n\r\n/)
-    .filter((p) => p.trim());
+  const html = corpoEhHtml(noticia.body);
+  const paragrafos = html
+    ? []
+    : String(noticia.body || "")
+        .split(/\n{2,}|\r\n\r\n/)
+        .filter((p) => p.trim());
 
   return (
     <View style={estilos.tela}>
@@ -68,11 +73,23 @@ export default function NoticiaDetalheScreen() {
         <View style={estilos.corpo}>
           <Text style={estilos.data}>{formataDataFirestore(noticia.publishedAt)}</Text>
           <TituloPagina>{noticia.title}</TituloPagina>
-          <View style={estilos.texto}>
-            {paragrafos.map((paragrafo, i) => (
-              <Paragrafo key={i}>{paragrafo.trim()}</Paragrafo>
-            ))}
-          </View>
+          {noticia.authorName || noticia.authorPhotoUrl ? (
+            <View style={estilos.autor}>
+              {noticia.authorPhotoUrl ? (
+                <Image source={{ uri: noticia.authorPhotoUrl }} style={estilos.fotoAutor} />
+              ) : null}
+              {noticia.authorName ? <Text style={estilos.nomeAutor}>{noticia.authorName}</Text> : null}
+            </View>
+          ) : null}
+          {html ? (
+            <CorpoNoticia body={noticia.body} />
+          ) : (
+            <View style={estilos.texto}>
+              {paragrafos.map((paragrafo, i) => (
+                <Paragrafo key={i}>{paragrafo.trim()}</Paragrafo>
+              ))}
+            </View>
+          )}
         </View>
       </ScrollView>
     </View>
@@ -100,4 +117,16 @@ const estilos = StyleSheet.create({
     marginBottom: 8,
   },
   texto: { gap: 16, marginTop: 18 },
+  autor: {
+    marginTop: 14,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  fotoAutor: { width: 40, height: 40 },
+  nomeAutor: {
+    fontFamily: FONTES.corpoMedio,
+    fontSize: 14,
+    color: CORES.texto,
+  },
 });

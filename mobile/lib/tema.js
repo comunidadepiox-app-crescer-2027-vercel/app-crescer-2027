@@ -1,6 +1,8 @@
 // Paleta oficial do Crescer, a mesma do app web (Specs/DESIGN.md).
 export const CORES = {
   roxo: "#3a1075",
+  // Fundo da splash: o MP4 no aparelho renderiza neste tom, não no #3a1075 do restante do app.
+  roxoSplash: "#3e1c7a",
   roxoBotao: "#310073",
   roxoClaro: "#4c1d90",
   laranja: "#d68130",
