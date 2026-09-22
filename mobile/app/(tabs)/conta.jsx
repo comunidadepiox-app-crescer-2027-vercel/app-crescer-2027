@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { View, Text, ScrollView, Pressable, StyleSheet } from "react-native";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { signOut, updateProfile } from "firebase/auth";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../lib/firebase";
 import { useAuth } from "../../lib/authProvider";
+import { apagarOrigem } from "../../lib/avisoSaida";
 import { Campo, Botao, TituloPagina, TituloSecao, Paragrafo, TextoErro, TextoAviso } from "../../components/Ui";
 import { CORES, FONTES } from "../../lib/tema";
 
@@ -15,6 +16,42 @@ export default function ContaScreen() {
   const [aviso, setAviso] = useState("");
   const [erro, setErro] = useState("");
   const [salvando, setSalvando] = useState(false);
+  const [temOrigem, setTemOrigem] = useState(false);
+  const [apagando, setApagando] = useState(false);
+  const [avisoOrigem, setAvisoOrigem] = useState("");
+  const [erroOrigem, setErroOrigem] = useState("");
+
+  useFocusEffect(
+    useCallback(() => {
+      if (!db || !user?.uid) return undefined;
+      let vivo = true;
+      getDoc(doc(db, "users", user.uid))
+        .then((snap) => {
+          if (vivo) setTemOrigem(Boolean(snap.data()?.origem?.lat));
+        })
+        .catch(() => {
+          if (vivo) setTemOrigem(false);
+        });
+      return () => {
+        vivo = false;
+      };
+    }, [user?.uid])
+  );
+
+  async function apagarLocal() {
+    setErroOrigem("");
+    setAvisoOrigem("");
+    setApagando(true);
+    try {
+      await apagarOrigem(user.uid);
+      setTemOrigem(false);
+      setAvisoOrigem("Localização apagada.");
+    } catch {
+      setErroOrigem("Não foi possível apagar a localização agora.");
+    } finally {
+      setApagando(false);
+    }
+  }
 
   async function salvarNome() {
     setAviso("");
@@ -74,11 +111,29 @@ export default function ContaScreen() {
       <View style={estilos.bloco}>
         <TituloSecao>Privacidade</TituloSecao>
         <Paragrafo style={{ marginTop: 8 }}>
-          Este aplicativo guarda apenas os dados da sua conta (nome e e-mail) e,
-          se você enviou, o cadastro de interesse do Benfeitor da Fé. Nada é
-          compartilhado fora da Comunidade de São Pio X. Para excluir sua conta,
-          fale com a comunidade pelo e-mail contato@piox.org.br.
+          Este aplicativo guarda os dados da sua conta (nome e e-mail). Se você
+          marcou Quero ir, guarda também a última localização para calcular a hora
+          de sair até o Centro de Convenções. Você pode apagar essa coordenada
+          aqui. Se você enviou o cadastro de interesse do Benfeitor da Fé, esses
+          dados também ficam guardados. Nada é compartilhado fora da Comunidade
+          de São Pio X. Para excluir sua conta, fale com a comunidade pelo e-mail
+          contato@piox.org.br.
         </Paragrafo>
+        {temOrigem ? (
+          <Botao
+            titulo="Apagar localização"
+            variante="contorno"
+            onPress={apagarLocal}
+            desabilitado={apagando}
+            style={{ marginTop: 14 }}
+          />
+        ) : (
+          <Paragrafo style={{ marginTop: 8 }}>
+            Nenhuma localização está guardada agora.
+          </Paragrafo>
+        )}
+        <TextoAviso>{avisoOrigem}</TextoAviso>
+        <TextoErro>{erroOrigem}</TextoErro>
       </View>
 
       <Botao

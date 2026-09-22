@@ -29,7 +29,7 @@ O encontro tem vários espaços no mesmo dia. O fiel precisa ver o que acontece 
 
 ### Não entra
 
-- Lembrete de cada horário (o aviso de mudança do dia publicado está na spec 008)
+- Lembrete de cada horário para todo mundo (quem marca Quero ir recebe o aviso de saída na spec 010; a mudança do dia publicado continua na spec 008)
 - Mapa indoor
 - Edição pelo fiel
 - Import automático da página `/programacao/` do WordPress

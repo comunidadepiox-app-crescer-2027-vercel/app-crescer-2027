@@ -47,6 +47,12 @@
         {
           "color": "#3a1075"
         }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "O Crescer usa sua localização para calcular a hora de sair até o Centro de Convenções."
+        }
       ]
     ]
   }

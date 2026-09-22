@@ -12,6 +12,21 @@ service cloud.firestore {
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
+    function origemOk() {
+      return !('origem' in request.resource.data)
+        || request.resource.data.origem == null
+        || (
+          request.resource.data.origem.keys().hasOnly(['lat', 'lng', 'updatedAt'])
+          && request.resource.data.origem.lat is number
+          && request.resource.data.origem.lng is number
+          && request.resource.data.origem.lat >= -90
+          && request.resource.data.origem.lat <= 90
+          && request.resource.data.origem.lng >= -180
+          && request.resource.data.origem.lng <= 180
+          && request.resource.data.origem.updatedAt is timestamp
+        );
+    }
+
     match /users/{userId} {
       allow get: if signedIn() && (request.auth.uid == userId || isAdmin());
       allow list: if isAdmin();
@@ -21,8 +36,20 @@ service cloud.firestore {
       allow update: if signedIn()
         && request.auth.uid == userId
         && request.resource.data.role == resource.data.role
-        && request.resource.data.email == resource.data.email;
+        && request.resource.data.email == resource.data.email
+        && origemOk();
       allow delete: if false;
+
+      match /queroIr/{itemId} {
+        allow read: if signedIn() && request.auth.uid == userId;
+        allow create: if signedIn()
+          && request.auth.uid == userId
+          && request.resource.data.keys().hasOnly(['itemId', 'createdAt'])
+          && request.resource.data.itemId == itemId
+          && request.resource.data.createdAt is timestamp;
+        allow update: if false;
+        allow delete: if signedIn() && request.auth.uid == userId;
+      }
     }
 
     match /news/{newsId} {
@@ -57,6 +84,9 @@ service cloud.firestore {
       allow delete: if signedIn() && resource.data.uid == request.auth.uid;
       allow read: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
     }
+
+    // trafficAlerts e mapsUsage não têm match de propósito.
+    // O cliente não lê nem escreve. O job usa o Admin SDK.
 
     match /benefactorLeads/{leadId} {
       allow create: if signedIn()

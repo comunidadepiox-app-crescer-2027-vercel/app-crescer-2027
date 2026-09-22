@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "mobile": "npm start --prefix mobile"
+    "mobile": "npm start --prefix mobile",
+    "test:aviso-saida": "node --test jobs/aviso-saida/calculo.test.js"
   },
   "dependencies": {
     "@tiptap/extension-color": "^2.27.3",

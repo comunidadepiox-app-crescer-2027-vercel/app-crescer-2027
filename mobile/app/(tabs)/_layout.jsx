@@ -1,4 +1,5 @@
-import { View, StyleSheet } from "react-native";
+import { useEffect } from "react";
+import { AppState, View, StyleSheet } from "react-native";
 import { Redirect, Tabs } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAuth } from "../../lib/authProvider";
@@ -12,6 +13,8 @@ import {
   IconePessoa,
 } from "../../components/Icones";
 import { CORES, FONTES } from "../../lib/tema";
+import { atualizarOrigemSePermitida } from "../../lib/avisoSaida";
+import { garantirCanalSaida } from "../../lib/notificacoes";
 
 const ALTURA_ABAS = 64;
 
@@ -28,6 +31,16 @@ export default function TabsLayout() {
   const { user, loading } = useAuth();
   const insets = useSafeAreaInsets();
   const insetoBaixo = Math.max(insets.bottom, 0);
+
+  useEffect(() => {
+    if (!user?.uid) return undefined;
+    garantirCanalSaida();
+    atualizarOrigemSePermitida(user.uid).catch(() => {});
+    const sub = AppState.addEventListener("change", (estado) => {
+      if (estado === "active") atualizarOrigemSePermitida(user.uid).catch(() => {});
+    });
+    return () => sub.remove();
+  }, [user?.uid]);
 
   if (loading) return null;
   if (!user) return <Redirect href="/" />;

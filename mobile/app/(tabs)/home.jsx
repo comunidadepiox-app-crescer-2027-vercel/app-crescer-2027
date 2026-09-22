@@ -10,11 +10,15 @@ import { FundoRoxoPoligonal, FundoLaranjaPoligonal } from "../../components/Fund
 import { Botao, TituloSecao, Paragrafo } from "../../components/Ui";
 import { PilhaAnuncios } from "../../components/PilhaAnuncios";
 import { CORES, FONTES } from "../../lib/tema";
+import { useAuth } from "../../lib/authProvider";
+import { useQueroIr } from "../../lib/avisoSaida";
 
 const foto = require("../../assets/brand/foto-evento.webp");
 
 export default function HomeScreen() {
   const router = useRouter();
+  const { user } = useAuth();
+  const { ids, ocupado, alternar } = useQueroIr(user?.uid);
   const [noticias, setNoticias] = useState(null);
   const [programa, setPrograma] = useState(null);
   const [erroNoticias, setErroNoticias] = useState(false);
@@ -113,7 +117,12 @@ export default function HomeScreen() {
             A programação de {formataDataCurta(recorte.date)} ainda não foi publicada.
           </Paragrafo>
         ) : (
-          <ProgramaLista grupos={grupos} />
+          <ProgramaLista
+            grupos={grupos}
+            queroIr={ids}
+            ocupadoId={ocupado}
+            onQueroIr={alternar}
+          />
         )}
       </View>
 

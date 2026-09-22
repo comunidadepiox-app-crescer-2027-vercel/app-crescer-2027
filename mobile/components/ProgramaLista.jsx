@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import { CORES, FONTES } from "../lib/tema";
 import { nomeDoEspaco } from "../lib/programa";
 
-export function ProgramaLista({ grupos }) {
+export function ProgramaLista({ grupos, queroIr, ocupadoId, onQueroIr }) {
   return (
     <View style={{ gap: 16 }}>
       {[...grupos.entries()].map(([espaco, itens]) => (
@@ -23,6 +23,16 @@ export function ProgramaLista({ grupos }) {
                 <Text style={estilos.titulo}>{item.title}</Text>
                 {item.guest ? <Text style={estilos.extra}>{item.guest}</Text> : null}
                 {item.notes ? <Text style={estilos.extra}>{item.notes}</Text> : null}
+                {onQueroIr ? (
+                  <Pressable
+                    onPress={() => onQueroIr(item)}
+                    disabled={ocupadoId === item.id}
+                  >
+                    <Text style={estilos.quero}>
+                      {queroIr?.has(item.id) ? "Cancelar aviso" : "Quero ir"}
+                    </Text>
+                  </Pressable>
+                ) : null}
               </View>
             </View>
           ))}
@@ -83,5 +93,12 @@ const estilos = StyleSheet.create({
     fontSize: 13,
     color: "rgba(17,28,45,0.7)",
     marginTop: 2,
+  },
+  quero: {
+    fontFamily: FONTES.corpoSemi,
+    fontSize: 14,
+    color: CORES.destaque,
+    textDecorationLine: "underline",
+    marginTop: 8,
   },
 });

@@ -1,12 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { View, Text, ScrollView, Pressable, StyleSheet } from "react-native";
 import { observarProgramaPublicado, itensDoDia, agrupaPorEspaco } from "../../lib/programa";
+import { useAuth } from "../../lib/authProvider";
+import { useQueroIr } from "../../lib/avisoSaida";
 import { EDICAO, resolveDiaRecorte, formataDataCurta, formataDataLonga, diasDaEdicao } from "../../lib/edicao";
 import { ProgramaLista } from "../../components/ProgramaLista";
 import { TituloPagina, Paragrafo } from "../../components/Ui";
 import { CORES, FONTES } from "../../lib/tema";
 
 export default function AgendaScreen() {
+  const { user } = useAuth();
+  const { ids, ocupado, alternar } = useQueroIr(user?.uid);
   const dias = useMemo(diasDaEdicao, []);
   const [dia, setDia] = useState(() => resolveDiaRecorte().date);
   const [todos, setTodos] = useState(null);
@@ -63,7 +67,12 @@ export default function AgendaScreen() {
       ) : itens.length === 0 ? (
         <Paragrafo>A programação deste dia ainda não foi publicada.</Paragrafo>
       ) : (
-        <ProgramaLista grupos={grupos} />
+        <ProgramaLista
+          grupos={grupos}
+          queroIr={ids}
+          ocupadoId={ocupado}
+          onQueroIr={alternar}
+        />
       )}
 
       <Text style={estilos.nota}>

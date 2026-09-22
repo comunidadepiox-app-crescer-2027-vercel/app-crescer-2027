@@ -60,6 +60,19 @@ async function gravarToken(uid, token) {
   else await addDoc(collection(db, "deviceTokens"), dados);
 }
 
+export async function garantirCanalSaida(Notifications) {
+  const modulo = Notifications || (await notificacoes());
+  if (!modulo || Platform.OS !== "android") return;
+  await modulo.setNotificationChannelAsync("programa", {
+    name: "Programação",
+    importance: modulo.AndroidImportance.DEFAULT,
+  });
+  await modulo.setNotificationChannelAsync("saida", {
+    name: "Hora de sair",
+    importance: modulo.AndroidImportance.HIGH,
+  });
+}
+
 export async function ativarNotificacao(uid) {
   const Notifications = await notificacoes();
   if (!Notifications) return { ok: false, motivo: "build" };
@@ -72,12 +85,7 @@ export async function ativarNotificacao(uid) {
   }
   if (status !== "granted") return { ok: false, motivo: "negado" };
 
-  if (Platform.OS === "android") {
-    await Notifications.setNotificationChannelAsync("programa", {
-      name: "Programação",
-      importance: Notifications.AndroidImportance.DEFAULT,
-    });
-  }
+  await garantirCanalSaida(Notifications);
 
   const projectId =
     Constants.expoConfig?.extra?.eas?.projectId ?? Constants.easConfig?.projectId;
