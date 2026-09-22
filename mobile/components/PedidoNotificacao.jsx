@@ -26,14 +26,12 @@ export function PedidoNotificacao({ uid }) {
         return;
       }
       if (res.motivo === "negado") {
-        setAviso("Sem a permissão, o aviso continua aqui no app.");
+        setAviso("Sem a permissão, a mudança da programação não chega neste celular.");
         return;
       }
-      setAviso(
-        "Neste aparelho o aviso continua na tela. A notificação com o app fechado pede o app instalado."
-      );
+      setAviso("A notificação com o app fechado pede o aplicativo instalado.");
     } catch {
-      setAviso("Não foi possível ativar agora. O aviso na tela continua valendo.");
+      setAviso("Não foi possível ativar agora.");
     }
   }
 

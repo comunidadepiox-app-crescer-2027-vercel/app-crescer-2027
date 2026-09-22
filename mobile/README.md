@@ -21,4 +21,4 @@ O botão Google **não funciona no Expo Go**: o Google recusa o redirect do Expo
 
 Publicar notícias, cronograma e anúncios: no navegador, `http://localhost:3000/admin` (login `crescer-admin@crescer.app` + senha do Firebase Auth; o papel `admin` se define no Firestore antes do primeiro login).
 
-A faixa de mudança da programação aparece no Expo Go. A notificação com o app fechado pede um build de desenvolvimento: o Expo Go neste SDK não recebe push remoto.
+A mudança da programação chega só pela notificação do celular. O Expo Go neste SDK não recebe esse push: isso pede um build de desenvolvimento.

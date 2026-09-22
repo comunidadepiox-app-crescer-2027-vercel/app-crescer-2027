@@ -9,8 +9,6 @@ import { ProgramaLista } from "../../components/ProgramaLista";
 import { FundoRoxoPoligonal, FundoLaranjaPoligonal } from "../../components/FundoPoligonal";
 import { Botao, TituloSecao, Paragrafo } from "../../components/Ui";
 import { PilhaAnuncios } from "../../components/PilhaAnuncios";
-import { FaixaPrograma } from "../../components/FaixaPrograma";
-import { useAvisoPrograma } from "../../lib/avisoPrograma";
 import { CORES, FONTES } from "../../lib/tema";
 
 const foto = require("../../assets/brand/foto-evento.webp");
@@ -52,12 +50,10 @@ export default function HomeScreen() {
   }, [recorte.date]);
 
   const grupos = programa ? agrupaPorEspaco(programa) : null;
-  const aviso = useAvisoPrograma(programa);
 
   return (
     <View style={{ flex: 1 }}>
     <ScrollView contentContainerStyle={estilos.pagina}>
-      <FaixaPrograma mudou={aviso.mudou} onEntendi={aviso.entendi} />
       <FundoRoxoPoligonal style={estilos.hero}>
         <Text style={estilos.edicao}>{EDICAO.nome}</Text>
         <Text style={estilos.slogan}>
