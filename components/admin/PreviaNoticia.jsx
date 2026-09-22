@@ -1,6 +1,7 @@
 "use client";
 
 import { ArtigoCorpo, Byline } from "@/components/noticias/Artigo";
+import { classeBotaoNeutro } from "@/components/admin/CabecalhoMesa";
 
 function Miolo({ noticia }) {
   return (
@@ -29,7 +30,7 @@ export function PreviaNoticia({ noticia, onFechar }) {
         <button
           type="button"
           onClick={onFechar}
-          className="border border-linha px-4 py-2 text-sm font-semibold uppercase"
+          className={classeBotaoNeutro}
         >
           Fechar
         </button>

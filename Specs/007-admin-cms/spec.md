@@ -15,12 +15,14 @@ A equipe de comunicação precisa publicar notícias, ajustar a programação e 
 
 - Grupo `/admin` protegido por `role == admin`
 - Login simples em `/admin` (e-mail pré-preenchido `crescer-admin@crescer.app`, senha digitada; sem Google e sem cadastro nesta tela)
-- `/admin` com barra lateral: Início, Notícias, Cronograma, Anúncios
-- CRUD de `news` com editor rico (TipTap), autor, capa e pré-visualização antes de publicar
+- `/admin` com barra lateral roxa: Início, Notícias, Cronograma, Anúncios. Item ativo marcado em dourado
+- Início da mesa com o trabalho real: rascunho de notícia mais recente ou nada por publicar, programação do dia do recorte, anúncio ativo ou nenhum. Se a leitura falhar, a faixa permanece e a linha de estado some
+- CRUD de `news` com editor TipTap: folha de escrita (título em slab, barra agrupada por ícones, menu na seleção, menu no parágrafo vazio, recuo por botão e por Tab, colar ou soltar imagem), coluna com autor, capa e publicação, e pré-visualização antes de publicar
 - CRUD de `programItems` (abas só dos dias da edição; lista não depende de índice composto)
 - CRUD de `announcements` (spec 009)
 - Aviso push quando a programação publicada do dia do recorte muda (spec 004 e 008)
-- Fiel que abrir `/admin` vê recusa (sem vazar dados); atalho para voltar ao app
+- Fiel que abrir `/admin` vê recusa (sem vazar dados) e pode sair
+- `/` redireciona para `/admin`. O site não tem as telas do fiel
 
 ### Não entra
 
@@ -32,10 +34,10 @@ A equipe de comunicação precisa publicar notícias, ajustar a programação e 
 ## Fluxos
 
 1. Admin abre `/admin` no navegador (não no app nativo). Sem sessão, vê login só e-mail/senha, com e-mail pré-preenchido `crescer-admin@crescer.app`. Entra e cai na mesa.
-2. Cria notícia no editor, envia capa, autor, imagem ou vídeo ao Cloudinary, pré-visualiza e publica.
+2. Cria notícia na folha do editor. Formata pela barra ou pelo menu da seleção, insere imagem colando ou soltando no texto, envia capa e autor, pré-visualiza e publica.
 3. Cria ou edita item de programação. Se a mudança publicada for do dia do recorte, a mesa dispara o aviso.
 4. Publica anúncio vertical com link opcional.
-5. Fiel autenticado em `/admin` vê recusa (não vê dados). Sem sessão, não é redirecionado para `/`; permanece no login da mesa.
+5. Fiel autenticado em `/admin` vê recusa (não vê dados) e sai pela própria tela. Sem sessão, permanece no login da mesa. Quem abre `/` cai em `/admin`.
 
 ## Superfície do produto
 
@@ -68,14 +70,18 @@ Chaves iniciais: `home`, `about`, `benfeitor` (se a campanha deixar de ser só e
 - Publicar notícia preenche `publishedAt` se ainda vazio.
 - Lead: admin não edita CPF/e-mail; só `status`.
 - Upload Cloudinary usa unsigned preset **restrito** ou signed no server. Preferir signed via Route Handler se houver `CLOUDINARY_API_SECRET`; nunca commitar o secret.
+- O editor só grava HTML já aceito pelo app: parágrafo, título, lista, citação, link, cor, alinhamento, recuo, imagem, vídeo e botão. Tabela, destaque e código não entram.
+- O início da mesa não inventa métrica. A linha de cada faixa sai da coleção correspondente.
 
 ## Critérios de aceite
 
 - [ ] Fiel não lê nem escreve coleções admin
-- [ ] Admin publica notícia visível em `/noticias`
-- [ ] Admin cria item visível em `/cronograma` e na Home do dia
+- [ ] Admin publica notícia visível no app nativo
+- [ ] Admin cria item visível na agenda e na Home do app
 - [ ] Admin lista leads sem export público
 - [ ] Capa aparece via Cloudinary
+- [ ] No editor, a seleção abre o menu de formato, o parágrafo vazio oferece imagem, vídeo, botão e título, colar imagem insere no texto, e Tab não tira o foco
+- [ ] O início mostra o estado real das três áreas, sem número hero nem gráfico
 - [ ] UI admin sóbria, sem dashboard de métricas inventadas
 
 ## Anti-slop

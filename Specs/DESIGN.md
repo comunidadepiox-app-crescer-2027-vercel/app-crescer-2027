@@ -16,7 +16,7 @@ Este arquivo é a fonte da verdade visual do app. Tokens extraídos em 04/09/202
 | `splash-crescer.mp4` | Vídeo da logo se montando (Jitter, recorte quadrado). No app nativo o fundo da splash é `#3e1c7a` para coincidir com o tom que o vídeo mostra no aparelho | Splash de abertura |
 | `wordmark-crescer-branca.png` | Lettering "Crescer" + subtítulo recortado da logo oficial branca | Splash (sobre roxo) |
 
-O símbolo também existe em vetor: `components/brand/SimboloCrescer.jsx`, redesenhado peça por peça (usado na tela de login; a splash usa o vídeo).
+A splash de abertura com o vídeo fica no app nativo (`mobile/`). O site administrativo não usa splash.
 
 ## Leitura de design
 

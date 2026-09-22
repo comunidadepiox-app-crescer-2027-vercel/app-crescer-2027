@@ -1,7 +1,6 @@
 import localFont from "next/font/local";
 import { Outfit } from "next/font/google";
 import { AuthProvider } from "@/lib/auth/AuthProvider";
-import { SplashCrescer } from "@/components/brand/SplashCrescer";
 import "./globals.css";
 
 const geometric = localFont({
@@ -27,19 +26,15 @@ const outfit = Outfit({
 });
 
 export const metadata = {
-  title: "Crescer, o Encontro da Família Católica",
-  description:
-    "Acompanhe as notícias, o cronograma do encontro e seja um Benfeitor da Fé. Comunidade de São Pio X, Campina Grande, PB.",
+  title: "Crescer Admin",
+  description: "Mesa de trabalho da equipe de comunicação do Crescer.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR" className={`${geometric.variable} ${arcane.variable} ${outfit.variable}`}>
       <body className="antialiased">
-        <AuthProvider>
-          <SplashCrescer />
-          {children}
-        </AuthProvider>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

@@ -14,7 +14,7 @@
 
 - [x] **T3 — CRUD notícias**
   - Faz: criar, editar, publicar, despublicar.
-  - Verifica: item publicado aparece em `/noticias`.
+  - Verifica: item publicado aparece no app nativo.
   - Fora: cronograma.
 
 - [x] **T4 — Upload Cloudinary**
@@ -24,12 +24,12 @@
 
 - [x] **T5 — CRUD programação**
   - Faz: criar/editar/remover `programItems`. Lista sem índice composto (lê a coleção e filtra o dia no client). Dias do encontro nas abas (5–9/02/2027).
-  - Verifica: item do dia aparece no cronograma e na Home; erro de lista não some como vazio.
+  - Verifica: item do dia aparece na agenda e na Home do app; erro de lista não some como vazio.
   - Fora: import site.
 
 - [x] **T6 — Destaques e leads**
   - Faz: `siteContent` + lista de leads com mudança de status.
-  - Verifica: fiel não abre `/admin/leads` com dados; Home lê destaque se existir.
+  - Verifica: fiel não abre `/admin/leads` com dados; a Home do app lê destaque se existir.
   - Fora: export CSV.
 
 - [x] **T7 — Login da mesa**
@@ -51,6 +51,16 @@
   - Faz: ao salvar mudança publicada do dia do recorte, a mesa chama o envio do push.
   - Verifica: rascunho de outro dia não chama a rota.
   - Fora: lembrete de cada horário.
+
+- [ ] **T11 — Editor de escrita**
+  - Faz: barra agrupada por ícones, menu na seleção, menu no parágrafo vazio, botões de recuo, placeholder e colar ou soltar imagem. A edição fica em folha mais coluna de autor, capa e publicação.
+  - Verifica: Tab não tira o foco; a seleção abre formato; parágrafo vazio oferece imagem, vídeo, botão e título; colar imagem entra no texto; prévia não publica.
+  - Fora: tabela, destaque, código e biblioteca de mídia.
+
+- [ ] **T12 — Casca da mesa**
+  - Faz: barra roxa com item ativo em dourado, cabeçalho comum, início com estado real das três áreas, lista de notícias com capa, e o mesmo ritmo em cronograma e anúncios.
+  - Verifica: as quatro entradas navegam; o início não mostra número hero nem gráfico; falha de leitura esconde a linha de estado e mantém a faixa.
+  - Fora: métricas inventadas e as rotas de destaques e leads.
 
 ## Validação final
 

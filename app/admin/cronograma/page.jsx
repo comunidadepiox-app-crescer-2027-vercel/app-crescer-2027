@@ -16,6 +16,12 @@ import {
   diasDaEdicao,
 } from "@/lib/event/edition";
 import { avisarMudancaPrograma, mudouDiaPublicado } from "@/lib/admin/notificar";
+import {
+  CabecalhoMesa,
+  classeBotaoNeutro,
+  classeBotaoPrimario,
+  classeLinha,
+} from "@/components/admin/CabecalhoMesa";
 
 const NOVO = {
   time: "",
@@ -149,19 +155,15 @@ export default function AdminCronogramaPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold uppercase">Cronograma</h1>
-        <button
-          type="button"
-          onClick={abrirNovo}
-          className="rounded-[10px] bg-titulo px-5 py-2.5 font-titulo font-bold uppercase text-white"
-        >
-          Novo item
-        </button>
-      </div>
-      <p className="mt-1 text-sm text-texto/60">
-        {EDICAO.nome}. Os fiéis só veem o dia correspondente em Home, Cronograma e no app.
-      </p>
+      <CabecalhoMesa
+        titulo="Cronograma"
+        frase={`${EDICAO.nome}. Os fiéis só veem o dia correspondente em Home, Cronograma e no app.`}
+        acao={
+          <button type="button" onClick={abrirNovo} className={classeBotaoPrimario}>
+            Novo item
+          </button>
+        }
+      />
 
       <div className="mt-6 flex gap-4 overflow-x-auto border-b border-linha">
         {[...dias, ...datasFora].map((d) => (
@@ -169,8 +171,8 @@ export default function AdminCronogramaPage() {
             key={d}
             type="button"
             onClick={() => setDia(d)}
-            className={`shrink-0 pb-2 font-titulo text-lg font-bold uppercase ${
-              dia === d ? "border-b-2 border-destaque text-titulo" : "text-texto/60"
+            className={`shrink-0 pb-2 font-titulo text-lg font-bold uppercase transition-colors duration-150 motion-reduce:transition-none ${
+              dia === d ? "border-b-2 border-destaque text-titulo" : "text-texto/60 hover:text-titulo"
             }`}
           >
             {formataDataCurta(d)}
@@ -188,7 +190,7 @@ export default function AdminCronogramaPage() {
       {editando !== null && (
         <form
           onSubmit={salvar}
-          className="mt-6 flex flex-col gap-3 rounded-[10px] border border-linha bg-superficie p-5"
+          className="mt-6 flex flex-col gap-3 rounded-[14px] border border-linha bg-superficie p-5"
         >
           <h2 className="font-titulo text-lg font-bold uppercase text-titulo">
             {editando === "novo" ? "Novo item" : "Editar item"} de {formataDataCurta(dia)}
@@ -281,18 +283,10 @@ export default function AdminCronogramaPage() {
           {erro && <p className="text-sm font-medium text-vermelho">{erro}</p>}
 
           <div className="flex gap-3">
-            <button
-              type="submit"
-              disabled={ocupado}
-              className="rounded-[10px] bg-titulo px-5 py-2.5 font-titulo font-bold uppercase text-white disabled:opacity-60"
-            >
+            <button type="submit" disabled={ocupado} className={classeBotaoPrimario}>
               Salvar
             </button>
-            <button
-              type="button"
-              onClick={() => setEditando(null)}
-              className="rounded-[10px] border border-linha px-5 py-2.5 font-titulo font-bold uppercase text-texto/70"
-            >
+            <button type="button" onClick={() => setEditando(null)} className={classeBotaoNeutro}>
               Cancelar
             </button>
           </div>
@@ -304,13 +298,13 @@ export default function AdminCronogramaPage() {
       ) : erroLista ? (
         <p className="mt-6 text-sm font-medium text-vermelho">{erroLista}</p>
       ) : itens.length === 0 ? (
-        <p className="mt-6 text-texto/70">
+        <p className="mt-6 rounded-[14px] border border-linha bg-superficie px-5 py-8 text-texto/70">
           Nenhum item em {formataDataCurta(dia)}. Use o botão Novo item.
         </p>
       ) : (
-        <ul className="mt-6 divide-y divide-linha border-y border-linha">
+        <ul className="mt-6 overflow-hidden rounded-[14px] border border-linha bg-superficie">
           {itens.map((item) => (
-            <li key={item.id} className="flex items-center gap-4 py-3">
+            <li key={item.id} className={`flex items-center gap-4 border-b border-linha px-4 py-3 last:border-b-0 ${classeLinha}`}>
               <span className="w-14 shrink-0 font-semibold text-destaque">{item.time}</span>
               <div className="min-w-0 flex-1">
                 <p className="truncate font-medium">{item.title}</p>
@@ -323,14 +317,14 @@ export default function AdminCronogramaPage() {
               <button
                 type="button"
                 onClick={() => abrirEdicao(item)}
-                className="text-sm font-semibold text-destaque underline"
+                className="text-sm font-semibold text-titulo transition-colors duration-150 hover:text-destaque motion-reduce:transition-none"
               >
                 Editar
               </button>
               <button
                 type="button"
                 onClick={() => excluir(item.id)}
-                className="text-sm font-semibold text-vermelho underline"
+                className="text-sm font-semibold text-vermelho transition-colors duration-150 hover:text-titulo motion-reduce:transition-none"
               >
                 Excluir
               </button>

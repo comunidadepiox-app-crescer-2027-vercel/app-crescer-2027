@@ -5,6 +5,8 @@
 - Personas: `fiel` (leitura); escrita é 007
 - Depende de: [001-autenticacao](../001-autenticacao/), [002-navegacao-e-home](../002-navegacao-e-home/)
 
+> **Superfície web retirada.** O site Next.js é só a mesa administrativa (`/admin`). A leitura de notícias desta spec vive no app Expo, spec [008](../008-app-react-native/spec.md).
+
 ## Problema
 
 O fiel precisa ler as novidades da comunidade no próprio app, no mesmo tom do site oficial, sem ir ao WordPress.

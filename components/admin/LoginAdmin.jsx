@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, firebaseConfigurado } from "@/lib/firebase/client";
 import { traduzErroAuth } from "@/lib/auth/errors";
@@ -86,7 +85,7 @@ export function RecusaAdmin({ onSair }) {
           do uid desta conta, e defina o campo <span className="font-medium">role</span>{" "}
           como <span className="font-medium">admin</span>. Depois recarregue a página.
         </p>
-        <div className="mt-6 flex flex-wrap gap-4">
+        <div className="mt-6">
           <button
             type="button"
             onClick={onSair}
@@ -94,9 +93,6 @@ export function RecusaAdmin({ onSair }) {
           >
             Sair
           </button>
-          <Link href="/home" className="self-center text-sm font-medium text-texto/60 underline">
-            Voltar ao app
-          </Link>
         </div>
       </div>
     </div>

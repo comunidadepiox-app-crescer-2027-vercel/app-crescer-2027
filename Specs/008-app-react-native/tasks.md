@@ -34,13 +34,13 @@
   - Faz: editar nome, sair; links oficiais; institucional.
   - Verifica: sair volta ao login.
 - [x] **T13 — Anúncios na Home**
-  - Faz: pilha dos anúncios ativos na primeira abertura do dia.
-  - Verifica: X revela o de trás; o mesmo dia não repete.
+  - Faz: pilha dos anúncios ativos em toda entrada no app.
+  - Verifica: X revela o de trás; voltar ao app mostra de novo.
   - Fora: Home do site.
 
 - [x] **T14 — Aviso da programação**
-  - Faz: faixa quando o dia do recorte muda; pedido único para ativar notificação; token em `deviceTokens`.
-  - Verifica: primeira leitura não avisa; "Agora não" não repete o pedido.
+  - Faz: pedido único para ativar notificação; token em `deviceTokens`. A mudança do dia do recorte chega só pelo push.
+  - Verifica: "Agora não" não repete o pedido. Não há faixa na Home nem na Agenda.
   - Fora: push dentro do Expo Go.
 
 - [x] **T12 — Validação e docs**

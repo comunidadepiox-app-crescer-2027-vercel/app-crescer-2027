@@ -16,8 +16,10 @@ O primeiro admin **não** nasce pela UI. Implementar o mecanismo escolhido em OP
 | `app/admin/layout.jsx` | guard `admin`; barra lateral; login se sem sessão |
 | `components/admin/LoginAdmin.jsx` | formulário e recusa |
 | `lib/admin/login.js` | e-mail pré-preenchido `crescer-admin@crescer.app` |
-| `components/admin/EditorNoticia.jsx` | editor TipTap |
-| `components/noticias/Artigo.jsx` | corpo sanitizado, usado na prévia e no site |
+| `components/admin/EditorNoticia.jsx` | editor TipTap: barra agrupada, menu na seleção, menu no parágrafo vazio, colar ou soltar imagem |
+| `components/admin/CabecalhoMesa.jsx` | título, frase e ação das abas |
+| `components/admin/iconesMesa.jsx` | ícones de linha da barra e do editor |
+| `components/noticias/Artigo.jsx` | corpo sanitizado, usado na prévia da mesa |
 | `app/admin/anuncios/page.jsx` | anúncios (009) |
 | `app/api/notify-programa/route.js` | push da programação do dia |
 | `app/admin/page.jsx` | índice |
@@ -64,6 +66,12 @@ Pastas `news/`, `authors/` e `announcements/`. Imagem ou vídeo, conforme o camp
 | Secret Cloudinary no client | Route Handler |
 | Admin único perde acesso | pelo menos dois e-mails na allowlist quando existir |
 
+## Mesa e editor (revisão visual)
+
+A barra lateral usa o roxo institucional e o padrão poligonal. O início lê `news`, `programItems` e `announcements` só para uma linha de estado em cada faixa. Notícias ocupa a faixa larga. Cronograma e anúncios ficam menores, lado a lado. Sem gráfico e sem número hero.
+
+O editor acrescenta `@tiptap/extension-placeholder`. `BubbleMenu` e `FloatingMenu` vêm de `@tiptap/react`. O HTML gravado continua o de `lib/news/html.js`.
+
 ## Fora deste plan
 
-Analytics, gestão de papéis em massa. O editor rico entra nesta revisão. Destaques e leads saem do menu.
+Analytics, gestão de papéis em massa, tabela e destaque no editor. Destaques e leads saem do menu.

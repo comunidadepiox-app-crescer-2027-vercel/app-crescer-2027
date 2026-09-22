@@ -5,6 +5,8 @@
 - Personas: `fiel`, `admin`
 - Depende de: [001-autenticacao](../001-autenticacao/), [002-navegacao-e-home](../002-navegacao-e-home/)
 
+> **Superfície web retirada.** O site Next.js é só a mesa administrativa (`/admin`). A conta do fiel desta spec vive no app Expo, spec [008](../008-app-react-native/spec.md).
+
 ## Problema
 
 O fiel precisa ver a conta com que entrou, atualizar o nome e sair. O admin precisa de um caminho visível para o CMS.

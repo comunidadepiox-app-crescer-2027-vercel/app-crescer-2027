@@ -17,8 +17,8 @@ O fiel só acessa o Crescer pelo navegador. A comunidade quer um aplicativo inst
 - Todas as telas do fiel: início/login, Home, Notícias (lista e detalhe), Agenda (cronograma), Benfeitor da Fé, Conta, Galeria e Sobre
 - Splash de abertura com o vídeo oficial da logo sobre `#3e1c7a` (mesmo tom do fundo do vídeo no aparelho), wordmark branco e, no rodapé, as logos da Diocese de Campina Grande e da Comunidade de São Pio X
 - Mesmo Firestore e as mesmas regras de leitura do fiel, mais `announcements` (spec 009) e o token de notificação em `deviceTokens`
-- Na Home, pilha de anúncios ativos na primeira abertura do dia (fuso America/Fortaleza)
-- Faixa quando a programação publicada do dia do recorte muda, e um pedido único para ativar notificação
+- Na Home, pilha de anúncios ativos em toda entrada no app (abertura ou volta do segundo plano)
+- Pedido único para ativar notificação quando a programação publicada do dia do recorte muda
 - Identidade visual completa: paleta 000, fontes oficiais (convertidas para TTF), ícones da marca
 - Login e-mail/senha; login Google via `expo-auth-session` **só em build nativo** (dev/produção). No Expo Go o botão explica o bloqueio da política OAuth do Google
 
@@ -26,7 +26,7 @@ O fiel só acessa o Crescer pelo navegador. A comunidade quer um aplicativo inst
 
 - Área administrativa (continua na web, spec 007)
 - Modo offline e publicação nas lojas
-- Push remoto dentro do Expo Go (no SDK 57 isso pede build de desenvolvimento; a faixa na tela funciona no Expo Go)
+- Push remoto dentro do Expo Go (no SDK 57 isso pede build de desenvolvimento)
 - Pagamentos
 
 ## Fluxos
@@ -45,7 +45,7 @@ O fiel só acessa o Crescer pelo navegador. A comunidade quer um aplicativo inst
 
 ## Dados
 
-Persistência de sessão via AsyncStorage (token do Firebase Auth no aparelho). Também no aparelho: o dia em que a pilha de anúncios apareceu, a impressão da programação do recorte e a resposta ao pedido de notificação. O token Expo, quando a pessoa aceita, vai para `deviceTokens`.
+Persistência de sessão via AsyncStorage (token do Firebase Auth no aparelho). Também no aparelho: a resposta ao pedido de notificação. O token Expo, quando a pessoa aceita, vai para `deviceTokens`.
 
 ## Regras de negócio
 

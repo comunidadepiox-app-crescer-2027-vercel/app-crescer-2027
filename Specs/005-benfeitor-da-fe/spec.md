@@ -5,6 +5,8 @@
 - Personas: `fiel`
 - Depende de: [001-autenticacao](../001-autenticacao/), [002-navegacao-e-home](../002-navegacao-e-home/)
 
+> **Superfície web retirada.** O site Next.js é só a mesa administrativa (`/admin`). O cadastro de Benfeitor desta spec vive no app Expo, spec [008](../008-app-react-native/spec.md).
+
 ## Problema
 
 O encontro depende de apoio contínuo. O fiel precisa entender a campanha e deixar um cadastro para a comunidade entrar em contato. O app não cobra.

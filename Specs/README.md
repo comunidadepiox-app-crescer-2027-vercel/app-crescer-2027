@@ -2,7 +2,7 @@
 
 Este repositório usa **Spec-Driven Development (SDD)**. Nenhuma funcionalidade de média ou alta complexidade entra no código sem passar pelo fluxo abaixo.
 
-O Crescer é o Encontro da Família Católica, organizado pela Comunidade de São Pio X em Campina Grande/PB. O WebApp acompanha notícias, o cronograma do evento e a campanha Benfeitor da Fé.
+O Crescer é o Encontro da Família Católica, organizado pela Comunidade de São Pio X em Campina Grande/PB. O app do fiel (Expo, `mobile/`) acompanha notícias, o cronograma e a campanha Benfeitor da Fé. O site Next.js é só a mesa administrativa.
 
 ## Fluxo obrigatório
 

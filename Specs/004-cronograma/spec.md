@@ -5,6 +5,8 @@
 - Personas: `fiel` (leitura); escrita é 007
 - Depende de: [001-autenticacao](../001-autenticacao/), [002-navegacao-e-home](../002-navegacao-e-home/)
 
+> **Superfície web retirada.** O site Next.js é só a mesa administrativa (`/admin`). A agenda do fiel desta spec vive no app Expo, spec [008](../008-app-react-native/spec.md).
+
 ## Problema
 
 O encontro tem vários espaços no mesmo dia. O fiel precisa ver o que acontece hoje na Home e a programação inteira numa página só, no modelo do site oficial.

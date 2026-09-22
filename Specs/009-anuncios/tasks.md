@@ -13,8 +13,8 @@
   - Fora: app.
 
 - [x] **T3 — Pilha no app**
-  - Faz: Home mostra os ativos uma vez por dia, mais novo na frente, X revela o de trás, toque abre o link.
-  - Verifica: segunda abertura no mesmo dia não mostra; inativo fica de fora.
+  - Faz: Home mostra os ativos em toda entrada no app, mais novo na frente, X revela o de trás, toque abre o link.
+  - Verifica: voltar do segundo plano mostra de novo; trocar de aba não mostra; inativo fica de fora.
   - Fora: Home do site.
 
 ## Validação final

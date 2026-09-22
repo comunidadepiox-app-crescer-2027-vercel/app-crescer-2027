@@ -5,6 +5,8 @@
 - Personas: `fiel` (o admin também entra por aqui)
 - Depende de: [000-fundacao-e-identidade](../000-fundacao-e-identidade/)
 
+> **Superfície web retirada.** O site Next.js é só a mesa administrativa (`/admin`). O login do fiel desta spec vive no app Expo, spec [008](../008-app-react-native/spec.md).
+
 ## Problema
 
 O fiel precisa entrar no WebApp com e-mail ou Google antes de ver Home, notícias e cronograma. Sem sessão, o produto não abre as páginas internas.

@@ -8,6 +8,12 @@ import {
   updateAnnouncement,
 } from "@/lib/admin/announcements";
 import { uploadMedia } from "@/lib/admin/upload";
+import {
+  CabecalhoMesa,
+  classeBotaoNeutro,
+  classeBotaoPrimario,
+  classeLinha,
+} from "@/components/admin/CabecalhoMesa";
 
 const VAZIO = { imageUrl: "", imagePublicId: "", linkUrl: "", active: true };
 
@@ -137,22 +143,18 @@ export default function AdminAnunciosPage() {
 
   return (
     <div className="max-w-4xl">
-      <div className="flex items-center justify-between gap-4">
-        <h1 className="text-3xl font-bold uppercase">Anúncios</h1>
-        <button
-          type="button"
-          onClick={abrirNovo}
-          className="bg-titulo px-5 py-2.5 font-titulo font-bold uppercase text-white"
-        >
-          Novo anúncio
-        </button>
-      </div>
-      <p className="mt-2 max-w-prose text-sm text-texto/70">
-        O cartaz aparece na Home do app na primeira abertura do dia. O mais recente fica na frente.
-      </p>
+      <CabecalhoMesa
+        titulo="Anúncios"
+        frase="O cartaz aparece na Home do app cada vez que a pessoa entra. O mais recente fica na frente."
+        acao={
+          <button type="button" onClick={abrirNovo} className={classeBotaoPrimario}>
+            Novo anúncio
+          </button>
+        }
+      />
 
       {editando !== null && (
-        <form onSubmit={salvar} className="mt-6 grid gap-6 border border-linha bg-superficie p-5 lg:grid-cols-[minmax(0,1fr)_220px]">
+        <form onSubmit={salvar} className="mt-6 grid gap-6 rounded-[14px] border border-linha bg-superficie p-5 lg:grid-cols-[minmax(0,1fr)_220px]">
           <div className="flex flex-col gap-4">
             <h2 className="font-titulo text-lg font-bold uppercase text-titulo">
               {editando === "novo" ? "Novo anúncio" : "Editar anúncio"}
@@ -182,18 +184,10 @@ export default function AdminAnunciosPage() {
             </label>
             {erro && <p className="text-sm font-medium text-vermelho">{erro}</p>}
             <div className="flex gap-3">
-              <button
-                type="submit"
-                disabled={ocupado}
-                className="bg-titulo px-5 py-2.5 font-titulo font-bold uppercase text-white disabled:opacity-60"
-              >
+              <button type="submit" disabled={ocupado} className={classeBotaoPrimario}>
                 Salvar
               </button>
-              <button
-                type="button"
-                onClick={() => setEditando(null)}
-                className="border border-linha px-5 py-2.5 font-titulo font-bold uppercase text-texto/70"
-              >
+              <button type="button" onClick={() => setEditando(null)} className={classeBotaoNeutro}>
                 Cancelar
               </button>
             </div>
@@ -217,11 +211,11 @@ export default function AdminAnunciosPage() {
       {lista === null ? (
         <p className="mt-6 text-sm text-texto/60">Carregando...</p>
       ) : lista.length === 0 ? (
-        <p className="mt-6 text-texto/70">Nenhum anúncio ainda.</p>
+        <p className="mt-6 rounded-[14px] border border-linha bg-superficie px-5 py-8 text-texto/70">Nenhum anúncio ainda.</p>
       ) : (
-        <ul className="mt-6 divide-y divide-linha border-y border-linha">
+        <ul className="mt-6 overflow-hidden rounded-[14px] border border-linha bg-superficie">
           {lista.map((item) => (
-            <li key={item.id} className="flex items-center gap-4 py-3">
+            <li key={item.id} className={`flex items-center gap-4 border-b border-linha px-4 py-3 last:border-b-0 ${classeLinha}`}>
               {item.imageUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={item.imageUrl} alt="" className="h-16 w-10 border border-linha object-cover" />
@@ -234,13 +228,13 @@ export default function AdminAnunciosPage() {
                   {item.active ? "Ativo" : "Pausado"}
                 </p>
               </div>
-              <button type="button" onClick={() => alternar(item)} className="text-sm font-semibold text-destaque underline">
+              <button type="button" onClick={() => alternar(item)} className="text-sm font-semibold text-titulo transition-colors duration-150 hover:text-destaque motion-reduce:transition-none">
                 {item.active ? "Pausar" : "Ativar"}
               </button>
-              <button type="button" onClick={() => abrirEdicao(item)} className="text-sm font-semibold text-destaque underline">
+              <button type="button" onClick={() => abrirEdicao(item)} className="text-sm font-semibold text-titulo transition-colors duration-150 hover:text-destaque motion-reduce:transition-none">
                 Editar
               </button>
-              <button type="button" onClick={() => excluir(item.id)} className="text-sm font-semibold text-vermelho underline">
+              <button type="button" onClick={() => excluir(item.id)} className="text-sm font-semibold text-vermelho transition-colors duration-150 hover:text-titulo motion-reduce:transition-none">
                 Excluir
               </button>
             </li>

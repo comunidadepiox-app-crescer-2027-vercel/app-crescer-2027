@@ -1,10 +1,10 @@
-# Visão do produto — WebApp Crescer
+# Visão do produto — Crescer
 
 ## O que é
 
-WebApp do **Crescer — Encontro da Família Católica**, encontro anual de famílias promovido pela Comunidade de São Pio X em Campina Grande/PB.
+**Crescer — Encontro da Família Católica**, encontro anual de famílias promovido pela Comunidade de São Pio X em Campina Grande/PB.
 
-O app é o companheiro de quem vai ao encontro: entrar com a própria conta, ver o que acontece hoje, ler as notícias da comunidade e apoiar a obra como Benfeitor da Fé.
+O companheiro de quem vai ao encontro é o app nativo (Expo, pasta `mobile/`): entrar com a própria conta, ver o que acontece hoje, ler as notícias da comunidade e apoiar a obra como Benfeitor da Fé. O site Next.js é só a mesa administrativa da equipe de comunicação.
 
 ## Para quem
 
@@ -23,7 +23,7 @@ Uma família abre o app no dia do encontro e, em poucos toques, sabe o que está
 - Ingressos, credenciamento ou pagamento de inscrição (o encontro não é tratado como e-commerce aqui)
 - Gateway de doação (boleto/Pix do Benfeitor acontece no fluxo oficial, após contato humano)
 - Rede social, chat ou feed de comentários
-- App nativo: em andamento na spec `008` (Expo em `mobile/`). CMS admin permanece na web.
+- App do fiel no navegador. As telas do fiel ficam no app nativo (spec `008`, Expo em `mobile/`). O site é só a mesa administrativa.
 - Gestão de caravanas (o site oficial já faz isso; o app só aponta o link)
 - CMS genérico para páginas arbitrárias
 
@@ -31,7 +31,8 @@ Uma família abre o app no dia do encontro e, em poucos toques, sabe o que está
 
 | Camada | Escolha | Motivo |
 |---|---|---|
-| UI | Next.js App Router + JSX | App web, rotas por pasta, JavaScript como decidido |
+| UI do fiel | Expo / React Native em `mobile/` | App instalável; spec `008` |
+| UI da mesa | Next.js App Router + JSX | Site só administrativo, rotas por pasta, JavaScript como decidido |
 | Estilo | Tailwind CSS | Tokens do Crescer em CSS variables, sem UI kit genérico |
 | Auth | Firebase Auth | E-mail/senha e Google no mesmo projeto |
 | Dados | Cloud Firestore | Conteúdo editorial e leads sem backend próprio nesta fase |
@@ -39,24 +40,15 @@ Uma família abre o app no dia do encontro e, em poucos toques, sabe o que está
 
 ## Navegação do produto
 
-Área autenticada:
+O site (Next.js) é só a mesa administrativa. `/` redireciona para `/admin`. Sem sessão, `/admin` mostra login simples (`crescer-admin@crescer.app` pré-preenchido). Papel `admin`:
 
-- `/` — Início (login e cadastro). Sem sessão, o fiel permanece aqui.
-- `/home` — Notícias em destaque + cronograma do dia
-- `/noticias` e `/noticias/[id]`
-- `/cronograma`
-- `/benfeitor`
-- `/configuracao`
-- `/galeria`
-- `/sobre`
-
-Área admin (role `admin`), no site, não no app nativo:
-
-- `/admin` — sem sessão mostra login simples (`crescer-admin@crescer.app` pré-preenchido)
-- `/admin/noticias`
+- `/admin`
+- `/admin/noticias` e `/admin/noticias/[id]`
 - `/admin/cronograma`
-- `/admin/destaques`
-- `/admin/leads`
+- `/admin/anuncios`
+- `/admin/destaques` e `/admin/leads` (fora do menu)
+
+O app do fiel (Expo) tem login, Home, notícias, agenda, benfeitor, conta, galeria e sobre. Spec `008`.
 
 ## Glossário
 

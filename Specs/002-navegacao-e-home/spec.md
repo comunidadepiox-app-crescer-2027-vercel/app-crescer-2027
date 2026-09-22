@@ -5,6 +5,8 @@
 - Personas: `fiel`
 - Depende de: [001-autenticacao](../001-autenticacao/); consome recortes de [003-noticias](../003-noticias/) e [004-cronograma](../004-cronograma/)
 
+> **Superfície web retirada.** O site Next.js é só a mesa administrativa (`/admin`). Home e navegação do fiel desta spec vivem no app Expo, spec [008](../008-app-react-native/spec.md).
+
 ## Problema
 
 Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do evento, as notícias recentes e um caminho fixo para as outras páginas.

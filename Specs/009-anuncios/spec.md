@@ -16,7 +16,7 @@ A equipe precisa mostrar um cartaz vertical na Home do app, com link opcional, s
 - `/admin/anuncios`: criar, editar, ativar, desativar e excluir
 - Imagem vertical no Cloudinary e URL opcional
 - Pré-visualização no formato do celular, na mesa
-- No app, na primeira abertura da Home de cada dia (America/Fortaleza), pilha com todos os anúncios ativos
+- No app, em toda entrada (abertura ou volta do segundo plano), pilha com todos os anúncios ativos
 - O mais recente fica na frente; o X tira só esse; o de trás já está visível
 - Toque na imagem abre o link, se houver
 
@@ -29,8 +29,8 @@ A equipe precisa mostrar um cartaz vertical na Home do app, com link opcional, s
 ## Fluxos
 
 1. Admin envia a imagem, cola o link se quiser, deixa ativo e salva.
-2. Fiel abre a Home pela primeira vez no dia e vê a pilha.
-3. Fecha o da frente; o próximo aparece. No mesmo dia, reabrir a Home não mostra de novo.
+2. Fiel entra no app e vê a pilha na Home.
+3. Fecha o da frente; o próximo aparece. Trocar de aba não mostra de novo. Sair e voltar ao app mostra a pilha outra vez.
 
 ## Superfície do produto
 
@@ -59,13 +59,13 @@ Coleção `announcements/{id}`
 
 - Fiel só lê `active == true`.
 - Ordem: `createdAt` decrescente.
-- O dia visto fica no aparelho. Fechar o app no meio da pilha não reabre no mesmo dia.
+- A pilha reabre em cada entrada no app. Trocar de aba no mesmo uso não reabre.
 - Sem imagem, o admin não salva.
 
 ## Critérios de aceite
 
 - [ ] Admin publica anúncio e vê a miniatura na lista
-- [ ] App mostra a pilha só na primeira Home do dia
+- [ ] App mostra a pilha em toda entrada no app
 - [ ] X revela o anúncio de trás
 - [ ] Toque abre o link quando existe
 - [ ] Anúncio inativo não entra na pilha

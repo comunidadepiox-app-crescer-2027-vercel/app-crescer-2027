@@ -5,7 +5,7 @@
 
 ## Abordagem
 
-Coleção `announcements` escrita só pelo admin. O app escuta os ativos, ordena por `createdAt` e decide no aparelho se o dia já viu a pilha.
+Coleção `announcements` escrita só pelo admin. O app escuta os ativos, ordena por `createdAt` e mostra a pilha sempre que o app fica ativo.
 
 ## Arquivos e rotas previstos
 
@@ -39,7 +39,7 @@ Pasta `announcements/`, só imagem, pelo Route Handler já usado na capa.
 | Risco | Mitigação |
 |---|---|
 | Índice composto ausente | Declarar em `firestore.indexes.json` |
-| Pilha reabre no mesmo dia | Gravar a data ao mostrar, não ao fechar o último |
+| Trocar de aba reabre a pilha | Só recolocar a fila quando o app fica ativo |
 
 ## Fora deste plan
 
