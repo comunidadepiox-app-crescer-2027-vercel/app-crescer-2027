@@ -2,7 +2,7 @@
 
 ## Funcionais
 
-- **RF-01** Fiel autenticado vê nav com Home, Notícias, Cronograma, Benfeitor da Fé, Configuração, Galeria e Sobre.
+- **RF-01** Fiel autenticado vê a barra com Home, Notícias, Agenda e Benfeitor da Fé, e o círculo de menu no centro. A Conta abre pela engrenagem do header. Galeria e Sobre continuam rotas do app.
 - **RF-02** `/home` exibe seção de notícias e seção de cronograma do dia.
 - **RF-03** Fora das datas da edição, a Home explica o recorte usado.
 - **RF-04** `/sobre` apresenta a comunidade e o encontro, com link de caravanas para o site oficial.
@@ -10,7 +10,7 @@
 
 ## Não funcionais
 
-- **RNF-01** Identidade DESIGN.md; nav sem pílulas
+- **RNF-01** Identidade DESIGN.md; aba ativa sem pílula. O círculo do menu é o controle do centro da barra
 - **RNF-02** Queries no client Firestore até haver motivo para server actions
 - **RNF-03** Nav usável com o polegar no mobile
 - **RNF-04** Datas em `America/Recife`

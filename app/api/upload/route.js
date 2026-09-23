@@ -5,7 +5,7 @@ const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 const CLOUDINARY_KEY = process.env.CLOUDINARY_API_KEY;
 const CLOUDINARY_SECRET = process.env.CLOUDINARY_API_SECRET;
 
-const PASTAS = new Set(["news", "authors", "announcements"]);
+const PASTAS = new Set(["news", "authors"]);
 const LIMITE_IMAGEM = 8 * 1024 * 1024;
 const LIMITE_VIDEO = 80 * 1024 * 1024;
 

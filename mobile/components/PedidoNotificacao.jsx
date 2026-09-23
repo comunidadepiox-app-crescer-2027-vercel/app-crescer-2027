@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ativarNotificacao, adiarPedido, lerPedido } from "../lib/notificacoes";
+import { alturaBarra } from "./BarraAbas";
 import { CORES, FONTES } from "../lib/tema";
 
 export function PedidoNotificacao({ uid }) {
@@ -42,7 +43,7 @@ export function PedidoNotificacao({ uid }) {
 
   return (
     <View pointerEvents="box-none" style={StyleSheet.absoluteFill}>
-      <View style={[estilos.cartao, { bottom: 76 + insets.bottom }]}>
+      <View style={[estilos.cartao, { bottom: alturaBarra(insets.bottom) + 12 }]}>
         <Text style={estilos.titulo}>Ative as notificações</Text>
         <Text style={estilos.texto}>
           Quando a programação de hoje mudar, o aviso chega mesmo com o app fechado.

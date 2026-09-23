@@ -15,11 +15,10 @@ A equipe de comunicação precisa publicar notícias, ajustar a programação e 
 
 - Grupo `/admin` protegido por `role == admin`
 - Login simples em `/admin` (e-mail pré-preenchido `crescer-admin@crescer.app`, senha digitada; sem Google e sem cadastro nesta tela)
-- `/admin` com barra lateral roxa: Início, Notícias, Cronograma, Anúncios. Item ativo marcado em dourado
-- Início da mesa com o trabalho real: rascunho de notícia mais recente ou nada por publicar, programação do dia do recorte, anúncio ativo ou nenhum. Se a leitura falhar, a faixa permanece e a linha de estado some
+- `/admin` com barra lateral roxa: Início, Notícias, Cronograma. Item ativo marcado em dourado
+- Início da mesa com o trabalho real: rascunho de notícia mais recente ou nada por publicar, e programação do dia do recorte. Se a leitura falhar, a faixa permanece e a linha de estado some
 - CRUD de `news` com editor TipTap: folha de escrita (título em slab, barra agrupada por ícones, menu na seleção, menu no parágrafo vazio, recuo por botão e por Tab, colar ou soltar imagem), coluna com autor, capa e publicação, e pré-visualização antes de publicar
 - CRUD de `programItems` (abas só dos dias da edição; lista não depende de índice composto)
-- CRUD de `announcements` (spec 009)
 - Aviso push quando a programação publicada do dia do recorte muda (spec 004 e 008)
 - Fiel que abrir `/admin` vê recusa (sem vazar dados) e pode sair
 - `/` redireciona para `/admin`. O site não tem as telas do fiel
@@ -28,7 +27,7 @@ A equipe de comunicação precisa publicar notícias, ajustar a programação e 
 
 - Gestão de usuários além de ver o próprio papel
 - Promoção self-serve para admin (o primeiro admin nasce pela decisão de OPEN-QUESTIONS)
-- Media library completa; upload pontual (capa, autor, imagem e vídeo do texto, anúncio)
+- Media library completa; upload pontual (capa, autor, imagem e vídeo do texto)
 - Destaques e Benfeitores no menu da mesa (as rotas `/admin/destaques` e `/admin/leads` continuam no código, fora da navegação)
 
 ## Fluxos
@@ -36,17 +35,16 @@ A equipe de comunicação precisa publicar notícias, ajustar a programação e 
 1. Admin abre `/admin` no navegador (não no app nativo). Sem sessão, vê login só e-mail/senha, com e-mail pré-preenchido `crescer-admin@crescer.app`. Entra e cai na mesa.
 2. Cria notícia na folha do editor. Formata pela barra ou pelo menu da seleção, insere imagem colando ou soltando no texto, envia capa e autor, pré-visualiza e publica.
 3. Cria ou edita item de programação. Se a mudança publicada for do dia do recorte, a mesa dispara o aviso.
-4. Publica anúncio vertical com link opcional.
-5. Fiel autenticado em `/admin` vê recusa (não vê dados) e sai pela própria tela. Sem sessão, permanece no login da mesa. Quem abre `/` cai em `/admin`.
+4. Fiel autenticado em `/admin` vê recusa (não vê dados) e sai pela própria tela. Sem sessão, permanece no login da mesa. Quem abre `/` cai em `/admin`.
 
 ## Superfície do produto
 
 | Tipo | Identificador |
 |---|---|
-| Rotas da mesa | `/admin`, `/admin/noticias`, `/admin/noticias/[id]`, `/admin/cronograma`, `/admin/anuncios` |
+| Rotas da mesa | `/admin`, `/admin/noticias`, `/admin/noticias/[id]`, `/admin/cronograma` |
 | Rotas fora do menu | `/admin/destaques`, `/admin/leads` |
-| Coleções | `news`, `programItems`, `announcements`, `deviceTokens`, `siteContent`, `benefactorLeads`, `users` (leitura do próprio role) |
-| Cloudinary | `news/`, `authors/`, `announcements/` |
+| Coleções | `news`, `programItems`, `deviceTokens`, `siteContent`, `benefactorLeads`, `users` (leitura do próprio role) |
+| Cloudinary | `news/`, `authors/` |
 | Papel | `admin` |
 
 ## Dados
@@ -81,7 +79,7 @@ Chaves iniciais: `home`, `about`, `benfeitor` (se a campanha deixar de ser só e
 - [ ] Admin lista leads sem export público
 - [ ] Capa aparece via Cloudinary
 - [ ] No editor, a seleção abre o menu de formato, o parágrafo vazio oferece imagem, vídeo, botão e título, colar imagem insere no texto, e Tab não tira o foco
-- [ ] O início mostra o estado real das três áreas, sem número hero nem gráfico
+- [ ] O início mostra o estado real de notícias e cronograma, sem número hero nem gráfico
 - [ ] UI admin sóbria, sem dashboard de métricas inventadas
 
 ## Anti-slop

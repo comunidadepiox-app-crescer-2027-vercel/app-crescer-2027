@@ -48,6 +48,10 @@ Só consumir `coverUrl` já salvo.
 | Muitos itens na nav mobile | Primários na barra; Galeria/Sobre no header |
 | Timezone de Campina Grande | Avaliar datas em `America/Recife` |
 
+## App (barra atual)
+
+No Expo, a barra é Home, Notícias, círculo de menu, Agenda e Benfeitor (`mobile/components/BarraAbas.jsx`). A Conta abre pela engrenagem à direita de INSCREVA-SE. A folha (`mobile/components/MenuAtalhos.jsx`) mostra Santo Terço, Voluntário, Fornecedor e Spotify sem rota.
+
 ## Fora deste plan
 
 CMS, detalhe da notícia, grade completa do cronograma, formulário Benfeitor.

@@ -45,7 +45,6 @@ O site (Next.js) é só a mesa administrativa. `/` redireciona para `/admin`. Se
 - `/admin`
 - `/admin/noticias` e `/admin/noticias/[id]`
 - `/admin/cronograma`
-- `/admin/anuncios`
 - `/admin/destaques` e `/admin/leads` (fora do menu)
 
 O app do fiel (Expo) tem login, Home, notícias, agenda, benfeitor, conta, galeria e sobre. Spec `008`.

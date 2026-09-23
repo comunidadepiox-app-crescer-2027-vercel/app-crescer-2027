@@ -30,5 +30,5 @@ Expo (React Native, JavaScript, sem TypeScript) com expo-router, na pasta `mobil
 
 1. Fundação: scaffold, deps, fontes TTF, assets da marca, tema (cores/tipografia)
 2. Infra: firebase client RN, AuthProvider, splash com vídeo
-3. Telas: login → abas (Home, Notícias, Agenda, Benfeitor, Conta) → detalhe de notícia, Galeria, Sobre
+3. Telas: login → barra (Home, Notícias, círculo de menu, Agenda, Benfeitor) → Conta pela engrenagem do header → detalhe de notícia, Galeria, Sobre
 4. Validação: bundle sem erros, checklist da spec, docs (README mobile)

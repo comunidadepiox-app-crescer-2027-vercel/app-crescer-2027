@@ -8,7 +8,6 @@ import { NewsCard } from "../../components/NewsCard";
 import { ProgramaLista } from "../../components/ProgramaLista";
 import { FundoRoxoPoligonal, FundoLaranjaPoligonal } from "../../components/FundoPoligonal";
 import { Botao, TituloSecao, Paragrafo } from "../../components/Ui";
-import { PilhaAnuncios } from "../../components/PilhaAnuncios";
 import { CORES, FONTES } from "../../lib/tema";
 import { useAuth } from "../../lib/authProvider";
 import { useQueroIr } from "../../lib/avisoSaida";
@@ -139,7 +138,6 @@ export default function HomeScreen() {
         />
       </FundoLaranjaPoligonal>
     </ScrollView>
-    <PilhaAnuncios />
     </View>
   );
 }

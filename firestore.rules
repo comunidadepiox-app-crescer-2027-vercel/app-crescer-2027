@@ -67,11 +67,6 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
-    match /announcements/{id} {
-      allow read: if isAdmin() || (signedIn() && resource.data.active == true);
-      allow create, update, delete: if isAdmin();
-    }
-
     match /deviceTokens/{id} {
       allow create: if signedIn()
         && request.resource.data.uid == request.auth.uid

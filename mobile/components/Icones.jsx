@@ -92,6 +92,26 @@ export function IconeSetaEsquerda(props) {
   );
 }
 
+export function IconeEngrenagem(props) {
+  return (
+    <Base {...props}>
+      <Path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+      <Circle cx={12} cy={12} r={3} />
+    </Base>
+  );
+}
+
+export function IconeGrade(props) {
+  return (
+    <Base {...props}>
+      <Rect x={3.5} y={3.5} width={7} height={7} rx={1.6} />
+      <Rect x={13.5} y={3.5} width={7} height={7} rx={1.6} />
+      <Rect x={3.5} y={13.5} width={7} height={7} rx={1.6} />
+      <Rect x={13.5} y={13.5} width={7} height={7} rx={1.6} />
+    </Base>
+  );
+}
+
 export function IconeGoogle({ cor = "#310073", tamanho = 18 }) {
   return (
     <Svg width={tamanho} height={tamanho} viewBox="0 0 16 16" fill={cor}>

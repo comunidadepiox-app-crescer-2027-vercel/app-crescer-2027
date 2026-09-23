@@ -5,7 +5,7 @@
 
 ## Abordagem
 
-Grupo `app/admin/` com layout que lê `role` do AuthProvider. Sem sessão, o layout mostra login e-mail/senha (e-mail pré-preenchido `crescer-admin@crescer.app`); fiel autenticado vê recusa; só `role == admin` vê a mesa, com barra lateral. Regras Firestore são a barreira real. Upload: Route Handler `app/api/upload/route.js` assina imagem ou vídeo nas pastas `news/`, `authors/` e `announcements/`.
+Grupo `app/admin/` com layout que lê `role` do AuthProvider. Sem sessão, o layout mostra login e-mail/senha (e-mail pré-preenchido `crescer-admin@crescer.app`); fiel autenticado vê recusa; só `role == admin` vê a mesa, com barra lateral. Regras Firestore são a barreira real. Upload: Route Handler `app/api/upload/route.js` assina imagem ou vídeo nas pastas `news/` e `authors/`.
 
 O primeiro admin **não** nasce pela UI. Implementar o mecanismo escolhido em OPEN-QUESTIONS (allowlist no Handler, custom claim, ou doc manual) como task explícita.
 
@@ -20,7 +20,6 @@ O primeiro admin **não** nasce pela UI. Implementar o mecanismo escolhido em OP
 | `components/admin/CabecalhoMesa.jsx` | título, frase e ação das abas |
 | `components/admin/iconesMesa.jsx` | ícones de linha da barra e do editor |
 | `components/noticias/Artigo.jsx` | corpo sanitizado, usado na prévia da mesa |
-| `app/admin/anuncios/page.jsx` | anúncios (009) |
 | `app/api/notify-programa/route.js` | push da programação do dia |
 | `app/admin/page.jsx` | índice |
 | `app/admin/noticias/page.jsx` | lista + criar |
@@ -47,7 +46,7 @@ Como o client em JSX não deve confiar só no campo `users.role` (o fiel poderia
 
 ## Cloudinary
 
-Pastas `news/`, `authors/` e `announcements/`. Imagem ou vídeo, conforme o campo do formulário.
+Pastas `news/` e `authors/`. Imagem ou vídeo, conforme o campo do formulário.
 
 ## Ordem de entrega
 
@@ -68,7 +67,7 @@ Pastas `news/`, `authors/` e `announcements/`. Imagem ou vídeo, conforme o camp
 
 ## Mesa e editor (revisão visual)
 
-A barra lateral usa o roxo institucional e o padrão poligonal. O início lê `news`, `programItems` e `announcements` só para uma linha de estado em cada faixa. Notícias ocupa a faixa larga. Cronograma e anúncios ficam menores, lado a lado. Sem gráfico e sem número hero.
+A barra lateral usa o roxo institucional e o padrão poligonal. O início lê `news` e `programItems` só para uma linha de estado em cada faixa. Notícias e cronograma ocupam a faixa larga, uma abaixo da outra. Sem gráfico e sem número hero.
 
 O editor acrescenta `@tiptap/extension-placeholder`. `BubbleMenu` e `FloatingMenu` vêm de `@tiptap/react`. O HTML gravado continua o de `lib/news/html.js`.
 

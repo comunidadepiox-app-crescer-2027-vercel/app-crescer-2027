@@ -1,6 +1,6 @@
 # Spec: 009-anuncios Anúncios na Home
 
-- Status: `in-progress`
+- Status: `retired` (saiu do app e da mesa; esta pasta fica como histórico)
 - Complexidade: `media`
 - Personas: `admin` (publica); `fiel` (vê no app)
 - Depende de: [007-admin-cms](../007-admin-cms/), [008-app-react-native](../008-app-react-native/)

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { listAllNews } from "@/lib/admin/news";
 import { listProgramItemsAdmin } from "@/lib/admin/program";
-import { listAnnouncements } from "@/lib/admin/announcements";
 import { formataDataCurta, resolveDiaRecorte } from "@/lib/event/edition";
 import { CabecalhoMesa } from "@/components/admin/CabecalhoMesa";
 
@@ -19,10 +18,6 @@ function linhaPrograma(lista) {
   const tem = lista.some((item) => item.date === dia);
   const quando = formataDataCurta(dia);
   return tem ? `${quando}: há programação.` : `${quando}: ainda sem item.`;
-}
-
-function linhaAnuncios(lista) {
-  return lista.some((item) => item.active) ? "Há anúncio ativo." : "Nenhum anúncio ativo.";
 }
 
 function Faixa({ href, kicker, titulo, descricao, estado, larga = false }) {
@@ -46,7 +41,6 @@ function Faixa({ href, kicker, titulo, descricao, estado, larga = false }) {
 export default function AdminIndexPage() {
   const [noticias, setNoticias] = useState(undefined);
   const [programa, setPrograma] = useState(undefined);
-  const [anuncios, setAnuncios] = useState(undefined);
 
   useEffect(() => {
     listAllNews()
@@ -55,9 +49,6 @@ export default function AdminIndexPage() {
     listProgramItemsAdmin()
       .then(setPrograma)
       .catch(() => setPrograma(null));
-    listAnnouncements()
-      .then(setAnuncios)
-      .catch(() => setAnuncios(null));
   }, []);
 
   return (
@@ -78,20 +69,14 @@ export default function AdminIndexPage() {
         />
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-[1.4fr_1fr]">
+      <div className="mt-4">
         <Faixa
           href="/admin/cronograma"
           kicker="O dia"
           titulo="Cronograma"
           descricao="Manter a programação por dia, espaço e horário."
           estado={Array.isArray(programa) ? linhaPrograma(programa) : null}
-        />
-        <Faixa
-          href="/admin/anuncios"
-          kicker="Home do app"
-          titulo="Anúncios"
-          descricao="Publicar o cartaz que aparece na Home do app."
-          estado={Array.isArray(anuncios) ? linhaAnuncios(anuncios) : null}
+          larga
         />
       </div>
     </div>

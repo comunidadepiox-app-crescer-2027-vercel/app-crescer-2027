@@ -1,0 +1,222 @@
+import { useEffect, useRef, useState } from "react";
+import {
+  Animated,
+  Dimensions,
+  Image,
+  PanResponder,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import AudioLines from "lucide-react-native/icons/audio-lines";
+import Contact from "lucide-react-native/icons/contact";
+import Handshake from "lucide-react-native/icons/handshake";
+import { CORES, FONTES } from "../lib/tema";
+
+const terco = require("../assets/icons/terco.webp");
+const { height: ALTURA_TELA } = Dimensions.get("window");
+
+const ITENS = [
+  { rotulo: "Terço da Restauração das Famílias", imagem: terco },
+  { rotulo: "Voluntário", Icone: Handshake },
+  { rotulo: "Fornecedor", Icone: Contact },
+  { rotulo: "Spotify", Icone: AudioLines },
+];
+
+export function MenuAtalhos({ aberto, onFechar, alturaBarra = 0 }) {
+  const [visivel, setVisivel] = useState(aberto);
+  
+  // Animações nativas
+  const translateY = useRef(new Animated.Value(ALTURA_TELA)).current;
+  const opacidade = useRef(new Animated.Value(0)).current;
+
+  // Guardamos a ref da função de fechar para callbacks
+  const onFecharRef = useRef(onFechar);
+  onFecharRef.current = onFechar;
+
+  useEffect(() => {
+    if (aberto) {
+      setVisivel(true);
+      // Entradas em mola (Spring) dão sensação de resposta imediata e natural
+      Animated.parallel([
+        Animated.spring(translateY, {
+          toValue: 0,
+          useNativeDriver: true,
+          damping: 25,
+          mass: 0.8,
+          stiffness: 260,
+        }),
+        Animated.timing(opacidade, {
+          toValue: 1,
+          duration: 200,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    } else {
+      // Saída rápida e suave
+      Animated.parallel([
+        Animated.timing(translateY, {
+          toValue: ALTURA_TELA,
+          duration: 220,
+          useNativeDriver: true,
+        }),
+        Animated.timing(opacidade, {
+          toValue: 0,
+          duration: 180,
+          useNativeDriver: true,
+        }),
+      ]).start(({ finished }) => {
+        if (finished) setVisivel(false);
+      });
+    }
+  }, [aberto, translateY, opacidade]);
+
+  // Gestos de arrastar para fechar (PanResponder)
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => false,
+      onMoveShouldSetPanResponder: (_, gesto) =>
+        gesto.dy > 5 && Math.abs(gesto.dy) > Math.abs(gesto.dx),
+
+      onPanResponderMove: (_, gesto) => {
+        // Permite apenas arrastar para baixo
+        if (gesto.dy > 0) {
+          translateY.setValue(gesto.dy);
+          // Reduz a opacidade do fundo proporcionalmente ao arrasto
+          const progresso = Math.max(0, 1 - gesto.dy / 300);
+          opacidade.setValue(progresso);
+        }
+      },
+
+      onPanResponderRelease: (_, gesto) => {
+        // Se arrastou mais de 90px ou deu um "flick" rápido para baixo
+        if (gesto.dy > 90 || gesto.vy > 0.5) {
+          onFecharRef.current?.();
+        } else {
+          // Caso contrário, volta para a posição aberta com efeito de mola
+          Animated.parallel([
+            Animated.spring(translateY, {
+              toValue: 0,
+              useNativeDriver: true,
+              bounciness: 4,
+              speed: 14,
+            }),
+            Animated.timing(opacidade, {
+              toValue: 1,
+              duration: 150,
+              useNativeDriver: true,
+            }),
+          ]).start();
+        }
+      },
+    })
+  ).current;
+
+  if (!visivel && !aberto) return null;
+
+  return (
+    <View style={[estilos.overlay, { bottom: alturaBarra }]} accessibilityViewIsModal>
+      {/* Fundo escurecido clicável para fechar */}
+      <Pressable style={StyleSheet.absoluteFill} onPress={onFechar}>
+        <Animated.View style={[estilos.fundo, { opacity: opacidade }]} />
+      </Pressable>
+
+      {/* Cartão do Menu */}
+      <Animated.View
+        style={[estilos.folha, { transform: [{ translateY }] }]}
+      >
+        <View style={estilos.alcaToque} {...panResponder.panHandlers}>
+          <View style={estilos.alca} />
+        </View>
+
+        <View style={estilos.grade}>
+          {ITENS.map(({ rotulo, Icone, imagem }) => (
+            <View key={rotulo} style={estilos.item}>
+              <View style={estilos.poco}>
+                {imagem ? (
+                  <Image source={imagem} style={estilos.terco} resizeMode="contain" />
+                ) : (
+                  <Icone color={CORES.laranja} size={40} strokeWidth={2} />
+                )}
+              </View>
+              <Text style={estilos.rotulo}>{rotulo}</Text>
+            </View>
+          ))}
+        </View>
+      </Animated.View>
+    </View>
+  );
+}
+
+const estilos = StyleSheet.create({
+  overlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 20,
+    backgroundColor: "transparent",
+  },
+  fundo: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(17, 12, 28, 0.45)",
+  },
+  folha: {
+    position: "absolute",
+    zIndex: 2,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: CORES.superficie,
+    borderTopLeftRadius: 22,
+    borderTopRightRadius: 22,
+    paddingHorizontal: 20,
+    paddingBottom: 28,
+    overflow: "hidden",
+  },
+  alcaToque: {
+    alignSelf: "stretch",
+    alignItems: "center",
+    paddingTop: 10,
+    paddingBottom: 18,
+  },
+  alca: {
+    width: 36,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: "#D5D5D5",
+  },
+  grade: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    rowGap: 20,
+  },
+  item: {
+    width: "44%",
+    alignItems: "center",
+    gap: 10,
+  },
+  poco: {
+    width: 76,
+    height: 76,
+    borderRadius: 38,
+    backgroundColor: "#F3F1F1",
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
+  },
+  terco: {
+    width: 55,
+    height: 55,
+  },
+  rotulo: {
+    fontFamily: FONTES.corpoMedio,
+    fontSize: 11,
+    letterSpacing: 0.6,
+    color: "#8E8E8E",
+    textTransform: "uppercase",
+    textAlign: "center",
+  },
+});

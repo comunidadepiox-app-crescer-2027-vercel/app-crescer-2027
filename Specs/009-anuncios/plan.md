@@ -1,7 +1,9 @@
 # Plan: 009-anuncios Anúncios na Home
 
 - Spec: [spec.md](spec.md)
-- Status: `planned`
+- Status: `retired`
+
+A feature saiu do produto. A pilha da Home, a rota `/admin/anuncios`, a lib de escrita, o match em `firestore.rules` e o índice de `announcements` foram removidos. Documentos já gravados no Firestore permanecem até alguém apagá-los no console.
 
 ## Abordagem
 

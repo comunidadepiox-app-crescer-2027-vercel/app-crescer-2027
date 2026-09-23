@@ -38,8 +38,8 @@
   - Fora: promoção automática.
 
 - [x] **T8 — Mesa lateral**
-  - Faz: barra com Início, Notícias, Cronograma e Anúncios. Destaques e Benfeitores saem do menu e da mesa.
-  - Verifica: as quatro entradas navegam; as duas retiradas não aparecem.
+  - Faz: barra com Início, Notícias e Cronograma. Destaques e Benfeitores saem do menu e da mesa.
+  - Verifica: as três entradas navegam; as duas retiradas não aparecem.
   - Fora: apagar as páginas de destaques e leads.
 
 - [x] **T9 — Editor e prévia**
@@ -58,8 +58,8 @@
   - Fora: tabela, destaque, código e biblioteca de mídia.
 
 - [ ] **T12 — Casca da mesa**
-  - Faz: barra roxa com item ativo em dourado, cabeçalho comum, início com estado real das três áreas, lista de notícias com capa, e o mesmo ritmo em cronograma e anúncios.
-  - Verifica: as quatro entradas navegam; o início não mostra número hero nem gráfico; falha de leitura esconde a linha de estado e mantém a faixa.
+  - Faz: barra roxa com item ativo em dourado, cabeçalho comum, início com estado real de notícias e cronograma, e lista de notícias com capa.
+  - Verifica: as três entradas navegam; o início não mostra número hero nem gráfico; falha de leitura esconde a linha de estado e mantém a faixa.
   - Fora: métricas inventadas e as rotas de destaques e leads.
 
 ## Validação final

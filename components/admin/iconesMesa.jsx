@@ -19,13 +19,6 @@ const TRACOS = {
       <rect x="5" y="5.5" width="14" height="14" />
     </>
   ),
-  anuncios: (
-    <>
-      <rect x="4" y="5" width="16" height="12" />
-      <path d="M8 17l3.2-3.6L14 16l2-2.2L20 17" />
-      <circle cx="9" cy="9" r="1" />
-    </>
-  ),
   citacao: (
     <>
       <path d="M8 16V11c0-2 1.2-3.5 3-3.5" />

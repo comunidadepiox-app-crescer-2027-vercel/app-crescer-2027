@@ -1,5 +1,7 @@
 # Tasks: 009-anuncios Anúncios na Home
 
+A feature saiu do produto. O código da pilha, da mesa e da coleção foi removido. As tasks abaixo registram o que existiu.
+
 ## Checklist
 
 - [x] **T1 — Rules e índice**
@@ -17,8 +19,12 @@
   - Verifica: voltar do segundo plano mostra de novo; trocar de aba não mostra; inativo fica de fora.
   - Fora: Home do site.
 
+- [x] **T4 — Retirada**
+  - Faz: apagar a pilha na Home, o CRUD da mesa, a pasta de upload, o match das rules e o índice.
+  - Verifica: app e mesa não leem `announcements`.
+  - Fora: apagar documentos já gravados no Firestore.
+
 ## Validação final
 
-- [ ] Critérios de aceite de `spec.md`
-- [ ] Copy sem travessão
-- [ ] `spec.md`, `plan.md` e este arquivo refletem o que foi entregue
+- [x] A feature não faz mais parte do produto
+- [x] `spec.md`, `plan.md` e este arquivo registram a retirada

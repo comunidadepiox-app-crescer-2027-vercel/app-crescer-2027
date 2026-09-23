@@ -16,7 +16,9 @@ Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do event
 ### Entra
 
 - Shell autenticado com navegação persistente
-- Destinos da nav: Home, Notícias, Cronograma, Benfeitor da Fé, Configuração
+- Barra inferior: Home, Notícias, círculo de menu, Agenda, Benfeitor da Fé
+- Conta fora da barra: engrenagem no header, à direita de INSCREVA-SE, abre a tela de Conta
+- Folha do círculo: Santo Terço, Voluntário, Fornecedor, Spotify. Só ícone e rótulo; sem rota nesta entrega
 - Destinos extras (prompt: “outras que forem importantes”): Galeria, Sobre
 - `/home` com:
   - seção de notícias (até 4 publicadas, capa + título + data; escuta ao vivo)
@@ -30,13 +32,15 @@ Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do event
 - Detalhe completo da notícia (003 implementa; a Home só aponta)
 - Programação completa por abas de espaço (004)
 - Formulário Benfeitor (005)
+- Destino de Santo Terço, Voluntário, Fornecedor e Spotify
 
 ## Fluxos
 
 1. Fiel autenticado cai em `/home`.
 2. Toca uma notícia → `/noticias/[id]`.
 3. Toca “ver cronograma” ou um horário → `/cronograma` (com âncora do dia, se já existir na 004).
-4. Nav leva a destinos reais; item ativo visível sem pílula.
+4. A barra leva a Home, Notícias, Agenda e Benfeitor. O item ativo fica dourado, sem pílula. Na Conta, aberta pela engrenagem, nenhuma aba fica ativa.
+5. O círculo abre a folha por cima da tela. Fecha ao tocar de novo no círculo, no fundo escuro ou ao arrastar para baixo. Os quatro atalhos não navegam.
 
 ## Superfície do produto
 
@@ -65,7 +69,7 @@ Datas da edição: constante em `lib/event/edition.js` (5 a 9 de fevereiro de 20
 ## Regras de negócio
 
 - Nav sempre visível nas rotas do grupo `(app)`.
-- Nenhum item de nav sem página.
+- Nenhum item da barra sem página. Os quatro atalhos da folha não são botão enquanto não tiverem destino.
 - Home não inventa estatística (“milhares de famílias”).
 - Link de Caravanas no Sobre ou rodapé da Home aponta para o site oficial, não abre produto interno.
 
@@ -75,7 +79,10 @@ Datas da edição: constante em `lib/event/edition.js` (5 a 9 de fevereiro de 20
 - [ ] Home mostra bloco de notícias e bloco do dia
 - [ ] Fora das datas do evento, o aviso existe e não é um número hero
 - [ ] Sem sessão, `/home` redireciona (spec 001)
-- [ ] Item ativo da nav não é uma pílula `rounded-full`
+- [ ] Item ativo da barra é dourado, sem pílula. O círculo laranja do centro é o controle do menu
+- [ ] A barra mostra Home, Notícias, Agenda e Benfeitor, com o círculo no meio
+- [ ] A engrenagem, à direita de INSCREVA-SE, abre Conta e nenhuma aba fica dourada
+- [ ] A folha lista Santo Terço, Voluntário, Fornecedor e Spotify, sem navegar, e fecha no círculo, no fundo ou no arraste
 
 ## Anti-slop
 

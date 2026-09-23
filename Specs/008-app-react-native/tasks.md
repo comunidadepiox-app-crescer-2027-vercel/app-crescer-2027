@@ -33,10 +33,10 @@
 - [x] **T11 — Conta, Galeria e Sobre**
   - Faz: editar nome, sair; links oficiais; institucional.
   - Verifica: sair volta ao login.
-- [x] **T13 — Anúncios na Home**
-  - Faz: pilha dos anúncios ativos em toda entrada no app.
-  - Verifica: X revela o de trás; voltar ao app mostra de novo.
-  - Fora: Home do site.
+- [x] **T13 — Anúncios na Home** (retirada com a spec 009)
+  - Faz: a pilha saiu da Home; o app não lê `announcements`.
+  - Verifica: a Home abre sem cartaz.
+  - Fora: apagar documentos já gravados no Firestore.
 
 - [x] **T14 — Aviso da programação**
   - Faz: pedido único para ativar notificação; token em `deviceTokens`. A mudança do dia do recorte chega só pelo push.

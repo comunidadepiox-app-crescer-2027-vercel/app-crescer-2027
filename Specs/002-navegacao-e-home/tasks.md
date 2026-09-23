@@ -37,6 +37,11 @@
   - Verifica: publicar no admin atualiza a Home sem recarregar; virada de dia é calendário Recife (5 até acabar o 5, depois 6).
   - Fora: detalhe da notícia.
 
+- [ ] **T8 — Barra e folha de atalhos**
+  - Faz: barra Home, Notícias, círculo, Agenda, Benfeitor. Conta só pela engrenagem do header. Folha com Santo Terço, Voluntário, Fornecedor e Spotify, sem destino.
+  - Verifica: aba ativa dourada; na Conta nenhuma aba dourada; a folha fecha no círculo, no fundo e no arraste; os atalhos não navegam.
+  - Fora: rota dos quatro atalhos.
+
 ## Validação final
 
 - [ ] Aceite de `spec.md`

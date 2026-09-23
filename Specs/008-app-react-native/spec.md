@@ -16,8 +16,7 @@ O fiel só acessa o Crescer pelo navegador. A comunidade quer um aplicativo inst
 - Projeto Expo (React Native, JavaScript) em `mobile/`, usando expo-router
 - Todas as telas do fiel: início/login, Home, Notícias (lista e detalhe), Agenda (cronograma), Benfeitor da Fé, Conta, Galeria e Sobre
 - Splash de abertura com o vídeo oficial da logo sobre `#3e1c7a` (mesmo tom do fundo do vídeo no aparelho), wordmark branco e, no rodapé, as logos da Diocese de Campina Grande e da Comunidade de São Pio X
-- Mesmo Firestore e as mesmas regras de leitura do fiel, mais `announcements` (spec 009) e o token de notificação em `deviceTokens`
-- Na Home, pilha de anúncios ativos em toda entrada no app (abertura ou volta do segundo plano)
+- Mesmo Firestore e as mesmas regras de leitura do fiel, e o token de notificação em `deviceTokens`
 - Pedido único para ativar notificação quando a programação publicada do dia do recorte muda
 - Identidade visual completa: paleta 000, fontes oficiais (convertidas para TTF), ícones da marca
 - Login e-mail/senha; login Google via `expo-auth-session` **só em build nativo** (dev/produção). No Expo Go o botão explica o bloqueio da política OAuth do Google
@@ -39,8 +38,8 @@ O fiel só acessa o Crescer pelo navegador. A comunidade quer um aplicativo inst
 
 | Tipo | Identificador |
 |---|---|
-| Pasta | `mobile/` (expo-router: `app/index` login, `app/(tabs)/{home,noticias,agenda,benfeitor,conta}`, `app/noticia/[id]`, `app/galeria`, `app/sobre`) |
-| Coleções Firestore | `users`, `news`, `programItems`, `benefactorLeads`, `announcements`, `deviceTokens` |
+| Pasta | `mobile/` (expo-router: `app/index` login, `app/(tabs)/{home,noticias,agenda,benfeitor,conta}`, `app/noticia/[id]`, `app/galeria`, `app/sobre`). A barra mostra Home, Notícias, Agenda e Benfeitor, com o círculo de menu no centro. Conta fica fora da barra e abre pela engrenagem do header. A folha do menu lista Santo Terço, Voluntário, Fornecedor e Spotify, sem rota nesta entrega |
+| Coleções Firestore | `users`, `news`, `programItems`, `benefactorLeads`, `deviceTokens` |
 | Papel necessário | `fiel` |
 
 ## Dados
