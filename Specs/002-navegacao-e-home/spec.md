@@ -18,7 +18,7 @@ Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do event
 - Shell autenticado com navegação persistente
 - Barra inferior: Home, Notícias, círculo de menu, Agenda, Benfeitor da Fé
 - Conta fora da barra: engrenagem no header, à direita de INSCREVA-SE, abre a tela de Conta
-- Folha do círculo: Santo Terço, Voluntário, Fornecedor, Spotify. Só ícone e rótulo; sem rota nesta entrega
+- Folha do círculo: Terço da Restauração das Famílias abre sua rota própria (011); Loja abre a coleção Arte Piedosa da Devotum no navegador externo; Voluntário, Fornecedor e Spotify seguem só com ícone e rótulo nesta entrega; Mapa do Evento aparece indisponível, sem ação
 - Destinos extras (prompt: “outras que forem importantes”): Galeria, Sobre
 - `/home` com:
   - seção de notícias (até 4 publicadas, capa + título + data; escuta ao vivo)
@@ -40,7 +40,7 @@ Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do event
 2. Toca uma notícia → `/noticias/[id]`.
 3. Toca “ver cronograma” ou um horário → `/cronograma` (com âncora do dia, se já existir na 004).
 4. A barra leva a Home, Notícias, Agenda e Benfeitor. O item ativo fica dourado, sem pílula. Na Conta, aberta pela engrenagem, nenhuma aba fica ativa.
-5. O círculo abre a folha por cima da tela. Fecha ao tocar de novo no círculo, no fundo escuro ou ao arrastar para baixo. Os quatro atalhos não navegam.
+5. O círculo abre a folha por cima da tela. Fecha ao tocar de novo no círculo, no fundo escuro ou ao arrastar para baixo. O Terço abre sua rota e Loja abre a coleção externa; Voluntário, Fornecedor e Spotify não navegam. Mapa do Evento fica visivelmente indisponível e não responde ao toque.
 
 ## Superfície do produto
 
@@ -69,7 +69,7 @@ Datas da edição: constante em `lib/event/edition.js` (5 a 9 de fevereiro de 20
 ## Regras de negócio
 
 - Nav sempre visível nas rotas do grupo `(app)`.
-- Nenhum item da barra sem página. Os quatro atalhos da folha não são botão enquanto não tiverem destino.
+- Nenhum item da barra sem página. Na folha, somente Terço e Loja são acionáveis nesta entrega; Mapa do Evento é uma exceção deliberada, exposta como controle desativado enquanto seu destino não estiver disponível.
 - Home não inventa estatística (“milhares de famílias”).
 - Link de Caravanas no Sobre ou rodapé da Home aponta para o site oficial, não abre produto interno.
 
@@ -82,7 +82,8 @@ Datas da edição: constante em `lib/event/edition.js` (5 a 9 de fevereiro de 20
 - [ ] Item ativo da barra é dourado, sem pílula. O círculo laranja do centro é o controle do menu
 - [ ] A barra mostra Home, Notícias, Agenda e Benfeitor, com o círculo no meio
 - [ ] A engrenagem, à direita de INSCREVA-SE, abre Conta e nenhuma aba fica dourada
-- [ ] A folha lista Santo Terço, Voluntário, Fornecedor e Spotify, sem navegar, e fecha no círculo, no fundo ou no arraste
+- [ ] A folha lista Terço, Loja, Voluntário, Fornecedor, Spotify e Mapa do Evento, e fecha no círculo, no fundo ou no arraste
+- [ ] Loja abre `https://usedevotum.com.br/colecao-arte-piedosa/` no navegador externo; Mapa do Evento tem aparência e semântica de indisponível e não responde ao toque
 
 ## Anti-slop
 

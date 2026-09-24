@@ -46,3 +46,13 @@
 - [x] **T12 — Validação e docs**
   - Faz: bundle sem erro, README do mobile (como rodar no Expo Go), sync das specs.
   - Verifica: `npx expo export --platform android` gerou o bundle (1458 módulos) sem erro. Teste no Expo Go fica com o responsável.
+
+- [x] **T15 — Terço da Restauração das Famílias**
+  - Faz: rota autenticada com as onze etapas de oração e navegação inferior; atalho correspondente na folha central.
+  - Verifica: a navegação respeita início e fim e o bundle Expo abre a rota.
+  - Fora: progresso persistido, áudio e rotas dos demais atalhos.
+
+- [x] **T16 — Loja e Mapa do Evento**
+  - Faz: incluir os atalhos Loja e Mapa do Evento na folha central.
+  - Verifica: Loja abre a coleção Arte Piedosa da Devotum no navegador; Mapa anuncia e mantém estado indisponível.
+  - Fora: catálogo nativo, WebView e rota de mapa.

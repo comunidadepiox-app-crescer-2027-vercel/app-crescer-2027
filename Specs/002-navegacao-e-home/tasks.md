@@ -38,9 +38,14 @@
   - Fora: detalhe da notícia.
 
 - [ ] **T8 — Barra e folha de atalhos**
-  - Faz: barra Home, Notícias, círculo, Agenda, Benfeitor. Conta só pela engrenagem do header. Folha com Santo Terço, Voluntário, Fornecedor e Spotify, sem destino.
-  - Verifica: aba ativa dourada; na Conta nenhuma aba dourada; a folha fecha no círculo, no fundo e no arraste; os atalhos não navegam.
-  - Fora: rota dos quatro atalhos.
+  - Faz: barra Home, Notícias, círculo, Agenda, Benfeitor. Conta só pela engrenagem do header. Folha com Terço da Restauração das Famílias, Voluntário, Fornecedor e Spotify.
+  - Verifica: aba ativa dourada; na Conta nenhuma aba dourada; a folha fecha no círculo, no fundo e no arraste; o Terço abre a rota 011 e os demais atalhos não navegam.
+  - Fora: rota de Voluntário, Fornecedor e Spotify.
+
+- [x] **T9 — Loja e Mapa do Evento na folha de atalhos**
+  - Faz: adicionar Loja com abertura externa da coleção Arte Piedosa da Devotum e Mapa do Evento em estado indisponível.
+  - Verifica: Loja abre `https://usedevotum.com.br/colecao-arte-piedosa/`; Mapa do Evento fica visualmente apagado, anuncia estado desativado e não responde ao toque; a grade acomoda os seis atalhos.
+  - Fora: rota interna, WebView ou conteúdo de mapa.
 
 ## Validação final
 

@@ -38,7 +38,7 @@ O fiel só acessa o Crescer pelo navegador. A comunidade quer um aplicativo inst
 
 | Tipo | Identificador |
 |---|---|
-| Pasta | `mobile/` (expo-router: `app/index` login, `app/(tabs)/{home,noticias,agenda,benfeitor,conta}`, `app/noticia/[id]`, `app/galeria`, `app/sobre`). A barra mostra Home, Notícias, Agenda e Benfeitor, com o círculo de menu no centro. Conta fica fora da barra e abre pela engrenagem do header. A folha do menu lista Santo Terço, Voluntário, Fornecedor e Spotify, sem rota nesta entrega |
+| Pasta | `mobile/` (expo-router: `app/index` login, `app/(tabs)/{home,noticias,agenda,benfeitor,conta}`, `app/noticia/[id]`, `app/galeria`, `app/sobre`, `app/terco-restauracao`). A barra mostra Home, Notícias, Agenda e Benfeitor, com o círculo de menu no centro. Conta fica fora da barra e abre pela engrenagem do header. A folha abre o Terço da Restauração das Famílias e a coleção Arte Piedosa da Devotum no navegador; Voluntário, Fornecedor e Spotify continuam sem rota e Mapa do Evento fica indisponível |
 | Coleções Firestore | `users`, `news`, `programItems`, `benefactorLeads`, `deviceTokens` |
 | Papel necessário | `fiel` |
 

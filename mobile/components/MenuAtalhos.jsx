@@ -3,6 +3,7 @@ import {
   Animated,
   Dimensions,
   Image,
+  Linking,
   PanResponder,
   Pressable,
   StyleSheet,
@@ -12,19 +13,25 @@ import {
 import AudioLines from "lucide-react-native/icons/audio-lines";
 import Contact from "lucide-react-native/icons/contact";
 import Handshake from "lucide-react-native/icons/handshake";
+import MapPinned from "lucide-react-native/icons/map-pinned";
+import ShoppingBag from "lucide-react-native/icons/shopping-bag";
+import { useRouter } from "expo-router";
 import { CORES, FONTES } from "../lib/tema";
 
 const terco = require("../assets/icons/terco.webp");
 const { height: ALTURA_TELA } = Dimensions.get("window");
 
 const ITENS = [
-  { rotulo: "Terço da Restauração das Famílias", imagem: terco },
+  { rotulo: "Terço da Restauração das Famílias", imagem: terco, rota: "/terco-restauracao" },
+  { rotulo: "Loja", Icone: ShoppingBag, url: "https://usedevotum.com.br/colecao-arte-piedosa/" },
   { rotulo: "Voluntário", Icone: Handshake },
   { rotulo: "Fornecedor", Icone: Contact },
   { rotulo: "Spotify", Icone: AudioLines },
+  { rotulo: "Mapa do Evento", Icone: MapPinned, indisponivel: true },
 ];
 
 export function MenuAtalhos({ aberto, onFechar, alturaBarra = 0 }) {
+  const router = useRouter();
   const [visivel, setVisivel] = useState(aberto);
   
   // Animações nativas
@@ -131,18 +138,26 @@ export function MenuAtalhos({ aberto, onFechar, alturaBarra = 0 }) {
         </View>
 
         <View style={estilos.grade}>
-          {ITENS.map(({ rotulo, Icone, imagem }) => (
-            <View key={rotulo} style={estilos.item}>
+          {ITENS.map(({ rotulo, Icone, imagem, rota, url, indisponivel }) => {
+            const conteudo = <>
               <View style={estilos.poco}>
                 {imagem ? (
                   <Image source={imagem} style={estilos.terco} resizeMode="contain" />
                 ) : (
-                  <Icone color={CORES.laranja} size={40} strokeWidth={2} />
+                  <Icone color={CORES.laranja} size={34} strokeWidth={2} />
                 )}
               </View>
-              <Text style={estilos.rotulo}>{rotulo}</Text>
-            </View>
-          ))}
+              <Text style={[estilos.rotulo, indisponivel && estilos.rotuloIndisponivel]}>{rotulo}</Text>
+            </>;
+            if (indisponivel) {
+              return <Pressable key={rotulo} accessibilityRole="button" accessibilityLabel={rotulo} accessibilityState={{ disabled: true }} disabled style={[estilos.item, estilos.itemIndisponivel]}>{conteudo}</Pressable>;
+            }
+            if (url) {
+              return <Pressable key={rotulo} accessibilityRole="link" accessibilityLabel={rotulo} onPress={() => { onFechar(); Linking.openURL(url).catch(() => {}); }} style={({ pressed }) => [estilos.item, pressed && { opacity: 0.72 }]}>{conteudo}</Pressable>;
+            }
+            if (!rota) return <View key={rotulo} style={estilos.item}>{conteudo}</View>;
+            return <Pressable key={rotulo} accessibilityRole="button" accessibilityLabel={rotulo} onPress={() => { onFechar(); router.push(rota); }} style={({ pressed }) => [estilos.item, pressed && { opacity: 0.72 }]}>{conteudo}</Pressable>;
+          })}
         </View>
       </Animated.View>
     </View>
@@ -190,11 +205,11 @@ const estilos = StyleSheet.create({
   grade: {
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     rowGap: 20,
   },
   item: {
-    width: "44%",
+    width: "30%",
     alignItems: "center",
     gap: 10,
   },
@@ -208,8 +223,8 @@ const estilos = StyleSheet.create({
     overflow: "hidden",
   },
   terco: {
-    width: 55,
-    height: 55,
+    width: 48,
+    height: 48,
   },
   rotulo: {
     fontFamily: FONTES.corpoMedio,
@@ -218,5 +233,11 @@ const estilos = StyleSheet.create({
     color: "#8E8E8E",
     textTransform: "uppercase",
     textAlign: "center",
+  },
+  itemIndisponivel: {
+    opacity: 0.42,
+  },
+  rotuloIndisponivel: {
+    color: "#B4B4B4",
   },
 });

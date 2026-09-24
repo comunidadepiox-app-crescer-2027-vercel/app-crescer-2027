@@ -50,7 +50,13 @@ Só consumir `coverUrl` já salvo.
 
 ## App (barra atual)
 
-No Expo, a barra é Home, Notícias, círculo de menu, Agenda e Benfeitor (`mobile/components/BarraAbas.jsx`). A Conta abre pela engrenagem à direita de INSCREVA-SE. A folha (`mobile/components/MenuAtalhos.jsx`) mostra Santo Terço, Voluntário, Fornecedor e Spotify sem rota.
+No Expo, a barra é Home, Notícias, círculo de menu, Agenda e Benfeitor (`mobile/components/BarraAbas.jsx`). A Conta abre pela engrenagem à direita de INSCREVA-SE. A folha (`mobile/components/MenuAtalhos.jsx`) abre o Terço e a coleção Arte Piedosa da Devotum; Voluntário, Fornecedor e Spotify continuam informativos. Mapa do Evento ocupa um atalho desativado, até que exista destino aprovado.
+
+## Atalhos externos e indisponíveis
+
+- Loja usa `Linking.openURL` para abrir `https://usedevotum.com.br/colecao-arte-piedosa/` fora do app.
+- Mapa do Evento não recebe `onPress`; usa baixa opacidade e estado de acessibilidade `disabled`, sem sugerir que haja um mapa disponível.
+- A grade passa a comportar seis itens sem reduzir a área de toque dos atalhos acionáveis.
 
 ## Fora deste plan
 
