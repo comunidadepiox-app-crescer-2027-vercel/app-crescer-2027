@@ -18,7 +18,7 @@ Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do event
 - Shell autenticado com navegação persistente
 - Barra inferior: Home, Notícias, círculo de menu, Agenda, Benfeitor da Fé
 - Conta fora da barra: engrenagem no header, à direita de INSCREVA-SE, abre a tela de Conta
-- Folha do círculo: Terço da Restauração das Famílias abre sua rota própria (011); Loja abre a coleção Arte Piedosa da Devotum no navegador externo; Voluntário, Fornecedor e Spotify seguem só com ícone e rótulo nesta entrega; Mapa do Evento aparece indisponível, sem ação
+- Folha do círculo: Terço da Restauração das Famílias abre sua rota própria (011); Loja abre a coleção Arte Piedosa da Devotum no navegador externo; Fornecedor abre a página visual `/fornecedor` (012); Voluntário e Spotify seguem só com ícone e rótulo nesta entrega; Mapa do Evento aparece indisponível, sem ação
 - Destinos extras (prompt: “outras que forem importantes”): Galeria, Sobre
 - `/home` com:
   - seção de notícias (até 4 publicadas, capa + título + data; escuta ao vivo)
@@ -32,7 +32,7 @@ Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do event
 - Detalhe completo da notícia (003 implementa; a Home só aponta)
 - Programação completa por abas de espaço (004)
 - Formulário Benfeitor (005)
-- Destino de Santo Terço, Voluntário, Fornecedor e Spotify
+- Destino de Santo Terço, Voluntário e Spotify
 
 ## Fluxos
 
@@ -40,7 +40,7 @@ Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do event
 2. Toca uma notícia → `/noticias/[id]`.
 3. Toca “ver cronograma” ou um horário → `/cronograma` (com âncora do dia, se já existir na 004).
 4. A barra leva a Home, Notícias, Agenda e Benfeitor. O item ativo fica dourado, sem pílula. Na Conta, aberta pela engrenagem, nenhuma aba fica ativa.
-5. O círculo abre a folha por cima da tela. Fecha ao tocar de novo no círculo, no fundo escuro ou ao arrastar para baixo. O Terço abre sua rota e Loja abre a coleção externa; Voluntário, Fornecedor e Spotify não navegam. Mapa do Evento fica visivelmente indisponível e não responde ao toque.
+5. O círculo abre a folha por cima da tela. Fecha ao tocar de novo no círculo, no fundo escuro ou ao arrastar para baixo. O Terço e o Fornecedor abrem suas rotas; Loja abre a coleção externa; Voluntário e Spotify não navegam. Mapa do Evento fica visivelmente indisponível e não responde ao toque.
 
 ## Superfície do produto
 

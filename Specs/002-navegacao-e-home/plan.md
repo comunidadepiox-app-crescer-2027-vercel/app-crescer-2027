@@ -50,7 +50,7 @@ Só consumir `coverUrl` já salvo.
 
 ## App (barra atual)
 
-No Expo, a barra é Home, Notícias, círculo de menu, Agenda e Benfeitor (`mobile/components/BarraAbas.jsx`). A Conta abre pela engrenagem à direita de INSCREVA-SE. A folha (`mobile/components/MenuAtalhos.jsx`) abre o Terço e a coleção Arte Piedosa da Devotum; Voluntário, Fornecedor e Spotify continuam informativos. Mapa do Evento ocupa um atalho desativado, até que exista destino aprovado.
+No Expo, a barra é Home, Notícias, círculo de menu, Agenda e Benfeitor (`mobile/components/BarraAbas.jsx`). A Conta abre pela engrenagem à direita de INSCREVA-SE. A folha (`mobile/components/MenuAtalhos.jsx`) abre o Terço, a coleção Arte Piedosa da Devotum e a página visual de Fornecedor. Voluntário e Spotify continuam informativos. Mapa do Evento ocupa um atalho desativado, até que exista destino aprovado.
 
 ## Atalhos externos e indisponíveis
 

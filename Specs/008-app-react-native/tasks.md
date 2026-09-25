@@ -56,3 +56,8 @@
   - Faz: incluir os atalhos Loja e Mapa do Evento na folha central.
   - Verifica: Loja abre a coleção Arte Piedosa da Devotum no navegador; Mapa anuncia e mantém estado indisponível.
   - Fora: catálogo nativo, WebView e rota de mapa.
+
+- [x] **T17 — Página de Fornecedor**
+  - Faz: criar a rota autenticada `/fornecedor` com os cards Food Park e Outros, usando as imagens locais e reserving URLs futuras.
+  - Verifica: o atalho Fornecedor abre a página, os cards são visuais e o retorno leva à Home.
+  - Fora: links externos, CMS e detalhes individuais.
