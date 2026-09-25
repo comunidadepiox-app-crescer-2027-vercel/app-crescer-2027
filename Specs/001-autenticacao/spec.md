@@ -1,86 +1,86 @@
-# Spec: 001-autenticacao Autenticação e tela de início
+# Spec: 001-autenticacao Autenticação anônima do fiel
 
-- Status: `in-progress` (implementada; validação end-to-end aguarda o `.env.local` com as chaves do Firebase)
+- Status: `in-progress` (implementação iniciada; validação end-to-end aguarda Firebase configurado)
 - Complexidade: `alta`
-- Personas: `fiel` (o admin também entra por aqui)
+- Personas: `fiel` e `admin`
 - Depende de: [000-fundacao-e-identidade](../000-fundacao-e-identidade/)
 
-> **Superfície web retirada.** O site Next.js é só a mesa administrativa (`/admin`). O login do fiel desta spec vive no app Expo, spec [008](../008-app-react-native/spec.md).
+> **Superfície web administrativa preservada.** O site Next.js continua sendo somente a mesa administrativa (`/admin`). O app do fiel usa Firebase Anonymous Auth, sem tela de login ou cadastro.
 
 ## Problema
 
-O fiel precisa entrar no WebApp com e-mail ou Google antes de ver Home, notícias e cronograma. Sem sessão, o produto não abre as páginas internas.
+O fiel não deve precisar criar credenciais para usar o aplicativo. Cada instalação precisa de uma sessão técnica persistente para acessar rotas, dados e integrações que dependem de um `uid`.
 
 ## Escopo
 
 ### Entra
 
-- Tela de início em `/` com login e cadastro
-- E-mail + senha (criar conta e entrar)
-- Google Sign-In
-- Criação do documento `users/{uid}` no primeiro acesso (`role: fiel`, nome, e-mail, `createdAt`)
-- Proteção das rotas internas: sem sessão, redireciona para `/`
-- Com sessão, `/` redireciona para `/home`
-- Mensagens de erro legíveis (credencial inválida, e-mail em uso)
+- Autenticação anônima automática no primeiro uso
+- Persistência da sessão anônima com Firebase Auth e AsyncStorage
+- Criação idempotente de `users/{uid}` com `role: "fiel"`
+- Proteção das rotas internas
+- Redirecionamento da rota inicial para `/home`
+- Retry quando o Anonymous Auth falhar
+- Manutenção do login protegido da mesa administrativa
 
 ### Não entra
 
-- Recuperação de senha avançada além do reset nativo do Firebase (pode ser um link “Esqueci a senha” usando `sendPasswordResetEmail`)
-- Edição de perfil (spec 006)
-- Promoção a admin (spec 007 / OPEN-QUESTIONS)
-- Captcha customizado
+- Login e cadastro do fiel
+- E-mail, senha, Google e recuperação de senha no app do fiel
+- Logout do fiel
+- Migração ou exclusão de dados preexistentes
+- Alteração da autorização da mesa administrativa
 
 ## Fluxos
 
-1. Fiel novo: cadastro com e-mail e senha → documento `users` → `/home`.
-2. Fiel existente: login e-mail/senha → `/home`.
-3. Fiel com Google: popup/redirect → documento `users` se for o primeiro uid → `/home`.
-4. Sessão inválida em rota interna → `/`.
-5. Sessão válida em `/` → `/home`.
+1. Primeiro uso: o app inicia uma sessão anônima e cria `users/{uid}`.
+2. Reabertura: a sessão anônima persistida é restaurada e o app abre em `/home`.
+3. Falha de autenticação: a splash permanece até uma ação de retry concluir.
+4. Sessão antiga de e-mail ou Google: a sessão é encerrada e substituída por uma sessão anônima, sem apagar os dados antigos.
+5. Rota interna: espera a sessão anônima antes de renderizar o conteúdo.
 
 ## Superfície do produto
 
 | Tipo | Identificador |
 |---|---|
-| Rota App Router | `/` |
+| Rota inicial | `/` |
 | Coleção Firestore | `users` |
-| Pasta Cloudinary | nenhuma |
-| Papel necessário | sem sessão na tela; autenticado depois |
+| Sessão | Firebase Anonymous Auth persistido em AsyncStorage |
+| Papel | `fiel` no app; `admin` apenas na mesa web |
 
 ## Dados
 
-Coleção `users/{uid}`
+Coleção `users/{uid}`:
 
 | Campo | Tipo | Obrigatório | Nota |
 |---|---|---|---|
-| `displayName` | string | não | Google pode trazer; cadastro e-mail pode ficar vazio até a 006 |
-| `email` | string | sim | (LGPD) |
-| `role` | `'fiel'` \| `'admin'` | sim | default `fiel`; nunca `admin` pelo client no cadastro |
+| `displayName` | string | não | Nome escolhido na aba Conta |
+| `email` | string | não | Não preenchido no app do fiel |
+| `role` | `'fiel'` \| `'admin'` | sim | Criado como `fiel`; nunca promovido pelo client |
 | `createdAt` | timestamp | sim | |
-| `photoURL` | string | não | só se o Google enviar |
+| `origem` | object | não | Mantido pelas integrações existentes |
 
 ## Regras de negócio
 
-- Cadastro pelo client sempre grava `role: fiel`.
-- Não existe atalho para virar admin nesta spec.
-- Senha mínima: 6 caracteres (limite do Firebase Auth), comunicada no formulário.
-- A tela de início usa a identidade da spec 000, não um card centralizado de SaaS.
+- O app do fiel sempre inicia uma sessão anônima automaticamente.
+- O `uid` da sessão anônima é a identidade técnica das integrações do aparelho.
+- O cliente não altera `role`, não acessa outro `uid` e não altera `email`.
+- A sessão antiga de e-mail ou Google é encerrada localmente, sem migração ou exclusão dos dados existentes.
+- O login admin da web continua separado e protegido.
+- Não existe tela de login, cadastro, Google, recuperação ou logout no app do fiel.
 
 ## Critérios de aceite
 
-- [ ] Dá para criar conta com e-mail e senha e cair em `/home`
-- [ ] Dá para entrar com Google e cair em `/home`
-- [ ] Documento `users/{uid}` existe após o primeiro login
-- [ ] Sem sessão, `/home` (e demais internas) voltam para `/`
-- [ ] Logado, `/` não mostra o formulário de novo
-- [ ] Botões têm destino real (entrar, criar conta, Google, esqueci a senha)
-- [ ] Copy sem travessão; layout alinhado à esquerda, logo como único centro possível
-
-## Anti-slop
-
-Proibido hero “Bem-vindo à jornada”, pílulas “Entrar com”, gradiente no fundo, três social buttons inventados. Só e-mail e Google.
+- [ ] O primeiro uso cria uma sessão anônima e abre `/home`
+- [ ] A reabertura restaura a mesma sessão anônima
+- [ ] Não existe tela de login ou cadastro no app do fiel
+- [ ] Falha de autenticação oferece retry e não libera rotas indevidamente
+- [ ] `users/{uid}` existe com `role: "fiel"`
+- [ ] A aba Conta permite salvar apenas o nome
+- [ ] News, Agenda, Benfeitor, Quero ir, localização e push continuam usando o UID anônimo
+- [ ] A mesa administrativa continua protegida por login e `role == admin`
 
 ## Referências
 
-- Specs irmãs: 000, 002, 006, 007
-- Firebase Auth: e-mail/senha + Google provider
+- Specs 005, 006, 007, 008, 010 e 011
+- Firebase Anonymous Auth

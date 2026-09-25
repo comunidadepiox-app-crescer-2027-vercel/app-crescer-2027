@@ -9,32 +9,31 @@
 
 ## Problema
 
-O fiel precisa ver a conta com que entrou, atualizar o nome e sair. O admin precisa de um caminho visível para o CMS.
+O fiel escolhe um nome para a conta do aplicativo e pode apagar sua localização. A identidade usada internamente pelo app é anônima e por instalação. O admin precisa de um caminho visível para o CMS.
 
 ## Escopo
 
 ### Entra
 
 - `/configuracao`
-- Exibe e-mail (somente leitura)
 - Edita `displayName` no Auth e em `users`
-- Sair (signOut) e voltar para `/`
-- Se `role == admin`, link real para `/admin`
+- Exibe e trata a localização guardada
+- Abre a área administrativa no site quando aplicável
 - Texto curto de privacidade: o que o app guarda (conta e, se enviou, lead Benfeitor)
 
 ### Não entra
 
-- Troca de e-mail
-- Exclusão de conta automatizada (pode listar “fale com a comunidade” até haver processo)
+- Login, cadastro, e-mail, senha, recuperação e logout do fiel
+- Exclusão de conta automatizada
 - Tema escuro, notificações push, idioma
 - Upload de avatar (photoURL do Google permanece se existir, sem editor)
 
 ## Fluxos
 
-1. Abre Configuração → vê e-mail e nome.
+1. Abre Configuração → vê o nome escolhido.
 2. Salva nome → `users.displayName` e Auth atualizados.
-3. Sair → sessão limpa, `/`.
-4. Admin vê atalho para `/admin`.
+3. Apaga a localização guardada.
+4. Admin vê atalho para `/admin`; o fiel não vê.
 
 ## Superfície do produto
 
@@ -47,20 +46,19 @@ O fiel precisa ver a conta com que entrou, atualizar o nome e sair. O admin prec
 
 ## Dados
 
-Update permitido em `users/{uid}`: `displayName` (e `updatedAt` se existir). `role` e `email` não mudam por esta tela.
+Update permitido em `users/{uid}`: `displayName` e a remoção de `origem` pela ação de privacidade. `role` e `email` não mudam por esta tela.
 
 ## Regras de negócio
 
-- Sem sessão, redirect `/`.
-- Sair é irreversível na sessão atual.
+- A sessão anônima é criada pelo app; a Conta não oferece login ou logout.
+- O nome escolhido não transforma o UID em identidade nominal verificável.
 - Não mostrar pílula de “plano Pro” ou status inventado.
 
 ## Critérios de aceite
 
-- [ ] E-mail visível, não editável
 - [ ] Nome persistido após reload
-- [ ] Sair funciona
-- [ ] Admin vê link `/admin`; fiel não vê
+- [ ] E-mail e logout não aparecem no app do fiel
+- [ ] Admin vê caminho para a mesa web; fiel não vê
 - [ ] Aviso de privacidade existe e não usa travessão
 
 ## Anti-slop

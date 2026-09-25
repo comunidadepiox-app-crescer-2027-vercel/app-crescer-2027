@@ -53,7 +53,7 @@ Coleção `benefactorLeads/{id}`
 | Campo | Tipo | Obrigatório | Nota |
 |---|---|---|---|
 | `name` | string | sim | (LGPD) |
-| `email` | string | sim | (LGPD) |
+| `email` | string | não | Não é preenchido pelo app do fiel; pode existir em registros antigos |
 | `phone` | string | sim | (LGPD) |
 | `cpf` | string | sim | (LGPD) só dígitos internamente |
 | `lgpdConsent` | bool | sim | deve ser `true` |

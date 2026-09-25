@@ -3,7 +3,6 @@ import {
   initializeAuth,
   getAuth,
   getReactNativePersistence,
-  GoogleAuthProvider,
 } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -44,4 +43,3 @@ function authDoApp(instancia) {
 
 export const auth = app ? authDoApp(app) : null;
 export const db = app ? getFirestore(app) : null;
-export { GoogleAuthProvider };

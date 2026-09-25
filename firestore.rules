@@ -36,7 +36,10 @@ service cloud.firestore {
       allow update: if signedIn()
         && request.auth.uid == userId
         && request.resource.data.role == resource.data.role
-        && request.resource.data.email == resource.data.email
+        && (
+          (!('email' in request.resource.data) && !('email' in resource.data))
+          || request.resource.data.email == resource.data.email
+        )
         && origemOk();
       allow delete: if false;
 

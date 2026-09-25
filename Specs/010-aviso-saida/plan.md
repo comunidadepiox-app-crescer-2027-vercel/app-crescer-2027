@@ -39,7 +39,8 @@ Regras de segurança a prever (rascunho):
 
 - `queroIr` só com `itemId` igual ao id do documento e `createdAt`.
 - `origem` ausente, nula, ou número de latitude e longitude com timestamp.
-- `role` e `email` continuam imutáveis no update do usuário.
+- O `uid` usado pelo job é o identificador anônimo da instalação
+- `role` e `email` continuam imutáveis no update do usuário
 
 ## Cloudinary
 

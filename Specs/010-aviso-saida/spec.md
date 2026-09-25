@@ -7,7 +7,7 @@
 
 ## Problema
 
-O fiel só fica sabendo da programação se abrir o app. Quem vai de carro de aplicativo não recebe, com o app fechado, a hora de sair até o Centro de Convenções conforme o trânsito.
+O fiel usa uma sessão anônima do Firebase por instalação. O UID dessa sessão identifica as marcações, a localização e os tokens push do aparelho. O job continua funcionando com o mesmo modelo de dados.
 
 ## Escopo
 
@@ -50,7 +50,7 @@ O fiel só fica sabendo da programação se abrir o app. Quem vai de carro de ap
 | Telas | Agenda, Home (recorte do dia), Conta |
 | Coleções | `users/{uid}.origem` (LGPD), `users/{uid}/queroIr/{itemId}`, `trafficAlerts/{uid}_{itemId}`, `mapsUsage/{YYYY-MM}` |
 | Job | `jobs/aviso-saida/`, `.github/workflows/aviso-saida.yml` |
-| Papel | `fiel` autenticado. Escrita de alerta e contador só pelo job (Admin SDK) |
+| Papel | sessão anônima do fiel autenticada. Escrita de alerta e contador só pelo job (Admin SDK) |
 
 ## Dados
 

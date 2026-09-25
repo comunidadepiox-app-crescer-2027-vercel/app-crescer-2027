@@ -1,45 +1,49 @@
-# Requirements: 001-autenticacao Autenticação e tela de início
+# Requirements: 001-autenticacao Autenticação anônima do fiel
 
 ## Funcionais
 
-- **RF-01** O fiel cria conta com e-mail e senha.
-- **RF-02** O fiel entra com e-mail e senha.
-- **RF-03** O fiel entra com Google.
-- **RF-04** O primeiro acesso cria `users/{uid}` com `role: fiel`.
-- **RF-05** Rotas internas exigem sessão.
-- **RF-06** `/` com sessão redireciona para `/home`.
-- **RF-07** O fiel pode pedir e-mail de redefinição de senha.
+- **RF-01** O primeiro uso inicia uma sessão Firebase Anonymous Auth sem interação.
+- **RF-02** A sessão anônima persiste no aparelho e mantém o mesmo `uid`.
+- **RF-03** O primeiro acesso cria `users/{uid}` com `role: "fiel"`.
+- **RF-04** As rotas internas esperam a sessão anônima.
+- **RF-05** A rota inicial redireciona para `/home` quando a sessão está pronta.
+- **RF-06** Falha de autenticação apresenta retry.
+- **RF-07** A mesa administrativa continua usando login por e-mail e senha.
 
 ## Não funcionais
 
 - **RNF-01** Identidade da spec 000 / DESIGN.md
-- **RNF-02** Firebase Auth no client; sem backend próprio nesta fase
-- **RNF-03** Formulários usáveis no mobile (toque, teclado e-mail)
-- **RNF-04** Senha nunca aparece em log ou Firestore
+- **RNF-02** Firebase Auth no client, sem backend de autenticação próprio
+- **RNF-03** Nenhuma credencial, senha ou token de usuário é salvo pelo app do fiel
+- **RNF-04** O UID anônimo não é apresentado como identidade verificável da pessoa
 
 ## Papéis
 
-| Ação | `fiel` | `admin` | Sem sessão |
+| Ação | `fiel` anônimo | `admin` web | Sem sessão |
 |---|---|---|---|
-| Ver `/` | redirect `/home` | redirect `/home` | sim |
-| Criar conta | n/a | n/a | sim |
-| Entrar | n/a (já está) | n/a | sim |
-| Ver `/home` | sim | sim | não |
+| Abrir o app do fiel | sim | sim | autentica anonimamente |
+| Ver rotas internas | sim | sim | aguarda autenticação |
+| Criar conta | não existe | não existe | não existe |
+| Entrar no app do fiel | não existe | não existe | não existe |
+| Abrir mesa admin | não | sim | redireciona para login |
 
 ## LGPD
 
-- Dados: e-mail; nome e foto se o Google enviar
-- Finalidade: conta e identificação no app
-- Aviso: texto curto na tela de cadastro
-- Onde: Firebase Auth + Firestore `users`
-- Quem lê: o próprio usuário; admin na spec 007 se necessário
+- Dados do app: nome escolhido, localização quando concedida, lead do Benfeitor, Quero ir e token do aparelho
+- O e-mail não é coletado pelo app do fiel
+- O UID anônimo identifica a instalação para integrar as funcionalidades, não uma pessoa de forma verificável
+- O Firebase Auth e o Firestore continuam sendo os locais de armazenamento
 
 ## Dependências
 
-- Spec 000 `validated` (ou pelo menos tokens e scaffold prontos)
-- Projeto Firebase com e-mail/senha e Google habilitados
-- Domínio autorizado no OAuth
+- Firebase com Anonymous Auth habilitado
+- AsyncStorage para persistência da sessão
+- Regras Firestore que aceitem `signedIn`
 
 ## Fora
 
-Perfil editável, CMS, recuperação além do e-mail do Firebase.
+- Login/cadastro do fiel
+- Google
+- Recuperação de senha
+- Logout do fiel
+- Migração ou exclusão de contas antigas

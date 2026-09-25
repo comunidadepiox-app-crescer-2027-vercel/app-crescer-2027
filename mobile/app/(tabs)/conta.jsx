@@ -1,9 +1,9 @@
 import { useCallback, useState } from "react";
 import { View, Text, ScrollView, Pressable, StyleSheet } from "react-native";
 import { useFocusEffect, useRouter } from "expo-router";
-import { signOut, updateProfile } from "firebase/auth";
+import { updateProfile } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { auth, db } from "../../lib/firebase";
+import { db } from "../../lib/firebase";
 import { useAuth } from "../../lib/authProvider";
 import { apagarOrigem } from "../../lib/avisoSaida";
 import { Campo, Botao, TituloPagina, TituloSecao, Paragrafo, TextoErro, TextoAviso } from "../../components/Ui";
@@ -58,7 +58,7 @@ export default function ContaScreen() {
     setErro("");
     setSalvando(true);
     try {
-      await updateProfile(auth.currentUser, { displayName: nome.trim() });
+      await updateProfile(user, { displayName: nome.trim() });
       await updateDoc(doc(db, "users", user.uid), { displayName: nome.trim() });
       setAviso("Nome atualizado.");
     } catch {
@@ -68,18 +68,13 @@ export default function ContaScreen() {
     }
   }
 
-  async function sair() {
-    await signOut(auth);
-    router.replace("/");
-  }
-
   return (
     <ScrollView contentContainerStyle={estilos.pagina}>
       <TituloPagina>Configuração</TituloPagina>
 
-      <TituloSecao style={{ marginTop: 24 }}>Sua conta</TituloSecao>
+      <TituloSecao style={{ marginTop: 24 }}>Seu perfil</TituloSecao>
       <Paragrafo style={{ marginTop: 8 }}>
-        E-mail: <Text style={{ fontFamily: FONTES.corpoMedio }}>{user?.email}</Text>
+        Escolha o nome que quer usar neste aplicativo.
       </Paragrafo>
       <View style={{ gap: 12, marginTop: 14 }}>
         <Campo rotulo="Nome" value={nome} onChangeText={setNome} />
@@ -111,13 +106,12 @@ export default function ContaScreen() {
       <View style={estilos.bloco}>
         <TituloSecao>Privacidade</TituloSecao>
         <Paragrafo style={{ marginTop: 8 }}>
-          Este aplicativo guarda os dados da sua conta (nome e e-mail). Se você
-          marcou Quero ir, guarda também a última localização para calcular a hora
-          de sair até o Centro de Convenções. Você pode apagar essa coordenada
-          aqui. Se você enviou o cadastro de interesse do Benfeitor da Fé, esses
-          dados também ficam guardados. Nada é compartilhado fora da Comunidade
-          de São Pio X. Para excluir sua conta, fale com a comunidade pelo e-mail
-          contato@piox.org.br.
+          Este aplicativo guarda o nome escolhido e, se você marcou Quero ir,
+          guarda também a última localização para calcular a hora de sair até
+          o Centro de Convenções. Você pode apagar essa coordenada aqui. Se
+          você enviou o cadastro de interesse do Benfeitor da Fé, esses dados
+          também ficam guardados. Nada é compartilhado fora da Comunidade de
+          São Pio X.
         </Paragrafo>
         {temOrigem ? (
           <Botao
@@ -136,12 +130,6 @@ export default function ContaScreen() {
         <TextoErro>{erroOrigem}</TextoErro>
       </View>
 
-      <Botao
-        titulo="Sair da conta"
-        variante="contornoVermelho"
-        onPress={sair}
-        style={{ marginTop: 24 }}
-      />
     </ScrollView>
   );
 }

@@ -15,6 +15,7 @@ A equipe de comunicação precisa publicar notícias, ajustar a programação e 
 
 - Grupo `/admin` protegido por `role == admin`
 - Login simples em `/admin` (e-mail pré-preenchido `crescer-admin@crescer.app`, senha digitada; sem Google e sem cadastro nesta tela)
+- O app do fiel usa Anonymous Auth separado e nunca concede acesso ao CMS
 - `/admin` com barra lateral roxa: Início, Notícias, Cronograma. Item ativo marcado em dourado
 - Início da mesa com o trabalho real: rascunho de notícia mais recente ou nada por publicar, e programação do dia do recorte. Se a leitura falhar, a faixa permanece e a linha de estado some
 - CRUD de `news` com editor TipTap: folha de escrita (título em slab, barra agrupada por ícones, menu na seleção, menu no parágrafo vazio, recuo por botão e por Tab, colar ou soltar imagem), coluna com autor, capa e publicação, e pré-visualização antes de publicar
