@@ -18,7 +18,7 @@ import ShoppingBag from "lucide-react-native/icons/shopping-bag";
 import { useRouter } from "expo-router";
 import { CORES, FONTES } from "../lib/tema";
 
-const terco = require("../assets/icons/terco.webp");
+const terco = require("../assets/icons/icone-novo.webp");
 const { height: ALTURA_TELA } = Dimensions.get("window");
 
 const ITENS = [
@@ -223,8 +223,8 @@ const estilos = StyleSheet.create({
     overflow: "hidden",
   },
   terco: {
-    width: 48,
-    height: 48,
+    width: 75,
+    height: 75,
   },
   rotulo: {
     fontFamily: FONTES.corpoMedio,
