@@ -19,12 +19,14 @@ import { useRouter } from "expo-router";
 import { CORES, FONTES } from "../lib/tema";
 
 const terco = require("../assets/icons/icone-novo.webp");
+const testemunhos = require("../assets/icons/icone-testemunhos.png");
 const { height: ALTURA_TELA } = Dimensions.get("window");
 
 const ITENS = [
   { rotulo: "Terço da Restauração das Famílias", imagem: terco, rota: "/terco-restauracao" },
   { rotulo: "Loja", Icone: ShoppingBag, url: "https://usedevotum.com.br/colecao-arte-piedosa/" },
   { rotulo: "Voluntário", Icone: Handshake },
+  { rotulo: "Testemunhos", imagem: testemunhos, tamanhoImagem: 59, rota: "/testemunhos" },
   { rotulo: "Fornecedor", Icone: Contact, rota: "/fornecedor" },
   { rotulo: "Spotify", Icone: AudioLines },
   { rotulo: "Mapa do Evento", Icone: MapPinned, indisponivel: true },
@@ -138,11 +140,15 @@ export function MenuAtalhos({ aberto, onFechar, alturaBarra = 0 }) {
         </View>
 
         <View style={estilos.grade}>
-          {ITENS.map(({ rotulo, Icone, imagem, rota, url, indisponivel }) => {
+          {ITENS.map(({ rotulo, Icone, imagem, tamanhoImagem, rota, url, indisponivel }) => {
             const conteudo = <>
               <View style={estilos.poco}>
                 {imagem ? (
-                  <Image source={imagem} style={estilos.terco} resizeMode="contain" />
+                  <Image
+                    source={imagem}
+                    style={[estilos.terco, tamanhoImagem ? { width: tamanhoImagem, height: tamanhoImagem } : null]}
+                    resizeMode="contain"
+                  />
                 ) : (
                   <Icone color={CORES.laranja} size={34} strokeWidth={2} />
                 )}

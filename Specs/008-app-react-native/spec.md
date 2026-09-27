@@ -1,4 +1,4 @@
-# Spec: 008-app-react-native — App do fiel em React Native (Expo)
+﻿# Spec: 008-app-react-native — App do fiel em React Native (Expo)
 
 - Status: `in-progress` (bundle validado; aceite no Expo Go pendente do responsável)
 - Complexidade: `alta`
@@ -39,7 +39,7 @@ O fiel acessa o Crescer pelo app instalado sem criar credenciais. A sessão anô
 
 | Tipo | Identificador |
 |---|---|
-| Pasta | `mobile/` (expo-router: `app/index` login, `app/(tabs)/{home,noticias,agenda,benfeitor,conta}`, `app/noticia/[id]`, `app/galeria`, `app/sobre`, `app/terco-restauracao`, `app/fornecedor`). A barra mostra Home, Notícias, Agenda e Benfeitor, com o círculo de menu no centro. Conta fica fora da barra e abre pela engrenagem do header. A folha abre o Terço da Restauração das Famílias, a coleção Arte Piedosa da Devotum no navegador e a página visual de Fornecedor; Voluntário e Spotify continuam sem rota e Mapa do Evento fica indisponível |
+| Pasta | `mobile/` (expo-router: `app/index` login, `app/(tabs)/{home,noticias,agenda,benfeitor,conta}`, `app/noticia/[id]`, `app/galeria`, `app/sobre`, `app/terco-restauracao`, `app/fornecedor`, `app/testemunhos`). A barra mostra Home, Notícias, Agenda e Benfeitor, com o círculo de menu no centro. Conta fica fora da barra e abre pela engrenagem do header. A folha abre o Terço da Restauração das Famílias, a coleção Arte Piedosa da Devotum no navegador, a página visual de Fornecedor e o formulário de Testemunhos; Voluntário e Spotify continuam sem rota e Mapa do Evento fica indisponível |
 | Coleções Firestore | `users`, `news`, `programItems`, `benefactorLeads`, `deviceTokens` |
 | Papel necessário | `fiel` |
 

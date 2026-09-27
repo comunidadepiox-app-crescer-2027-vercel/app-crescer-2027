@@ -96,5 +96,15 @@ service cloud.firestore {
       allow update: if isAdmin();
       allow delete: if false;
     }
+
+    // Testemunhos. O fiel não lê a coleção, porque o texto ainda não foi
+    // aprovado pela equipe. A escrita é false de propósito: quem grava é o
+    // Route Handler app/api/testemunhos, com o Admin SDK e a service account,
+    // depois de passar o texto pelo filtro da IA. As rules não valem para o
+    // Admin SDK, então ele é a única via de escrita.
+    match /testimonials/{testimonialId} {
+      allow read: if isAdmin();
+      allow create, update, delete: if false;
+    }
   }
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { listAllNews } from "@/lib/admin/news";
 import { listProgramItemsAdmin } from "@/lib/admin/program";
+import { contaTestemunhos } from "@/lib/admin/testimonials";
 import { formataDataCurta, resolveDiaRecorte } from "@/lib/event/edition";
 import { CabecalhoMesa } from "@/components/admin/CabecalhoMesa";
 
@@ -18,6 +19,12 @@ function linhaPrograma(lista) {
   const tem = lista.some((item) => item.date === dia);
   const quando = formataDataCurta(dia);
   return tem ? `${quando}: há programação.` : `${quando}: ainda sem item.`;
+}
+
+function linhaTestemunhos(quantos) {
+  if (quantos === null) return null;
+  if (quantos === 0) return "Nenhum testemunho na fila.";
+  return quantos === 1 ? "1 testemunho na fila de leitura." : `${quantos} testemunhos na fila de leitura.`;
 }
 
 function Faixa({ href, kicker, titulo, descricao, estado, larga = false }) {
@@ -41,6 +48,7 @@ function Faixa({ href, kicker, titulo, descricao, estado, larga = false }) {
 export default function AdminIndexPage() {
   const [noticias, setNoticias] = useState(undefined);
   const [programa, setPrograma] = useState(undefined);
+  const [testemunhos, setTestemunhos] = useState(undefined);
 
   useEffect(() => {
     listAllNews()
@@ -49,6 +57,9 @@ export default function AdminIndexPage() {
     listProgramItemsAdmin()
       .then(setPrograma)
       .catch(() => setPrograma(null));
+    contaTestemunhos("aguardando")
+      .then(setTestemunhos)
+      .catch(() => setTestemunhos(null));
   }, []);
 
   return (
@@ -76,6 +87,17 @@ export default function AdminIndexPage() {
           titulo="Cronograma"
           descricao="Manter a programação por dia, espaço e horário."
           estado={Array.isArray(programa) ? linhaPrograma(programa) : null}
+          larga
+        />
+      </div>
+
+      <div className="mt-4">
+        <Faixa
+          href="/admin/testemunhos"
+          kicker="No palco"
+          titulo="Testemunhos"
+          descricao="Ler a fila de testemunhos e decidir o que entra no encontro."
+          estado={testemunhos === undefined ? null : linhaTestemunhos(testemunhos)}
           larga
         />
       </div>

@@ -101,6 +101,23 @@ const TRACOS = {
       <path d="M19.5 8.5A8 8 0 1 0 18 18" />
     </>
   ),
+  testimonials: (
+    <>
+      <path d="M8 15.5V12c0-2 1.1-3.5 2.8-3.5" />
+      <path d="M16 15.5V12c0-2-1.1-3.5-2.8-3.5" />
+      <path d="M5 4.5h14v15H5z" />
+    </>
+  ),
+  volta: (
+    <>
+      <path d="M14.5 5.5 8 12l6.5 6.5" />
+    </>
+  ),
+  avanca: (
+    <>
+      <path d="M9.5 5.5 16 12l-6.5 6.5" />
+    </>
+  ),
 };
 
 export function IconeMesa({ nome, className = "h-[18px] w-[18px]" }) {

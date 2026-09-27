@@ -56,10 +56,15 @@ Pode ir direto ao código só se for **baixa** complexidade e **não** alterar c
 | [008-app-react-native](008-app-react-native/) | App do fiel em Expo/React Native (`mobile/`) | Alta |
 | [009-anuncios](009-anuncios/) | Retirada: anúncios em pilha na Home do app | Média |
 | [010-aviso-saida](010-aviso-saida/) | Aviso de saída com trânsito para quem marca Quero ir | Alta |
+| [011-terco-restauracao-familias](011-terco-restauracao-familias/) | Terço da Restauração das Famílias no app | Média |
+| [012-fornecedores](012-fornecedores/) | Página de fornecedores no app | Média |
+| [013-testimunhos](013-testimunhos/) | Testemunho do fiel no app, filtro por IA e fila de leitura na mesa | Alta |
 
 Ordem de implementação: `000` → `001` → `002` → (`003` e `004` em paralelo após a Home) → `005` → `006` → `007` → `008`.
 
 A spec `007` pode avançar o plan em paralelo, mas o CMS só entra depois das coleções de notícias e cronograma existirem.
+
+As specs `011`, `012` e `013` entram depois da `008`. A `013` escreve em coleção própria, com escrita só pelo Admin SDK, e por isso não depende de regra nova de leitura para o fiel.
 
 ## Stack que as specs assumem
 

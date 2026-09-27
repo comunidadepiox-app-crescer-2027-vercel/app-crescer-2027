@@ -16,7 +16,7 @@ A equipe de comunicação precisa publicar notícias, ajustar a programação e 
 - Grupo `/admin` protegido por `role == admin`
 - Login simples em `/admin` (e-mail pré-preenchido `crescer-admin@crescer.app`, senha digitada; sem Google e sem cadastro nesta tela)
 - O app do fiel usa Anonymous Auth separado e nunca concede acesso ao CMS
-- `/admin` com barra lateral roxa: Início, Notícias, Cronograma. Item ativo marcado em dourado
+- `/admin` com barra lateral roxa: Início, Notícias, Cronograma e Testemunhos. Item ativo marcado em dourado
 - Início da mesa com o trabalho real: rascunho de notícia mais recente ou nada por publicar, e programação do dia do recorte. Se a leitura falhar, a faixa permanece e a linha de estado some
 - CRUD de `news` com editor TipTap: folha de escrita (título em slab, barra agrupada por ícones, menu na seleção, menu no parágrafo vazio, recuo por botão e por Tab, colar ou soltar imagem), coluna com autor, capa e publicação, e pré-visualização antes de publicar
 - CRUD de `programItems` (abas só dos dias da edição; lista não depende de índice composto)
@@ -29,6 +29,7 @@ A equipe de comunicação precisa publicar notícias, ajustar a programação e 
 - Gestão de usuários além de ver o próprio papel
 - Promoção self-serve para admin (o primeiro admin nasce pela decisão de OPEN-QUESTIONS)
 - Media library completa; upload pontual (capa, autor, imagem e vídeo do texto)
+- A fila de testemunhos é da spec 013. Aqui entram só a rota da mesa e a faixa do início
 - Destaques e Benfeitores no menu da mesa (as rotas `/admin/destaques` e `/admin/leads` continuam no código, fora da navegação)
 
 ## Fluxos
@@ -42,9 +43,9 @@ A equipe de comunicação precisa publicar notícias, ajustar a programação e 
 
 | Tipo | Identificador |
 |---|---|
-| Rotas da mesa | `/admin`, `/admin/noticias`, `/admin/noticias/[id]`, `/admin/cronograma` |
+| Rotas da mesa | `/admin`, `/admin/noticias`, `/admin/noticias/[id]`, `/admin/cronograma`, `/admin/testemunhos` |
 | Rotas fora do menu | `/admin/destaques`, `/admin/leads` |
-| Coleções | `news`, `programItems`, `deviceTokens`, `siteContent`, `benefactorLeads`, `users` (leitura do próprio role) |
+| Coleções | `news`, `programItems`, `deviceTokens`, `siteContent`, `benefactorLeads`, `testimonials`, `users` (leitura do próprio role) |
 | Cloudinary | `news/`, `authors/` |
 | Papel | `admin` |
 
