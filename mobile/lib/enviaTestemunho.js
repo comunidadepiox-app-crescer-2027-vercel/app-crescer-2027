@@ -35,7 +35,12 @@ async function tokenDaSessao() {
 export async function enviaTestemunho({ nome, anonimo, texto }) {
   const padrao = "Não foi possível enviar agora. Tente novamente em instantes.";
   if (!BASE) {
-    return { ok: false, erro: "O serviço de testemunhos está fora do ar neste aplicativo." };
+    return {
+      ok: false,
+      erro:
+        "Este aplicativo foi montado sem o endereço do servidor. " +
+        "Reconecte no Expo e abra o aplicativo de novo.",
+    };
   }
   const token = await tokenDaSessao();
   if (!token) {
