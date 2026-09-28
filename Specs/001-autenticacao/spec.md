@@ -54,11 +54,11 @@ Coleção `users/{uid}`:
 
 | Campo | Tipo | Obrigatório | Nota |
 |---|---|---|---|
-| `displayName` | string | não | Nome escolhido na aba Conta |
+| `displayName` | string | não | Nome escolhido no app. Em 28/09/2026 nenhuma tela o edita |
 | `email` | string | não | Não preenchido no app do fiel |
 | `role` | `'fiel'` \| `'admin'` | sim | Criado como `fiel`; nunca promovido pelo client |
 | `createdAt` | timestamp | sim | |
-| `origem` | object | não | Mantido pelas integrações existentes |
+| `origem` | object | não | Coordenada do antigo aviso de saída. Retirada em 28/09/2026, junto com a localização. Documento antigo pode ter o campo; nada mais o escreve |
 
 ## Regras de negócio
 
@@ -76,8 +76,7 @@ Coleção `users/{uid}`:
 - [ ] Não existe tela de login ou cadastro no app do fiel
 - [ ] Falha de autenticação oferece retry e não libera rotas indevidamente
 - [ ] `users/{uid}` existe com `role: "fiel"`
-- [ ] A aba Conta permite salvar apenas o nome
-- [ ] News, Agenda, Benfeitor, Quero ir, localização e push continuam usando o UID anônimo
+- [ ] News, Agenda, a campanha do Benfeitor, o Avise-me e o push continuam usando o UID anônimo
 - [ ] A mesa administrativa continua protegida por login e `role == admin`
 
 ## Referências

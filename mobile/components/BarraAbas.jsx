@@ -1,12 +1,24 @@
 import { Pressable, Text, View, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IconeGrade } from "./Icones";
+import { IconeGrade, IconeCoracaoChama } from "./Icones";
+import { abreLinkExterno, LINK_BENFEITOR } from "../lib/links";
 import { CORES, FONTES } from "../lib/tema";
 
 export const ALTURA_ABAS = 64;
 export const FOLGA_CIRCULO = 21;
 
-const ORDEM = ["home", "noticias", "agenda", "benfeitor"];
+const ORDEM = ["home", "noticias", "agenda"];
+
+// Benfeitor não é rota: a campanha é do site da comunidade. Ele entra na
+// barra como link externo, desenhado no mesmo componente das abas para não
+// quebrar a linha de base nem o desenho do item ativo.
+const LINK_EXTERNO = {
+  nome: "benfeitor",
+  rotulo: "Benfeitor",
+  url: LINK_BENFEITOR,
+  Icone: IconeCoracaoChama,
+  descricao: "Benfeitor da Fé, no site da comunidade",
+};
 
 export function alturaBarra(insetoBaixo) {
   return ALTURA_ABAS + FOLGA_CIRCULO + insetoBaixo;
@@ -61,6 +73,7 @@ export function BarraAbas({
             onFecharMenu={onFecharMenu}
           />
         ))}
+        <ItemLinkExterno link={LINK_EXTERNO} onFecharMenu={onFecharMenu} />
       </View>
     </View>
   );
@@ -93,6 +106,27 @@ function ItemAba({ rota, ativo, options, navigation, onFecharMenu }) {
       {options.tabBarIcon?.({ color: cor, focused: ativo, size: 24 })}
       <Text style={[estilos.rotulo, { color: cor }]} numberOfLines={1}>
         {rotulo}
+      </Text>
+    </Pressable>
+  );
+}
+
+// Mesmo desenho do item de aba, sem estado ativo: um link externo não tem rota
+// para ficar selecionada, então nunca fica dourado.
+function ItemLinkExterno({ link, onFecharMenu }) {
+  return (
+    <Pressable
+      onPress={() => {
+        onFecharMenu();
+        abreLinkExterno(link.url);
+      }}
+      accessibilityRole="link"
+      accessibilityLabel={link.descricao || link.rotulo}
+      style={({ pressed }) => [estilos.aba, pressed && { opacity: 0.72 }]}
+    >
+      <link.Icone cor="#ffffff" tamanho={24} />
+      <Text style={[estilos.rotulo, { color: "#ffffff" }]} numberOfLines={1}>
+        {link.rotulo}
       </Text>
     </Pressable>
   );

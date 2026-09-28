@@ -3,7 +3,8 @@ import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CORES } from "../lib/tema";
 import { Botao } from "./Ui";
-import { IconeEngrenagem } from "./Icones";
+import { IconeInfo } from "./Icones";
+import { abreLinkExterno, LINK_INGRESSO } from "../lib/links";
 
 const logo = require("../assets/brand/logo-crescer-branca.png");
 
@@ -18,19 +19,19 @@ export function Header() {
       </Pressable>
       <View style={estilos.acoes}>
         <Botao
-          titulo="INSCREVA-SE"
+          titulo="INGRESSO"
           variante="roxo"
-          onPress={() => router.push("/benfeitor")}
+          onPress={() => abreLinkExterno(LINK_INGRESSO)}
           style={{ alignSelf: "center", paddingVertical: 8, paddingHorizontal: 12 }}
         />
         <Pressable
-          onPress={() => router.push("/conta")}
+          onPress={() => router.push("/sobre-o-app")}
           hitSlop={8}
           accessibilityRole="button"
-          accessibilityLabel="Conta"
-          style={estilos.engrenagem}
+          accessibilityLabel="Sobre o aplicativo"
+          style={estilos.info}
         >
-          <IconeEngrenagem cor="#fff" tamanho={24} />
+          <IconeInfo cor="#fff" tamanho={24} />
         </Pressable>
       </View>
     </View>
@@ -60,7 +61,7 @@ const estilos = StyleSheet.create({
     alignItems: "center",
     gap: 4,
   },
-  engrenagem: {
+  info: {
     width: 44,
     height: 44,
     alignItems: "center",

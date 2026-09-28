@@ -1,5 +1,6 @@
 // Envio do testemunho. O app não grava nada: ele fala com a rota do servidor,
-// que filtra o texto com a IA antes de gravar no Firestore. A base vem de
+// que valida a sessão e grava no Firestore pelo Admin SDK. Não existe IA no
+// caminho, e o texto chega na mesa como a pessoa escreveu. A base vem de
 // EXPO_PUBLIC_API_BASE, porque o app roda no aparelho e a mesa roda na web.
 
 import { auth } from "./firebase";
@@ -30,8 +31,8 @@ async function tokenDaSessao() {
   }
 }
 
-// Devolve o status para a tela de confirmação saber se o texto entrou na fila,
-// se a IA recusou ou se ficou em revisão manual.
+// Devolve o ok ou o erro, e o id do documento gravado. A tela de confirmação
+// só precisa saber que o texto entrou na fila.
 export async function enviaTestemunho({ nome, anonimo, texto }) {
   const padrao = "Não foi possível enviar agora. Tente novamente em instantes.";
   if (!BASE) {
@@ -77,8 +78,6 @@ export async function enviaTestemunho({ nome, anonimo, texto }) {
   }
   return {
     ok: true,
-    status: corpo?.status || "novo",
     id: corpo?.id || null,
-    aviso: soEspaco(corpo?.mensagem),
   };
 }

@@ -15,18 +15,22 @@ import Contact from "lucide-react-native/icons/contact";
 import Handshake from "lucide-react-native/icons/handshake";
 import MapPinned from "lucide-react-native/icons/map-pinned";
 import ShoppingBag from "lucide-react-native/icons/shopping-bag";
+import Ticket from "lucide-react-native/icons/ticket";
 import { useRouter } from "expo-router";
 import { CORES, FONTES } from "../lib/tema";
+import { abreLinkExterno, LINK_INGRESSO } from "../lib/links";
 
 const terco = require("../assets/icons/icone-novo.webp");
 const testemunhos = require("../assets/icons/icone-testemunhos.png");
 const { height: ALTURA_TELA } = Dimensions.get("window");
 
+// url com o destino no navegador. endereco: o app não avisa, o sistema abre.
 const ITENS = [
   { rotulo: "Terço da Restauração das Famílias", imagem: terco, rota: "/terco-restauracao" },
+  { rotulo: "Ingresso", Icone: Ticket, url: LINK_INGRESSO, avisar: true },
   { rotulo: "Loja", Icone: ShoppingBag, url: "https://usedevotum.com.br/colecao-arte-piedosa/" },
   { rotulo: "Voluntário", Icone: Handshake },
-  { rotulo: "Testemunhos", imagem: testemunhos, tamanhoImagem: 5, rota: "/testemunhos" },
+  { rotulo: "Testemunhos", imagem: testemunhos, tamanhoImagem: 50, rota: "/testemunhos" },
   { rotulo: "Fornecedor", Icone: Contact, rota: "/fornecedor" },
   { rotulo: "Spotify", Icone: AudioLines },
   { rotulo: "Mapa do Evento", Icone: MapPinned, indisponivel: true },
@@ -140,7 +144,7 @@ export function MenuAtalhos({ aberto, onFechar, alturaBarra = 0 }) {
         </View>
 
         <View style={estilos.grade}>
-          {ITENS.map(({ rotulo, Icone, imagem, tamanhoImagem, rota, url, indisponivel }) => {
+          {ITENS.map(({ rotulo, Icone, imagem, tamanhoImagem, rota, url, indisponivel, avisar, descricao }) => {
             const conteudo = <>
               <View style={estilos.poco}>
                 {imagem ? (
@@ -159,7 +163,12 @@ export function MenuAtalhos({ aberto, onFechar, alturaBarra = 0 }) {
               return <Pressable key={rotulo} accessibilityRole="button" accessibilityLabel={rotulo} accessibilityState={{ disabled: true }} disabled style={[estilos.item, estilos.itemIndisponivel]}>{conteudo}</Pressable>;
             }
             if (url) {
-              return <Pressable key={rotulo} accessibilityRole="link" accessibilityLabel={rotulo} onPress={() => { onFechar(); Linking.openURL(url).catch(() => {}); }} style={({ pressed }) => [estilos.item, pressed && { opacity: 0.72 }]}>{conteudo}</Pressable>;
+              // avisar: a URL ainda não foi informada pela comunidade. O toque
+              // mostra o aviso em vez de abrir uma página em branco.
+              const abrir = avisar
+                ? () => abreLinkExterno(url)
+                : () => { onFechar(); Linking.openURL(url).catch(() => {}); };
+              return <Pressable key={rotulo} accessibilityRole="link" accessibilityLabel={descricao || rotulo} onPress={abrir} style={({ pressed }) => [estilos.item, pressed && { opacity: 0.72 }]}>{conteudo}</Pressable>;
             }
             if (!rota) return <View key={rotulo} style={estilos.item}>{conteudo}</View>;
             return <Pressable key={rotulo} accessibilityRole="button" accessibilityLabel={rotulo} onPress={() => { onFechar(); router.push(rota); }} style={({ pressed }) => [estilos.item, pressed && { opacity: 0.72 }]}>{conteudo}</Pressable>;
@@ -208,14 +217,18 @@ const estilos = StyleSheet.create({
     borderRadius: 2,
     backgroundColor: "#D5D5D5",
   },
+  // Grade de três colunas, empacotada pela esquerda. Com space-between, a
+  // última linha de dois itens jogava um para cada ponta e abria um buraco no
+  // meio. Aqui a linha cheia continua distribuída e a parcial só deixa a sobra
+  // na direita, com os itens sempre encostados um no outro.
   grade: {
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     rowGap: 20,
   },
   item: {
-    width: "30%",
+    width: "33%",
     alignItems: "center",
     gap: 10,
   },

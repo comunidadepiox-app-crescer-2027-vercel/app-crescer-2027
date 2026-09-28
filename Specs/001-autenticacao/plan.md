@@ -24,7 +24,7 @@ A mesa web não será alterada: seu AuthProvider, login e autorização por `rol
 
 ## Firestore
 
-O Anonymous Auth continua sendo `signedIn`. O documento `users/{uid}` mantém `role: "fiel"` e pode ser atualizado somente com `displayName` e `origem`. As subcoleções `queroIr`, tokens e leads continuam vinculadas ao UID da sessão.
+O Anonymous Auth continua sendo `signedIn`. O documento `users/{uid}` mantém `role: "fiel"` e pode ser atualizado somente com `displayName`. As subcoleções de lembrete, tokens e leads continuam vinculadas ao UID da sessão. A coordenada `origem` saiu do contrato em 28/09/2026 com a retirada da localização.
 
 ## Ordem de entrega
 

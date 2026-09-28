@@ -2,7 +2,6 @@ import { cert, getApps, initializeApp } from "firebase-admin/app";
 import { FieldValue, getFirestore } from "firebase-admin/firestore";
 
 import { tokenDoHeader, verificaUsuario } from "@/lib/server/verificaAdmin";
-import { filtraTestemunho, textoLimpo } from "@/lib/server/iaTestemunho";
 
 const LIMITE_NOME = 60;
 const LIMITE_TEXTO = 2000;
@@ -26,6 +25,17 @@ function agora() {
 function soEspaco(valor) {
   return String(valor ?? "")
     .replace(/\s+/g, " ")
+    .trim();
+}
+
+// O texto vai como a pessoa escreveu, só com quebra de linha limpa e espaço
+// nas pontas. Não há resumo, filtro nem suavização: quem decide é a equipe,
+// lendo o original na mesa.
+function textoLimpo(valor) {
+  return String(valor ?? "")
+    .replace(/\r\n?/g, "\n")
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
+    .replace(/\n{3,}/g, "\n\n")
     .trim();
 }
 
@@ -82,37 +92,16 @@ export async function POST(request) {
     return Response.json({ error: "Você já enviou um testemunho nesta edição." }, { status: 429 });
   }
 
-  // A IA não tem poder de decidir o que entra no evento. Ela recusa, suaviza e
-  // resume. Chave fora, cota estourada ou resposta torta caem em revisao, e o
-  // texto não se perde.
-  let status = "revisao";
-  let resumo = "";
-  let motivoRecusa = null;
-  let moderacao = "fallback";
-
-  const decisao = await filtraTestemunho(texto);
-  if (decisao) {
-    moderacao = "groq";
-    if (decisao.aprovado) {
-      status = "novo";
-      resumo = decisao.resumo;
-    } else {
-      status = "recusado_ia";
-      motivoRecusa = decisao.motivo;
-    }
-  }
-
+  // Nada é recusado na entrada. Depreciação, ansiedade, perda, abuso e
+  // adoecimento mental chegam inteiros, e a decisão é da equipe na mesa.
   const documento = {
     nome,
     anonimo,
     texto,
-    resumo,
-    status,
+    status: "novo",
     pasta: "aguardando",
-    motivoRecusa,
     uid,
     origem: "app",
-    moderacao,
     lidoAt: null,
     decididoAt: null,
     decididoPor: null,
@@ -122,23 +111,8 @@ export async function POST(request) {
 
   try {
     const ref = await db.collection("testimonials").add(documento);
-    return Response.json({
-      ok: true,
-      id: ref.id,
-      status,
-      mensagem: mensagemPorStatus(status),
-    });
+    return Response.json({ ok: true, id: ref.id });
   } catch {
     return Response.json({ error: mensagemDeErro("indisponivel") }, { status: 500 });
   }
-}
-
-function mensagemPorStatus(status) {
-  if (status === "recusado_ia") {
-    return "Recebemos o seu texto, mas ele não entra na fila de leitura. A equipe avalia com cuidado.";
-  }
-  if (status === "revisao") {
-    return "Recebemos o seu texto. A equipe vai avaliar com cuidado.";
-  }
-  return "Recebemos o seu testemunho. Obrigado por compartilhar.";
 }

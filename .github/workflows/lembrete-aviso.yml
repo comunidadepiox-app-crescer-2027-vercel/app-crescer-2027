@@ -1,11 +1,11 @@
-name: Aviso de saída
+name: Avisos da programação
 
 on:
   schedule:
     # 6h a 20h59 de Recife (UTC-3) em 5 a 9 de fevereiro.
-    - cron: "*/10 9-23 5-9 2 *"
+    - cron: "*/5 9-23 5-9 2 *"
     # 21h a 22h de Recife vira 0h a 1h UTC do dia seguinte (6 a 10 de fevereiro).
-    - cron: "*/10 0-1 6-10 2 *"
+    - cron: "*/5 0-1 6-10 2 *"
   workflow_dispatch:
     inputs:
       forcar:
@@ -23,12 +23,11 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: jobs/aviso-saida/package-lock.json
+          cache-dependency-path: jobs/lembrete-aviso/package-lock.json
       - run: npm ci
-        working-directory: jobs/aviso-saida
+        working-directory: jobs/lembrete-aviso
       - run: node executar.js
-        working-directory: jobs/aviso-saida
+        working-directory: jobs/lembrete-aviso
         env:
-          TOMTOM_API_KEY: ${{ secrets.TOMTOM_API_KEY }}
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          AVISO_SAIDA_FORCAR: ${{ github.event_name == 'workflow_dispatch' && inputs.forcar == 'true' && '1' || '' }}
+          LEMBRETE_FORCAR: ${{ github.event_name == 'workflow_dispatch' && inputs.forcar == 'true' && '1' || '' }}

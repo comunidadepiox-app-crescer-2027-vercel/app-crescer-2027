@@ -1,8 +1,12 @@
+// ARQUIVADO em 28/09/2026. Ver o README desta pasta antes de mexer.
+// A campanha passou a ser do site da Comunidade de São Pio X e a aba da barra
+// inferior abre o endereço externo. Esta tela não é rota e não entra no bundle.
+// Para recriá-la, o passo a passo está no README.
 import { useEffect, useState } from "react";
 import { View, Text, Image, ScrollView, Pressable, Linking, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { useAuth } from "../../lib/authProvider";
-import { validaLead, submitLead, jaTemLead, formataCelular, formataCpf, hrefWhatsappCadastro, WHATSAPP_ROTULO } from "../../lib/benfeitor";
+import { validaLead, submitLead, jaTemLead, formataCelular, formataCpf, hrefWhatsappCadastro, WHATSAPP_ROTULO } from "./benfeitorLib";
 import { FundoRoxoPoligonal } from "../../components/FundoPoligonal";
 import { Campo, Botao, TituloSecao, Paragrafo, TextoErro } from "../../components/Ui";
 import { CORES, FONTES } from "../../lib/tema";

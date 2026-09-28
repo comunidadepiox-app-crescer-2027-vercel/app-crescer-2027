@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AppState, View } from "react-native";
+import { View } from "react-native";
 import { Redirect, Tabs } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAuth } from "../../lib/authProvider";
@@ -11,11 +11,9 @@ import {
   IconeCasa,
   IconeJornal,
   IconeCalendario,
-  IconeCoracaoChama,
 } from "../../components/Icones";
 import { CORES, FONTES } from "../../lib/tema";
-import { atualizarOrigemSePermitida } from "../../lib/avisoSaida";
-import { garantirCanalSaida } from "../../lib/notificacoes";
+import { garantirCanalAviso } from "../../lib/notificacoes";
 
 export default function TabsLayout() {
   const { user, loading } = useAuth();
@@ -23,13 +21,8 @@ export default function TabsLayout() {
   const [menuAberto, setMenuAberto] = useState(false);
 
   useEffect(() => {
-    if (!user?.uid) return undefined;
-    garantirCanalSaida();
-    atualizarOrigemSePermitida(user.uid).catch(() => {});
-    const sub = AppState.addEventListener("change", (estado) => {
-      if (estado === "active") atualizarOrigemSePermitida(user.uid).catch(() => {});
-    });
-    return () => sub.remove();
+    if (!user?.uid) return;
+    garantirCanalAviso();
   }, [user?.uid]);
 
   if (loading) return null;
@@ -82,20 +75,6 @@ export default function TabsLayout() {
           options={{
             title: "Agenda",
             tabBarIcon: ({ color }) => <IconeCalendario cor={color} />,
-          }}
-        />
-        <Tabs.Screen
-          name="benfeitor"
-          options={{
-            title: "Benfeitor",
-            tabBarIcon: ({ color }) => <IconeCoracaoChama cor={color} />,
-          }}
-        />
-        <Tabs.Screen
-          name="conta"
-          options={{
-            href: null,
-            title: "Conta",
           }}
         />
       </Tabs>

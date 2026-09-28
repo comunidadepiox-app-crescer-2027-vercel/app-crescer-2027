@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "mobile": "npm start --prefix mobile",
-    "test": "node --test lib/server/iaTestemunho.test.js",
-    "test:aviso-saida": "node --test jobs/aviso-saida/calculo.test.js"
+    "test": "node --test jobs/lembrete-aviso/calculo.test.js",
+    "test:lembrete": "node --test jobs/lembrete-aviso/calculo.test.js"
   },
   "dependencies": {
     "@tiptap/extension-color": "^2.27.3",

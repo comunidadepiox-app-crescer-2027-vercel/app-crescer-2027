@@ -2,7 +2,7 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 import { CORES, FONTES } from "../lib/tema";
 import { nomeDoEspaco } from "../lib/programa";
 
-export function ProgramaLista({ grupos, queroIr, ocupadoId, onQueroIr }) {
+export function ProgramaLista({ grupos, lembretes, ocupadoId, onAlternarLembrete }) {
   return (
     <View style={{ gap: 16 }}>
       {[...grupos.entries()].map(([espaco, itens]) => (
@@ -23,13 +23,15 @@ export function ProgramaLista({ grupos, queroIr, ocupadoId, onQueroIr }) {
                 <Text style={estilos.titulo}>{item.title}</Text>
                 {item.guest ? <Text style={estilos.extra}>{item.guest}</Text> : null}
                 {item.notes ? <Text style={estilos.extra}>{item.notes}</Text> : null}
-                {onQueroIr ? (
+                {onAlternarLembrete ? (
                   <Pressable
-                    onPress={() => onQueroIr(item)}
+                    onPress={() => onAlternarLembrete(item)}
                     disabled={ocupadoId === item.id}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${item.title} às ${item.time}`}
                   >
-                    <Text style={estilos.quero}>
-                      {queroIr?.has(item.id) ? "Cancelar aviso" : "Quero ir"}
+                    <Text style={estilos.lembrete}>
+                      {lembretes?.has(item.id) ? "Cancelar aviso" : "Avise-me"}
                     </Text>
                   </Pressable>
                 ) : null}
@@ -94,7 +96,7 @@ const estilos = StyleSheet.create({
     color: "rgba(17,28,45,0.7)",
     marginTop: 2,
   },
-  quero: {
+  lembrete: {
     fontFamily: FONTES.corpoSemi,
     fontSize: 14,
     color: CORES.destaque,

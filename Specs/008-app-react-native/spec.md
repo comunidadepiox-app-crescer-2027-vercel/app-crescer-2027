@@ -14,10 +14,13 @@ O fiel acessa o Crescer pelo app instalado sem criar credenciais. A sessão anô
 ### Entra
 
 - Projeto Expo (React Native, JavaScript) em `mobile/`, usando expo-router
-- Todas as telas do fiel: Home, Notícias (lista e detalhe), Agenda (cronograma), Benfeitor da Fé, Conta, Galeria e Sobre
+- Todas as telas do fiel: Home, Notícias (lista e detalhe), Agenda (cronograma), Sobre o app, Galeria e Sobre
+- Benfeitor da Fé não é tela: a aba da barra inferior abre o site da campanha, ver [005](005-benfeitor-da-fe/spec.md)
+- Botão **INGRESSO** no header e o atalho Ingresso na folha central, com o endereço do site oficial reservado no código e ainda vazio, ver [002](002-navegacao-e-home/spec.md)
 - Splash de abertura com o vídeo oficial da logo sobre `#3e1c7a` (mesmo tom do fundo do vídeo no aparelho), wordmark branco e, no rodapé, as logos da Diocese de Campina Grande e da Comunidade de São Pio X
 - Mesmo Firestore e as mesmas regras de leitura do fiel, e o token de notificação em `deviceTokens`
 - Pedido único para ativar notificação quando a programação publicada do dia do recorte muda
+- Ativação de aviso com motivo honesto: em ambiente sem push, o app diz qual é o motivo e deixa a pessoa sair, em vez de insistir num botão que nunca vai funcionar
 - Identidade visual completa: paleta 000, fontes oficiais (convertidas para TTF), ícones da marca
 - Sessão anônima automática via Firebase Anonymous Auth, persistida com AsyncStorage
 
@@ -28,19 +31,21 @@ O fiel acessa o Crescer pelo app instalado sem criar credenciais. A sessão anô
 - Modo offline e publicação nas lojas
 - Push remoto dentro do Expo Go (no SDK 57 isso pede build de desenvolvimento)
 - Pagamentos
+- Tela de configuração, edição de nome e qualquer ajuste de conta (spec 006)
+- Localização do fiel (spec 010)
 
 ## Fluxos
 
 1. Fiel abre o app, vê a splash com o vídeo da logo e a sessão anônima é criada ou restaurada automaticamente.
 2. Na Home vê destaque da edição, até 4 notícias e a programação do dia do recorte (calendário Recife: dia 5 até acabar o 5, depois o 6). Home, Notícias e Agenda escutam o Firestore.
-3. Benfeitor: mesmo formulário e validações da web, grava em `benefactorLeads`. Máscara de celular e CPF. Se já cadastrou, abre a confirmação.
+3. Benfeitor: toca na aba e o navegador abre a campanha da Comunidade de São Pio X. O app não pede nenhum dado nesse caminho.
 
 ## Superfície do produto
 
 | Tipo | Identificador |
 |---|---|
-| Pasta | `mobile/` (expo-router: `app/index` login, `app/(tabs)/{home,noticias,agenda,benfeitor,conta}`, `app/noticia/[id]`, `app/galeria`, `app/sobre`, `app/terco-restauracao`, `app/fornecedor`, `app/testemunhos`). A barra mostra Home, Notícias, Agenda e Benfeitor, com o círculo de menu no centro. Conta fica fora da barra e abre pela engrenagem do header. A folha abre o Terço da Restauração das Famílias, a coleção Arte Piedosa da Devotum no navegador, a página visual de Fornecedor e o formulário de Testemunhos; Voluntário e Spotify continuam sem rota e Mapa do Evento fica indisponível |
-| Coleções Firestore | `users`, `news`, `programItems`, `benefactorLeads`, `deviceTokens` |
+| Pasta | `mobile/` (expo-router: `app/index` login, `app/(tabs)/{home,noticias,agenda}`, `app/noticia/[id]`, `app/galeria`, `app/sobre`, `app/sobre-o-app`, `app/terco-restauracao`, `app/fornecedor`, `app/testemunhos`). A barra mostra Home, Notícias, Agenda e Benfeitor, com o círculo de menu no centro. Benfeitor é link externo e não é `Tabs.Screen`. Sobre o app fica fora da barra e abre pelo ícone de informação do header. A folha abre o Terço da Restauração das Famílias, a coleção Arte Piedosa da Devotum e o Ingresso no navegador, a página visual de Fornecedor e o formulário de Testemunhos; Voluntário e Spotify continuam sem rota e Mapa do Evento fica indisponível |
+| Coleções Firestore | `users`, `news`, `programItems`, `lembretes` (subcoleção do uid), `deviceTokens` |
 | Papel necessário | `fiel` |
 
 ## Dados
@@ -51,7 +56,8 @@ Persistência de sessão via AsyncStorage (token do Firebase Auth no aparelho). 
 
 - Cadastro anônimo sempre cria `role: 'fiel'` (mesma regra da web; rules do Firestore continuam valendo)
 - O app não oferece login, cadastro, Google, recuperação de senha ou logout
-- O mesmo UID anônimo é usado por dados, localização, Quero ir e notificações
+- O mesmo UID anônimo é usado por dados, lembretes e notificações
+- Endereços externos vivem em `mobile/lib/links.js`, e nenhum item de link fica sem destino: com a constante vazia, o toque avisa
 - Datas e recorte "hoje" seguem `lib/event/edition` (timezone America/Recife): antes do evento e no dia 5 mostra 5/02; depois da meia-noite do dia 5 mostra 6/02, e assim até 9/02
 
 ## Critérios de aceite
@@ -60,8 +66,8 @@ Persistência de sessão via AsyncStorage (token do Firebase Auth no aparelho). 
 - [ ] Splash mostra o vídeo da logo sobre o mesmo roxo da tela, as logos da diocese e de São Pio X no rodapé, e libera quando a sessão resolve
 - [ ] Sessão anônima é criada automaticamente e persiste ao reabrir
 - [ ] Home abre diretamente, sem tela de login ou cadastro
-- [ ] Home, Notícias, detalhe, Agenda, Benfeitor, Conta, Galeria e Sobre funcionais
-- [ ] Formulário Benfeitor grava lead com as mesmas validações da web
+- [ ] Home, Notícias, detalhe, Agenda, Sobre o app, Galeria, Sobre e Testemunhos funcionais
+- [ ] A aba Benfeitor abre o site da campanha e o header mostra **INGRESSO** com o ícone de informação ao lado
 - [ ] Identidade: roxo #3a1075, laranja #d68130, dourado, Geometric Slabserif nos títulos
 
 ## Anti-slop

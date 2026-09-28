@@ -12,21 +12,6 @@ service cloud.firestore {
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
-    function origemOk() {
-      return !('origem' in request.resource.data)
-        || request.resource.data.origem == null
-        || (
-          request.resource.data.origem.keys().hasOnly(['lat', 'lng', 'updatedAt'])
-          && request.resource.data.origem.lat is number
-          && request.resource.data.origem.lng is number
-          && request.resource.data.origem.lat >= -90
-          && request.resource.data.origem.lat <= 90
-          && request.resource.data.origem.lng >= -180
-          && request.resource.data.origem.lng <= 180
-          && request.resource.data.origem.updatedAt is timestamp
-        );
-    }
-
     match /users/{userId} {
       allow get: if signedIn() && (request.auth.uid == userId || isAdmin());
       allow list: if isAdmin();
@@ -39,11 +24,12 @@ service cloud.firestore {
         && (
           (!('email' in request.resource.data) && !('email' in resource.data))
           || request.resource.data.email == resource.data.email
-        )
-        && origemOk();
+        );
       allow delete: if false;
 
-      match /queroIr/{itemId} {
+      // Avise-me. O fiel marca e apaga só o próprio lembrete, e o documento
+      // não tem campo livre: só o id do item e a data da marcação.
+      match /lembretes/{itemId} {
         allow read: if signedIn() && request.auth.uid == userId;
         allow create: if signedIn()
           && request.auth.uid == userId
@@ -83,8 +69,8 @@ service cloud.firestore {
       allow read: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
     }
 
-    // trafficAlerts e mapsUsage não têm match de propósito.
-    // O cliente não lê nem escreve. O job usa o Admin SDK.
+    // lembreteAvisos não tem match de propósito. O cliente não lê nem
+    // escreve os avisos que já saíram. O job usa o Admin SDK.
 
     match /benefactorLeads/{leadId} {
       allow create: if signedIn()
@@ -97,11 +83,11 @@ service cloud.firestore {
       allow delete: if false;
     }
 
-    // Testemunhos. O fiel não lê a coleção, porque o texto ainda não foi
-    // aprovado pela equipe. A escrita é false de propósito: quem grava é o
-    // Route Handler app/api/testemunhos, com o Admin SDK e a service account,
-    // depois de passar o texto pelo filtro da IA. As rules não valem para o
-    // Admin SDK, então ele é a única via de escrita.
+    // Testemunhos. O fiel não lê a coleção: o texto só é lido pela equipe, e a
+    // leitura é integral, sem resumo no meio. A escrita é false de propósito:
+    // quem grava é o Route Handler app/api/testemunhos, com o Admin SDK e a
+    // service account. As rules não valem para o Admin SDK, então ele é a
+    // única via de escrita.
     match /testimonials/{testimonialId} {
       allow read: if isAdmin();
       allow create, update, delete: if false;

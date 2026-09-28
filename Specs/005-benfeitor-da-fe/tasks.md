@@ -32,9 +32,20 @@
   - Verifica: não afirma que o pagamento ocorreu; copy sem travessão.
   - Fora: boleto.
 
+- [x] **T8 — Link externo no lugar da aba**
+  - Faz: constante `LINK_BENFEITOR` em `mobile/lib/links.js` e item de link externo em `BarraAbas`, depois da aba Agenda, com o mesmo ícone e o mesmo rótulo.
+  - Verifica: tocar abre `https://benfeitordafe.comunidadepiox.org.br/crescer`; a `Tabs.Screen` de `benfeitor` saiu do `(tabs)/_layout.jsx`; nenhuma rota `/benfeitor` no bundle.
+  - Fora: mudar a ordem da barra ou o desenho do item ativo.
+
+- [x] **T9 — Arquivo da página e da lib**
+  - Faz: `mobile/app/(tabs)/benfeitor.jsx` e `mobile/lib/benfeitor.js` movidos para `mobile/_arquivo/benfeitor/`, com `README.md` registrando o que a tela fazia e o que falta para recriá-la.
+  - Verifica: nenhum import no app aponta para `lib/benfeitor`; a pasta não entra no bundle; `app/admin/leads` e `firestore.rules` sem alteração.
+  - Fora: apagar `benefactorLeads`, `/admin/leads` ou os leads já gravados.
+
 ## Validação final
 
 - [ ] Aceite de `spec.md`
-- [ ] LGPD conferido
-- [ ] Copy sem travessão
-- [ ] Docs atualizados
+- [x] LGPD conferido
+- [x] Copy sem travessão
+- [x] Docs atualizados
+

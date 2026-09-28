@@ -1,5 +1,7 @@
+// ARQUIVADO em 28/09/2026. Ver o README desta pasta antes de mexer.
+// A campanha passou a ser do site da comunidade e o app não grava mais lead.
 import { addDoc, collection, getDocs, limit, query, serverTimestamp, where } from "firebase/firestore";
-import { db } from "./firebase";
+import { db } from "../../lib/firebase";
 
 export function somenteDigitos(valor) {
   return String(valor || "").replace(/\D/g, "");

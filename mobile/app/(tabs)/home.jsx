@@ -10,14 +10,15 @@ import { FundoRoxoPoligonal, FundoLaranjaPoligonal } from "../../components/Fund
 import { Botao, TituloSecao, Paragrafo } from "../../components/Ui";
 import { CORES, FONTES } from "../../lib/tema";
 import { useAuth } from "../../lib/authProvider";
-import { useQueroIr } from "../../lib/avisoSaida";
+import { useAviseMe } from "../../lib/aviseMe";
+import { abreLinkExterno, LINK_BENFEITOR } from "../../lib/links";
 
 const foto = require("../../assets/brand/foto-evento.webp");
 
 export default function HomeScreen() {
   const router = useRouter();
   const { user } = useAuth();
-  const { ids, ocupado, alternar } = useQueroIr(user?.uid);
+  const { ids, ocupado, alternar } = useAviseMe(user?.uid);
   const [noticias, setNoticias] = useState(null);
   const [programa, setPrograma] = useState(null);
   const [erroNoticias, setErroNoticias] = useState(false);
@@ -118,9 +119,9 @@ export default function HomeScreen() {
         ) : (
           <ProgramaLista
             grupos={grupos}
-            queroIr={ids}
+            lembretes={ids}
             ocupadoId={ocupado}
-            onQueroIr={alternar}
+            onAlternarLembrete={alternar}
           />
         )}
       </View>
@@ -134,7 +135,7 @@ export default function HomeScreen() {
         <Botao
           titulo="Quero ser Benfeitor da Fé"
           variante="roxo"
-          onPress={() => router.push("/benfeitor")}
+          onPress={() => abreLinkExterno(LINK_BENFEITOR)}
         />
       </FundoLaranjaPoligonal>
     </ScrollView>

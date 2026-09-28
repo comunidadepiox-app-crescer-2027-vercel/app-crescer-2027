@@ -29,7 +29,8 @@
 
 ## LGPD
 
-- Dados do app: nome escolhido, localização quando concedida, lead do Benfeitor, Quero ir e token do aparelho
+- Dados do app: nome escolhido, o que a pessoa escreveu nos formulários do próprio app, o lembrete de Avise-me e o token do aparelho
+- A localização saiu em 28/09/2026, junto com o aviso de saída. O app não pede mais permissão de GPS
 - O e-mail não é coletado pelo app do fiel
 - O UID anônimo identifica a instalação para integrar as funcionalidades, não uma pessoa de forma verificável
 - O Firebase Auth e o Firestore continuam sendo os locais de armazenamento

@@ -13,7 +13,7 @@ export default function SobreScreen() {
 
   return (
     <View style={estilos.tela}>
-      <Voltar para="/conta" rotulo="Conta" />
+      <Voltar para="/sobre-o-app" rotulo="Sobre o app" />
       <ScrollView contentContainerStyle={estilos.pagina}>
       <TituloPagina>Sobre o Crescer</TituloPagina>
       <Paragrafo style={{ marginTop: 14 }}>

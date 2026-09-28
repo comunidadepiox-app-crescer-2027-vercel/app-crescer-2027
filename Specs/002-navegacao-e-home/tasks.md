@@ -47,6 +47,11 @@
   - Verifica: Loja abre `https://usedevotum.com.br/colecao-arte-piedosa/`; Mapa do Evento fica visualmente apagado, anuncia estado desativado e não responde ao toque; a grade acomoda os seis atalhos.
   - Fora: rota interna, WebView ou conteúdo de mapa.
 
+- [x] **T10 — Grade da folha sem buraco no meio**
+  - Faz: `justifyContent: "flex-start"` e `width: "33%"` no item, no `MenuAtalhos.jsx`.
+  - Verifica: a linha cheia continua distribuída em três colunas e a linha parcial empacota pela esquerda, com os itens encostados e sem vão no meio. `npx expo export --platform android` conclui.
+  - Fora: número de colunas, ordem dos atalhos e o desenho do círculo de pelo.
+
 ## Validação final
 
 - [ ] Aceite de `spec.md`

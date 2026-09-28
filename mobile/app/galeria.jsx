@@ -29,7 +29,7 @@ export default function GaleriaScreen() {
 
   return (
     <View style={estilos.tela}>
-      <Voltar para="/conta" rotulo="Conta" />
+      <Voltar para="/sobre-o-app" rotulo="Sobre o app" />
       <ScrollView contentContainerStyle={estilos.pagina}>
         <TituloPagina>Galeria</TituloPagina>
         <Paragrafo style={{ marginTop: 8 }}>

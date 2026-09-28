@@ -23,16 +23,12 @@ const logoTestemunhos = require("../assets/logo-testemunhos.png");
 
 const AVISO =
   "A Comunidade de São Pio X usa este texto e o seu nome apenas para preparar a " +
-  "leitura do seu testemunho no encontro. Marcar a opção de anônimo apaga o nome.";
+  "leitura do seu testemunho no encontro. A equipe lê o texto que você escreveu. " +
+  "Marcar a opção de anônimo apaga o nome.";
 
-const RECUSA_IA =
-  "Recebemos o seu texto, mas ele não entra na fila de leitura. A equipe avalia " +
-  "com cuidado e nada do que você escreveu fica público.";
-
-const REVISAO =
-  "Recebemos o seu texto. A equipe vai avaliar com cuidado e avisar se ele entrar.";
-
-const ENVIADO = "Recebemos o seu testemunho. Obrigado por compartilhar.";
+const ENVIADO =
+  "Recebemos o seu testemunho. Obrigado por compartilhar. A equipe lê os textos " +
+  "no encontro."
 
 export default function TestemunhosScreen() {
   const { user, loading } = useAuth();
@@ -106,16 +102,8 @@ export default function TestemunhosScreen() {
 
           {resultado ? (
             <View style={estilos.bloco}>
-              <TituloPagina>
-                {resultado.status === "novo" ? "Testemunho enviado" : "Texto recebido"}
-              </TituloPagina>
-              <Paragrafo style={{ marginTop: 12 }}>
-                {resultado.status === "recusado_ia"
-                  ? RECUSA_IA
-                  : resultado.status === "revisao"
-                    ? REVISAO
-                    : ENVIADO}
-              </Paragrafo>
+              <TituloPagina>Testemunho enviado</TituloPagina>
+              <Paragrafo style={{ marginTop: 12 }}>{ENVIADO}</Paragrafo>
               <Botao
                 titulo="Escrever outro"
                 variante="contorno"
@@ -130,7 +118,7 @@ export default function TestemunhosScreen() {
                 1. Escreva o seu nome ou marque a opção de anônimo.
               </Paragrafo>
               <Paragrafo>2. Conte o que mudou em você, com as suas palavras.</Paragrafo>
-              <Paragrafo>3. A equipe lê o seu relato no palco, com um resumo curto.</Paragrafo>
+              <Paragrafo>3. A equipe lê o seu texto no palco, do jeito que você escreveu.</Paragrafo>
 
               <View style={{ gap: 14, marginTop: 20 }}>
                 <Campo

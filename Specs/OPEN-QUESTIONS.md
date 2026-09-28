@@ -20,12 +20,15 @@ Itens que o SDD registra, mas que ainda não têm decisão final. Não bloqueiam
 - [x] Google no app nativo: no Expo Go o OAuth é recusado pelo Google (Error 400 `invalid_request`, política contra custom scheme). O fiel usa e-mail/senha no Go; Google fica para o development build.
 - [ ] Projeto Firebase, domínios autorizados do Google OAuth (web) e variáveis de ambiente (preencher `.env.local` a partir de `.env.example` e publicar `firestore.rules` no console)
 - [ ] Publicar `firestore.indexes.json` com o índice composto de `testimonials` (`pasta` + `createdAt`) e as rules da spec 013. Sem isso a aba da mesa dá `failed-precondition`
-- [ ] Chave gratuita do Groq em `GROQ_API_KEY` (https://console.groq.com/keys), para o filtro e o resumo de testemunho. Sem a chave o testemunho é gravado como `revisao` e o resumo não sai
 - [ ] `EXPO_PUBLIC_API_BASE` no `mobile/.env` com a URL pública do site, sem barra no fim, para o app falar com a rota de testemunhos. Sem ela a tela avisa que o serviço está fora do ar
 - [ ] `FIREBASE_SERVICE_ACCOUNT` presente em `.env`, porque a gravação de `testimonials` passa pelo Admin SDK na rota do servidor
+- [ ] **Development build do app, para o aviso com o app fechado.** O Expo Go não tem push remoto no Android desde o SDK 53, então a ativação de aviso e a contagem regressiva do Avise-me só funcionam no aplicativo instalado. O perfil `development` do `mobile/eas.json` já existe. Sem isso, o botão sempre recusa com o motivo `expo-go` e nada chega no aparelho
+- [ ] `FIREBASE_SERVICE_ACCOUNT` no secret do workflow **Avisos da programação**, que é o mesmo secret, e sem `TOMTOM_API_KEY`, que saiu em 28/09/2026
 - [ ] Conta Cloudinary (pasta `news/` usada pelo upload assinado)
 - [x] Destino do lead Benfeitor nesta entrega: só Firestore; a confirmação mostra o link do WhatsApp oficial `(83) 98897-7017` sem envio automático
-- [ ] Texto final da política de privacidade / aviso LGPD (o app usa um aviso curto alinhado ao site oficial; validar com a comunidade). O formulário de testemunho tem aviso próprio e registra o uid anônimo, que também é dado pessoal
+- [ ] Endereço do Ingresso para o site oficial do evento. A constante `LINK_INGRESSO` em `mobile/lib/links.js` está vazia e o toque avisa que o endereço entra em breve
+- [ ] Texto final da página de informação do app (`mobile/lib/sobreApp.js`). Hoje há texto provisório e um marcador indicando o arquivo e o formato da troca但
+- [ ] Texto final da política de privacidade / aviso LGPD (o app usa um aviso curto alinhado ao site oficial; validar com a comunidade). O formulário de testemunho tem aviso próprio e registra o uid anônimo, que também é dado pessoal. Com a retirada da IA, a equipe da mesa passa a ler o texto do testemunho na íntegra, e isso precisa estar no aviso ao titular
 
 ## Conteúdo inicial
 
@@ -42,4 +45,6 @@ Itens que o SDD registra, mas que ainda não têm decisão final. Não bloqueiam
 | Benfeitor | Formulário de lead, sem gateway de pagamento |
 | Caravanas | Link para o fluxo oficial, não é produto nesta fase |
 | Instituto Crescer | Fora. Não usar brandbook de `crescer.org.br` |
-| Testemunhos | Fila com pastas `aguardando` e `encerrados`, resumo pela IA, texto original guardado e nunca exibido na mesa |
+| Benfeitor da Fé | A campanha é do site da comunidade. O app arquivou o formulário e a aba abre `https://benfeitordafe.comunidadepiox.org.br/crescer` |
+| Quero ir | Virou **Avise-me**: sem localização, sem trânsito e sem hora de sair. Avisos em 30, 15, 10, 5 e 1 minuto, com cron de 5 em 5 e tolerância de 5 |
+| Testemunhos | Fila com pastas `aguardando` e `encerrados`, texto original lido pela equipe e decisão humana, sem IA e sem resumo automático |

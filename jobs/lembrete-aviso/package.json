@@ -1,5 +1,5 @@
 {
-  "name": "aviso-saida",
+  "name": "lembrete-aviso",
   "private": true,
   "type": "module",
   "dependencies": {

@@ -27,12 +27,12 @@
 - [x] **T9 — Agenda**
   - Faz: abas de dias da edição, grupos por espaço, escuta ao vivo.
   - Verifica: dias 05–09/02/2027.
-- [x] **T10 — Benfeitor**
-  - Faz: campanha + formulário com máscara de celular/CPF e LGPD; confirmação se já houver lead do uid.
-  - Verifica: lead gravado com status novo; reabrir a aba mostra a confirmação.
-- [x] **T11 — Conta, Galeria e Sobre**
-  - Faz: editar nome, sair; links oficiais; institucional.
-  - Verifica: sair volta ao login.
+- [x] **T10 — Benfeitor** (formulário arquivado em 28/09/2026, ver a spec 005)
+  - Estado: a tela e a lib foram movidas para `mobile/_arquivo/benfeitor/`, com README do que falta para recriá-las. A aba virou link externo para o site da campanha.
+  - Fora: pagamento e qualquer reativação do formulário no app.
+- [x] **T11 — Conta, Galeria e Sobre** (Conta substituída em 28/09/2026, ver a spec 006)
+  - Estado: editar nome e sair saíram com a tela de Configuração. Galeria e Sobre continuam, e o `Voltar` das duas aponta para `/sobre-o-app`.
+  - Fora: edição de conta.
 - [x] **T13 — Anúncios na Home** (retirada com a spec 009)
   - Faz: a pilha saiu da Home; o app não lê `announcements`.
   - Verifica: a Home abre sem cartaz.
@@ -61,3 +61,28 @@
   - Faz: criar a rota autenticada `/fornecedor` com os cards Food Park e Outros, usando as imagens locais e reserving URLs futuras.
   - Verifica: o atalho Fornecedor abre a página, os cards são visuais e o retorno leva à Home.
   - Fora: links externos, CMS e detalhes individuais.
+
+- [x] **T18 — Benfeitor como link externo** (28/09/2026, spec 005)
+  - Faz: `mobile/lib/links.js` com `LINK_BENFEITOR`, item de link externo na `BarraAbas` e `Tabs.Screen` de `benfeitor` removida; tela e lib arquivadas em `mobile/_arquivo/benfeitor/`.
+  - Verifica: a aba abre `https://benfeitordafe.comunidadepiox.org.br/crescer`; nenhuma rota `/benfeitor` no bundle; `/admin/leads` e `benefactorLeads` sem alteração.
+  - Fora: apagar leads já gravados.
+
+- [x] **T19 — INGRESSO e ícone de informação** (28/09/2026, specs 002 e 006)
+  - Faz: botão **INGRESSO** no header e atalho Ingresso na folha central, com `LINK_INGRESSO` reservado no código; `IconeEngrenagem` trocada por `IconeInfo`; `conta.jsx` removido e `/sobre-o-app` criada com o texto em `mobile/lib/sobreApp.js`.
+  - Verifica: o ícone de informação abre `/sobre-o-app`; Galeria e Sobre voltam para ela; o Ingresso avisa enquanto a constante estiver vazia.
+  - Fora: o texto final da página do app, que a comunidade ainda vai elaborar.
+
+- [x] **T20 — Avise-me sem localização** (28/09/2026, spec 010)
+  - Faz: `Avise-me` e `Cancelar aviso` no `ProgramaLista`, `useAviseMe` em `lib/avisoSaida.js`, subcoleção `lembretes`, `expo-location` fora do `app.json` e do `package.json`.
+  - Verifica: o app não pede permissão de localização em nenhum fluxo e o canal Android é `aviso`.
+  - Fora: o job, que é a spec 010.
+
+- [x] **T21 — Testemunhos sem IA** (28/09/2026, spec 013)
+  - Faz: a confirmação do envio tem uma mensagem só e o texto de "Como funciona" não promete resumo automático.
+  - Verifica: nenhum `resultado.status` na tela e o bundle do app conclui.
+  - Fora: a mesa, que é a spec 013.
+
+- [x] **T22 — Ativação de aviso sem tela morta** (28/09/2026)
+  - Faz: motivos nomeados (`expo-go`, `navegador`, `negado`, `sem-token`, `erro`) com uma frase cada, canal Android criado antes do pedido de permissão, `getExpoPushTokenAsync` dentro de `try`, e o cartão do pedido passa a ter botão "Entendi" quando o ambiente não tem push. `marcarLembrete` devolve `push` e `motivo` em vez de dizer que deu certo sem token. `expo-device` sai do projeto, porque a checagem de `isDevice` barrava emulador e simulador, que a referência do SDK 57 diz que suportam push.
+  - Verifica: no Expo Go o toque mostra o motivo e o cartão fecha; `npx expo export --platform android` conclui sem erro.
+  - Fora: fazer o push chegar de verdade, que exige development build (spec 010).

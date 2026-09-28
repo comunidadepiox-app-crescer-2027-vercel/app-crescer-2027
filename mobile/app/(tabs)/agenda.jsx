@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { View, Text, ScrollView, Pressable, StyleSheet } from "react-native";
 import { observarProgramaPublicado, itensDoDia, agrupaPorEspaco } from "../../lib/programa";
 import { useAuth } from "../../lib/authProvider";
-import { useQueroIr } from "../../lib/avisoSaida";
+import { useAviseMe } from "../../lib/aviseMe";
 import { EDICAO, resolveDiaRecorte, formataDataCurta, formataDataLonga, diasDaEdicao } from "../../lib/edicao";
 import { ProgramaLista } from "../../components/ProgramaLista";
 import { TituloPagina, Paragrafo } from "../../components/Ui";
@@ -10,7 +10,7 @@ import { CORES, FONTES } from "../../lib/tema";
 
 export default function AgendaScreen() {
   const { user } = useAuth();
-  const { ids, ocupado, alternar } = useQueroIr(user?.uid);
+  const { ids, ocupado, alternar } = useAviseMe(user?.uid);
   const dias = useMemo(diasDaEdicao, []);
   const [dia, setDia] = useState(() => resolveDiaRecorte().date);
   const [todos, setTodos] = useState(null);
@@ -69,14 +69,16 @@ export default function AgendaScreen() {
       ) : (
         <ProgramaLista
           grupos={grupos}
-          queroIr={ids}
+          lembretes={ids}
           ocupadoId={ocupado}
-          onQueroIr={alternar}
+          onAlternarLembrete={alternar}
         />
       )}
 
       <Text style={estilos.nota}>
-        Os horários e os convidados podem ser alterados sem aviso prévio.
+        Toque em Avise-me em um item para receber um aviso 30, 15, 10, 5 e 1
+        minuto antes do horário. Os horários e os convidados podem ser alterados
+        sem aviso prévio.
       </Text>
     </ScrollView>
   );

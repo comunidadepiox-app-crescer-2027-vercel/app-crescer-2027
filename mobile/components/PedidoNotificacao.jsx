@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { ativarNotificacao, adiarPedido, lerPedido } from "../lib/notificacoes";
+import {
+  AVISO_PUSH,
+  MOTIVO,
+  MOTIVO_SEM_RECURSO,
+  adiarPedido,
+  ativarNotificacao,
+  lerPedido,
+} from "../lib/notificacoes";
 import { alturaBarra } from "./BarraAbas";
 import { CORES, FONTES } from "../lib/tema";
 
@@ -9,6 +16,8 @@ export function PedidoNotificacao({ uid }) {
   const insets = useSafeAreaInsets();
   const [aberto, setAberto] = useState(false);
   const [aviso, setAviso] = useState("");
+  const [ocupado, setOcupado] = useState(false);
+  const [semRecurso, setSemRecurso] = useState(false);
 
   useEffect(() => {
     lerPedido()
@@ -20,23 +29,25 @@ export function PedidoNotificacao({ uid }) {
 
   async function ativar() {
     setAviso("");
+    setOcupado(true);
     try {
       const res = await ativarNotificacao(uid);
       if (res.ok) {
         setAberto(false);
         return;
       }
-      if (res.motivo === "negado") {
-        setAviso("Sem a permissão, a mudança da programação não chega neste celular.");
-        return;
-      }
-      setAviso("A notificação com o app fechado pede o aplicativo instalado.");
-    } catch {
-      setAviso("Não foi possível ativar agora.");
+      setAviso(AVISO_PUSH[res.motivo] || AVISO_PUSH[MOTIVO.ERRO]);
+      // Quando o ambiente não tem push, insistir é inútil. A tela oferece sair.
+      if (res.motivo === MOTIVO_SEM_RECURSO) setSemRecurso(true);
+    } catch (erro) {
+      setAviso(AVISO_PUSH[MOTIVO.ERRO]);
+      if (__DEV__) console.warn("Crescer: falha ao ativar o aviso.", erro?.message || erro);
+    } finally {
+      setOcupado(false);
     }
   }
 
-  async function depois() {
+  async function sair() {
     await adiarPedido();
     setAberto(false);
   }
@@ -50,11 +61,19 @@ export function PedidoNotificacao({ uid }) {
         </Text>
         {aviso ? <Text style={estilos.aviso}>{aviso}</Text> : null}
         <View style={estilos.acoes}>
-          <Pressable onPress={ativar} style={estilos.principal}>
-            <Text style={estilos.principalTexto}>Ativar notificações</Text>
-          </Pressable>
-          <Pressable onPress={depois}>
-            <Text style={estilos.depois}>Agora não</Text>
+          {semRecurso ? (
+            <Pressable onPress={sair} style={estilos.principal}>
+              <Text style={estilos.principalTexto}>Entendi</Text>
+            </Pressable>
+          ) : (
+            <Pressable onPress={ativar} disabled={ocupado} style={estilos.principal}>
+              <Text style={estilos.principalTexto}>
+                {ocupado ? "Ativando" : "Ativar notificações"}
+              </Text>
+            </Pressable>
+          )}
+          <Pressable onPress={sair} disabled={ocupado}>
+            <Text style={estilos.depois}>{semRecurso ? "Agora não" : "Depois"}</Text>
           </Pressable>
         </View>
       </View>

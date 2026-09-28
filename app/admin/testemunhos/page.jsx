@@ -25,7 +25,6 @@ const ABAS = [
   { pasta: "aguardando", rotulo: "Aguardando" },
   { pasta: "encerrados", rotulo: "Encerrados" },
 ];
-
 function dataCurta(timestamp) {
   if (!timestamp?.toDate) return "Sem data";
   const completo = formataDataFirestore(timestamp);
@@ -122,7 +121,7 @@ export default function AdminTestemunhosPage() {
     <div className="max-w-3xl">
       <CabecalhoMesa
         titulo="Testemunhos"
-        frase="Fila de leitura do encontro. O mais antigo vem primeiro. Leia o resumo, decida e o item sai da fila."
+        frase="Fila de leitura do encontro. O mais antigo vem primeiro. Leia o texto da pessoa, decida e o item sai da fila."
       />
 
       <div className="mt-6 flex gap-4 overflow-x-auto border-b border-linha">
@@ -180,22 +179,15 @@ export default function AdminTestemunhosPage() {
   );
 }
 
-// Uma coluna, cartão por linha, alvos grandes. O texto original nunca é
-// renderizado: a página só mostra o resumo que a IA preparou para o palco.
-// Quando não houve resumo, que é o caso da revisão, o cartão avisa e a
-// decisão possível é descartar.
+// Uma coluna, cartão por linha, alvos grandes. Não existe resumo automático
+// desde 28/09/2026: a mesa mostra o texto que a pessoa escreveu, e a equipe é
+// que decide o que pode ser lido no palco.
 function CartaoTestemunho({ testemunho, pasta, ocupado, onLer, onRecusar }) {
-  const recusado = testemunho.status === "recusado_ia";
-  const revisao = testemunho.status === "revisao";
   const nome = testemunho.anonimo || !testemunho.nome ? "Anônimo" : testemunho.nome;
   const decidido = pasta === "encerrados";
 
   return (
-    <li
-      className={`rounded-[14px] border bg-superficie p-5 ${
-        recusado || revisao ? "border-vermelho/40" : "border-linha"
-      }`}
-    >
+    <li className="rounded-[14px] border border-linha bg-superficie p-5">
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
         <p className="font-titulo text-lg font-bold uppercase text-titulo">{nome}</p>
         <p className="text-sm text-destaque">{dataCurta(testemunho.createdAt)}</p>
@@ -205,21 +197,9 @@ function CartaoTestemunho({ testemunho, pasta, ocupado, onLer, onRecusar }) {
         {ROTULO_STATUS[testemunho.status] || testemunho.status}
       </p>
 
-      {recusado ? (
-        <p className="mt-4 border-l-2 border-vermelho pl-3 text-sm leading-5 text-vermelho">
-          O filtro não aprovou este texto{testemunho.motivoRecusa ? `: ${testemunho.motivoRecusa}` : "."}{" "}
-          A equipe pode aceitar mesmo assim, se o contexto for bom.
-        </p>
-      ) : revisao ? (
-        <p className="mt-4 border-l-2 border-linha pl-3 text-sm leading-5 text-texto/70">
-          O resumo automático não saiu para este texto. Sem resumo não há o que ler no
-          palco, então a decisão é descartar.
-        </p>
-      ) : (
-        <p className="mt-4 whitespace-pre-line text-[15px] leading-6 text-texto">
-          {testemunho.resumo || "Sem resumo."}
-        </p>
-      )}
+      <p className="mt-4 whitespace-pre-line text-[15px] leading-6 text-texto">
+        {testemunho.texto || "Sem texto."}
+      </p>
 
       {decidido ? (
         <p className="mt-5 font-titulo text-xs font-bold uppercase text-texto/50">
@@ -227,16 +207,14 @@ function CartaoTestemunho({ testemunho, pasta, ocupado, onLer, onRecusar }) {
         </p>
       ) : (
         <div className="mt-5 flex flex-wrap gap-3">
-          {revisao ? null : (
-            <button
-              type="button"
-              onClick={onLer}
-              disabled={ocupado}
-              className={`${classeBotaoPrimario} min-h-11`}
-            >
-              Testemunho lido
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={onLer}
+            disabled={ocupado}
+            className={`${classeBotaoPrimario} min-h-11`}
+          >
+            Testemunho lido
+          </button>
           <button
             type="button"
             onClick={onRecusar}

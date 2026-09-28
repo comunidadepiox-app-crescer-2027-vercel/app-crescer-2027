@@ -7,6 +7,8 @@
 
 > **Superfície web retirada.** O site Next.js é só a mesa administrativa (`/admin`). Home e navegação do fiel desta spec vivem no app Expo, spec [008](../008-app-react-native/spec.md).
 
+> **O que mudou em 28/09/2026.** A barra inferior continua com quatro posições, mas Benfeitor deixou de ser rota e virou link externo para o site da campanha, ver [005](005-benfeitor-da-fe/spec.md). O header trocou INSCREVA-SE por **INGRESSO** e a engrenagem pelo ícone de informação, que abre a página do app, ver [006](006-sobre-o-app/spec.md). A folha central ganhou o atalho **Ingresso**. O destino do Ingresso é o site oficial do evento, e o endereço ainda não foi informado pela comunidade: o app tem a constante vazia e um aviso honesto enquanto isso.
+
 ## Problema
 
 Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do evento, as notícias recentes e um caminho fixo para as outras páginas.
@@ -17,8 +19,9 @@ Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do event
 
 - Shell autenticado com navegação persistente
 - Barra inferior: Home, Notícias, círculo de menu, Agenda, Benfeitor da Fé
-- Conta fora da barra: engrenagem no header, à direita de INSCREVA-SE, abre a tela de Conta
-- Folha do círculo: Terço da Restauração das Famílias abre sua rota própria (011); Loja abre a coleção Arte Piedosa da Devotum no navegador externo; Fornecedor abre a página visual `/fornecedor` (012); Testemunhos abre o formulário de envio do fiel (013); Voluntário e Spotify seguem só com ícone e rótulo nesta entrega; Mapa do Evento aparece indisponível, sem ação
+- Benfeitor é item de link externo na barra, não aba: abre `https://benfeitordafe.comunidadepiox.org.br/crescer` no navegador
+- Header com o botão **INGRESSO** e, à direita dele, o ícone de informação, que abre `/sobre-o-app` (spec 006)
+- Folha do círculo: Terço da Restauração das Famílias abre sua rota própria (011); Loja e Ingresso abrem endereço externo no navegador; Fornecedor abre a página visual `/fornecedor` (012); Testemunhos abre o formulário de envio do fiel (013); Voluntário e Spotify seguem só com ícone e rótulo nesta entrega; Mapa do Evento aparece indisponível, sem ação
 - Destinos extras (prompt: “outras que forem importantes”): Galeria, Sobre
 - `/home` com:
   - seção de notícias (até 4 publicadas, capa + título + data; escuta ao vivo)
@@ -31,22 +34,24 @@ Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do event
 - CRUD de notícia ou programação (007)
 - Detalhe completo da notícia (003 implementa; a Home só aponta)
 - Programação completa por abas de espaço (004)
-- Formulário Benfeitor (005)
+- Página de campanha do Benfeitor no app (005 arquivou a tela)
 - Destino de Santo Terço, Voluntário e Spotify
+- O endereço do Ingresso, que a comunidade ainda não informou
 
 ## Fluxos
 
 1. Fiel autenticado cai em `/home`.
 2. Toca uma notícia → `/noticias/[id]`.
 3. Toca “ver cronograma” ou um horário → `/cronograma` (com âncora do dia, se já existir na 004).
-4. A barra leva a Home, Notícias, Agenda e Benfeitor. O item ativo fica dourado, sem pílula. Na Conta, aberta pela engrenagem, nenhuma aba fica ativa.
-5. O círculo abre a folha por cima da tela. Fecha ao tocar de novo no círculo, no fundo escuro ou ao arrastar para baixo. O Terço, o Fornecedor e os Testemunhos abrem suas rotas; Loja abre a coleção externa; Voluntário e Spotify não navegam. Mapa do Evento fica visivelmente indisponível e não responde ao toque.
+4. A barra leva a Home, Notícias e Agenda por rota. Benfeitor abre o site da campanha no navegador. O item ativo fica dourado, sem pílula.
+5. Toca no ícone de informação → `/sobre-o-app`. Nenhuma aba fica ativa, porque a página está fora do grupo de abas.
+6. O círculo abre a folha por cima da tela. Fecha ao tocar de novo no círculo, no fundo escuro ou ao arrastar para baixo. O Terço, o Fornecedor e os Testemunhos abrem suas rotas; Loja e Ingresso abrem endereço externo; Voluntário e Spotify não navegam. Mapa do Evento fica visivelmente indisponível e não responde ao toque.
 
 ## Superfície do produto
 
 | Tipo | Identificador |
 |---|---|
-| Rotas | `/home`, `/galeria`, `/sobre` |
+| Rotas | `/home`, `/galeria`, `/sobre`, `/sobre-o-app` |
 | Coleções lidas | `news`, `programItems` (e/ou `programDays`), `siteContent` |
 | Cloudinary | URLs de capa já gravadas na notícia |
 | Papel | `fiel` ou `admin` autenticado |
@@ -69,21 +74,26 @@ Datas da edição: constante em `lib/event/edition.js` (5 a 9 de fevereiro de 20
 ## Regras de negócio
 
 - Nav sempre visível nas rotas do grupo `(app)`.
-- Nenhum item da barra sem página. Na folha, somente Terço, Loja, Fornecedor e Testemunhos são acionáveis nesta entrega; Mapa do Evento é uma exceção deliberada, exposta como controle desativado enquanto seu destino não estiver disponível.
-- Home não inventa estatística (“milhares de famílias”).
+- Nenhum item da barra sem destino. Na folha, somente Terço, Loja, Ingresso, Fornecedor e Testemunhos são acionáveis nesta entrega; Mapa do Evento é uma exceção deliberada, exposta como controle desativado enquanto seu destino não estiver disponível.
+- Benfeitor é link externo e não é `Tabs.Screen`. Um item de link não fica ativo dourado, porque não existe rota para ele.
+- O destino do Ingresso vive em `mobile/lib/links.js`. Enquanto a constante estiver vazia, o toque mostra um aviso curto de que o endereço entra em breve, em vez de não fazer nada nem abrir uma página em branco.
+- Home não inventa estatística ("milhares de famílias").
 - Link de Caravanas no Sobre ou rodapé da Home aponta para o site oficial, não abre produto interno.
 
 ## Critérios de aceite
 
-- [ ] Os sete destinos da nav existem e abrem página real
+- [ ] Os destinos da nav existem e abrem página real ou site real
 - [ ] Home mostra bloco de notícias e bloco do dia
 - [ ] Fora das datas do evento, o aviso existe e não é um número hero
 - [ ] Sem sessão, `/home` redireciona (spec 001)
 - [ ] Item ativo da barra é dourado, sem pílula. O círculo laranja do centro é o controle do menu
 - [ ] A barra mostra Home, Notícias, Agenda e Benfeitor, com o círculo no meio
-- [ ] A engrenagem, à direita de INSCREVA-SE, abre Conta e nenhuma aba fica dourada
-- [ ] A folha lista Terço, Loja, Voluntário, Testemunhos, Fornecedor, Spotify e Mapa do Evento, e fecha no círculo, no fundo ou no arraste
-- [ ] Loja abre `https://usedevotum.com.br/colecao-arte-piedosa/` no navegador externo; Mapa do Evento tem aparência e semântica de indisponível e não responde ao toque
+- [ ] Benfeitor abre o site da campanha no navegador e não pisca em branco ao toque
+- [ ] O header mostra **INGRESSO** e, à direita, o ícone de informação, que abre `/sobre-o-app`
+- [ ] A folha lista Terço, Loja, Ingresso, Voluntário, Testemunhos, Fornecedor, Spotify e Mapa do Evento, e fecha no círculo, no fundo ou no arraste
+- [ ] A grade da folha é de três colunas empacotadas pela esquerda: a linha cheia fica distribuída e a linha com sobras não abre vão no meio, com um item encostado no outro
+- [ ] Loja e Ingresso abrem endereço externo; com o Ingresso sem endereço, o toque avisa em vez de falhar em silêncio
+- [ ] Mapa do Evento tem aparência e semântica de indisponível e não responde ao toque
 
 ## Anti-slop
 
