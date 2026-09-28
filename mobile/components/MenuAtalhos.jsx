@@ -26,7 +26,7 @@ const ITENS = [
   { rotulo: "Terço da Restauração das Famílias", imagem: terco, rota: "/terco-restauracao" },
   { rotulo: "Loja", Icone: ShoppingBag, url: "https://usedevotum.com.br/colecao-arte-piedosa/" },
   { rotulo: "Voluntário", Icone: Handshake },
-  { rotulo: "Testemunhos", imagem: testemunhos, tamanhoImagem: 59, rota: "/testemunhos" },
+  { rotulo: "Testemunhos", imagem: testemunhos, tamanhoImagem: 5, rota: "/testemunhos" },
   { rotulo: "Fornecedor", Icone: Contact, rota: "/fornecedor" },
   { rotulo: "Spotify", Icone: AudioLines },
   { rotulo: "Mapa do Evento", Icone: MapPinned, indisponivel: true },
