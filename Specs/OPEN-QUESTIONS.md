@@ -1,4 +1,4 @@
-# Questões em aberto
+﻿# Questões em aberto
 
 Itens que o SDD registra, mas que ainda não têm decisão final. Não bloqueiam a criação das specs. Bloqueiam só a implementação da parte que depende da resposta.
 
@@ -26,9 +26,10 @@ Itens que o SDD registra, mas que ainda não têm decisão final. Não bloqueiam
 - [ ] `FIREBASE_SERVICE_ACCOUNT` no secret do workflow **Avisos da programação**, que é o mesmo secret, e sem `TOMTOM_API_KEY`, que saiu em 28/09/2026
 - [ ] Conta Cloudinary (pasta `news/` usada pelo upload assinado)
 - [x] Destino do lead Benfeitor nesta entrega: só Firestore; a confirmação mostra o link do WhatsApp oficial `(83) 98897-7017` sem envio automático
-- [ ] Endereço do Ingresso para o site oficial do evento. A constante `LINK_INGRESSO` em `mobile/lib/links.js` está vazia e o toque avisa que o endereço entra em breve
+- [ ] Endereço do Participar para o site oficial do evento. A constante `LINK_PARTICIPAR` em `mobile/lib/links.js` está vazia e o toque avisa que o endereço entra em breve
 - [ ] Texto final da página de informação do app (`mobile/lib/sobreApp.js`). Hoje há texto provisório e um marcador indicando o arquivo e o formato da troca但
 - [ ] Texto final da política de privacidade / aviso LGPD (o app usa um aviso curto alinhado ao site oficial; validar com a comunidade). O formulário de testemunho tem aviso próprio e registra o uid anônimo, que também é dado pessoal. Com a retirada da IA, a equipe da mesa passa a ler o texto do testemunho na íntegra, e isso precisa estar no aviso ao titular
+- [x] Texto da página de informação do app (`mobile/lib/sobreApp.js`): o texto de apresentação e o aviso de privacidade chegaram da comunidade em 28/09/2026 e já estão no arquivo. Ajustar se a comunidade pedir mudança de redação
 
 ## Conteúdo inicial
 

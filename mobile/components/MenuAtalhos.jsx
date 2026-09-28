@@ -14,26 +14,30 @@ import AudioLines from "lucide-react-native/icons/audio-lines";
 import Contact from "lucide-react-native/icons/contact";
 import Handshake from "lucide-react-native/icons/handshake";
 import MapPinned from "lucide-react-native/icons/map-pinned";
+import UserGroup from "lucide-react-native/icons/user-group";
 import ShoppingBag from "lucide-react-native/icons/shopping-bag";
 import Ticket from "lucide-react-native/icons/ticket";
 import { useRouter } from "expo-router";
 import { CORES, FONTES } from "../lib/tema";
-import { abreLinkExterno, LINK_INGRESSO } from "../lib/links";
+import { abreLinkExterno, LINK_PARTICIPAR } from "../lib/links";
 
 const terco = require("../assets/icons/icone-novo.webp");
 const testemunhos = require("../assets/icons/icone-testemunhos.png");
 const { height: ALTURA_TELA } = Dimensions.get("window");
 
-// url com o destino no navegador. endereco: o app não avisa, o sistema abre.
+// url com o destino no navegador. avisar: o endereço ainda não foi informado
+// pela comunidade, então o toque mostra o aviso em vez de abrir uma página em
+// branco. indisponivel: o ícone aparece apagado e não responde ao toque.
 const ITENS = [
   { rotulo: "Terço da Restauração das Famílias", imagem: terco, rota: "/terco-restauracao" },
-  { rotulo: "Ingresso", Icone: Ticket, url: LINK_INGRESSO, avisar: true },
-  { rotulo: "Loja", Icone: ShoppingBag, url: "https://usedevotum.com.br/colecao-arte-piedosa/" },
+  { rotulo: "Participar", Icone: Ticket, url: LINK_PARTICIPAR, avisar: true },
   { rotulo: "Voluntário", Icone: Handshake },
-  { rotulo: "Testemunhos", imagem: testemunhos, tamanhoImagem: 50, rota: "/testemunhos" },
+  { rotulo: "Loja", Icone: ShoppingBag, url: "https://usedevotum.com.br/colecao-arte-piedosa/" },
   { rotulo: "Fornecedor", Icone: Contact, rota: "/fornecedor" },
+  { rotulo: "Testemunhos", imagem: testemunhos, tamanhoImagem: 50, rota: "/testemunhos" },
   { rotulo: "Spotify", Icone: AudioLines },
   { rotulo: "Mapa do Evento", Icone: MapPinned, indisponivel: true },
+  { rotulo: "Congresso", Icone: UserGroup, indisponivel: true },
 ];
 
 export function MenuAtalhos({ aberto, onFechar, alturaBarra = 0 }) {

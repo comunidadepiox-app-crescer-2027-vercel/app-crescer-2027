@@ -10,15 +10,16 @@ import { Alert, Linking } from "react-native";
 // saiu do app em 28/09/2026 e ficou arquivada em mobile/_arquivo/benfeitor/.
 export const LINK_BENFEITOR = "https://benfeitordafe.comunidadepiox.org.br/crescer";
 
-// TODO(ingresso): preencher com a página oficial de inscrição do encontro.
-// Enquanto estiver vazio, o botão INGRESSO e o atalho Ingresso da folha
-// central avisam que o endereço entra em breve. Não trocar por um palpite.
-export const LINK_INGRESSO = "";
+// TODO(participar): preencher com a página oficial de participação do
+// encontro. Enquanto estiver vazia, o botão PARTICIPAR e o atalho
+// Participar da folha central avisam que o endereço entra em breve.
+// Não trocar por um palpite.
+export const LINK_PARTICIPAR = "";
 
-const AVISO_INGRESSO = {
+const AVISO_PARTICIPAR = {
   titulo: "Em breve",
   texto:
-    "O endereço de ingresso do Crescer ainda não foi publicado pela comunidade. " +
+    "O endereço de participação do Crescer ainda não foi publicado pela comunidade. " +
     "Logo que sair, ele entra aqui.",
 };
 
@@ -33,7 +34,7 @@ export function linkDisponivel(url) {
 
 // Abre o endereço no navegador. Devolve false, e mostra o aviso, quando o
 // endereço ainda não foi informado ou quando o aparelho não conseguiu abrir.
-export function abreLinkExterno(url, aviso = AVISO_INGRESSO) {
+export function abreLinkExterno(url, aviso = AVISO_PARTICIPAR) {
   if (!linkDisponivel(url)) {
     if (aviso) Alert.alert(aviso.titulo, aviso.texto);
     return false;

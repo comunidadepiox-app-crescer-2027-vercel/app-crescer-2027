@@ -1,4 +1,4 @@
-# Spec: 006-sobre-o-app Sobre o app
+﻿# Spec: 006-sobre-o-app Sobre o app
 
 - Status: `in-progress` (Configuração substituída por esta página em 28/09/2026; o texto final está reservado)
 - Complexidade: `media`
@@ -18,7 +18,7 @@ O fiel precisa de um lugar no app para saber o que é o aplicativo, quem o mant�
 
 ### Entra
 
-- `/sobre-o-app`, aberta pelo ícone de informação no header, à direita do botão INGRESSO
+- `/sobre-o-app`, aberta pelo ícone de informação no header, à direita do botão PARTICIPAR
 - Título, texto de apresentação e texto de privacidade, vindos de `mobile/lib/sobreApp.js`
 - Espaço reservado no código para o texto final, que ainda vai ser elaborado pela comunidade
 - Atalhos para a Galeria e para o Sobre o Crescer

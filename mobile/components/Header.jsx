@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CORES } from "../lib/tema";
 import { Botao } from "./Ui";
 import { IconeInfo } from "./Icones";
-import { abreLinkExterno, LINK_INGRESSO } from "../lib/links";
+import { abreLinkExterno, LINK_PARTICIPAR } from "../lib/links";
 
 const logo = require("../assets/brand/logo-crescer-branca.png");
 
@@ -19,9 +19,9 @@ export function Header() {
       </Pressable>
       <View style={estilos.acoes}>
         <Botao
-          titulo="INGRESSO"
+          titulo="PARTICIPAR"
           variante="roxo"
-          onPress={() => abreLinkExterno(LINK_INGRESSO)}
+          onPress={() => abreLinkExterno(LINK_PARTICIPAR)}
           style={{ alignSelf: "center", paddingVertical: 8, paddingHorizontal: 12 }}
         />
         <Pressable

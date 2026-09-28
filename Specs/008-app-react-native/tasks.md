@@ -1,4 +1,4 @@
-# Tasks: 008-app-react-native
+﻿# Tasks: 008-app-react-native
 
 - [x] **T1 — Scaffold Expo em `mobile/`**
   - Faz: create-expo-app template blank (JS) + dependências via expo install.
@@ -67,10 +67,10 @@
   - Verifica: a aba abre `https://benfeitordafe.comunidadepiox.org.br/crescer`; nenhuma rota `/benfeitor` no bundle; `/admin/leads` e `benefactorLeads` sem alteração.
   - Fora: apagar leads já gravados.
 
-- [x] **T19 — INGRESSO e ícone de informação** (28/09/2026, specs 002 e 006)
-  - Faz: botão **INGRESSO** no header e atalho Ingresso na folha central, com `LINK_INGRESSO` reservado no código; `IconeEngrenagem` trocada por `IconeInfo`; `conta.jsx` removido e `/sobre-o-app` criada com o texto em `mobile/lib/sobreApp.js`.
-  - Verifica: o ícone de informação abre `/sobre-o-app`; Galeria e Sobre voltam para ela; o Ingresso avisa enquanto a constante estiver vazia.
-  - Fora: o texto final da página do app, que a comunidade ainda vai elaborar.
+- [x] **T19 — PARTICIPAR e ícone de informação** (28/09/2026, specs 002 e 006)
+  - Faz: botão **PARTICIPAR** no header e atalho Participar na folha central, com `LINK_PARTICIPAR` reservado no código; `IconeEngrenagem` trocada por `IconeInfo`; `conta.jsx` removido e `/sobre-o-app` criada com o texto em `mobile/lib/sobreApp.js`.
+  - Verifica: o ícone de informação abre `/sobre-o-app`; Galeria e Sobre voltam para ela; o Participar avisa enquanto a constante estiver vazia.
+  - Fora: o endereço de participação, que a comunidade ainda não informou.
 
 - [x] **T20 — Avise-me sem localização** (28/09/2026, spec 010)
   - Faz: `Avise-me` e `Cancelar aviso` no `ProgramaLista`, `useAviseMe` em `lib/avisoSaida.js`, subcoleção `lembretes`, `expo-location` fora do `app.json` e do `package.json`.

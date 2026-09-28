@@ -36,6 +36,7 @@
   },
   "private": true,
   "devDependencies": {
+    "eas-cli": "^24.8.0",
     "wawoff2": "^2.0.1"
   }
 }

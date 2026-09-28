@@ -17,7 +17,7 @@ O formulário e a lib saem das rotas para `mobile/_arquivo/benfeitor/`. Fora de 
 
 | Caminho | Responsabilidade |
 |---|---|
-| `mobile/lib/links.js` | `LINK_BENFEITOR`, `LINK_INGRESSO` e `abreLinkExterno`, com o aviso de link pendente |
+| `mobile/lib/links.js` | `LINK_BENFEITOR`, `LINK_PARTICIPAR` e `abreLinkExterno`, com o aviso de link pendente |
 | `mobile/components/BarraAbas.jsx` | desenha o item de link externo depois da aba Agenda |
 | `mobile/app/(tabs)/_layout.jsx` | remove a `Tabs.Screen` de `benfeitor` |
 | `mobile/_arquivo/benfeitor/README.md` | o que a tela fazia e o que falta para recriá-la |
