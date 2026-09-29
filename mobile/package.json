@@ -35,6 +35,9 @@
     "web": "expo start --web"
   },
   "private": true,
+  "overrides": {
+    "react-native-worklets": "0.10.4"
+  },
   "devDependencies": {
     "wawoff2": "^2.0.1"
   }
