@@ -54,6 +54,12 @@
       "eas": {
         "projectId": "cecc641d-e929-4125-9098-206c512f809e"
       }
+    },
+    "runtimeVersion": {
+      "policy": "fingerprint"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/cecc641d-e929-4125-9098-206c512f809e"
     }
   }
 }
