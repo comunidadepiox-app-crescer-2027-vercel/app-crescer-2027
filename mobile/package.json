@@ -38,7 +38,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "preflight": "npm ci --include=dev && npx --yes expo-doctor",
-    "update": "eas update --branch preview --auto",
+    "update": "eas update --branch preview --environment preview",
     "build:apk": "eas build --profile preview --platform android"
   },
   "private": true,
