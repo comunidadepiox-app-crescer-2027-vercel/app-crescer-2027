@@ -1,11 +1,16 @@
-import { Pressable, Text, View, StyleSheet } from "react-native";
+import { Image, Pressable, Text, View, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IconeGrade, IconeCoracaoChama } from "./Icones";
+import { IconeCoracaoChama } from "./Icones";
 import { abreLinkExterno, LINK_BENFEITOR } from "../lib/links";
 import { CORES, FONTES } from "../lib/tema";
 
 export const ALTURA_ABAS = 64;
 export const FOLGA_CIRCULO = 21;
+
+// Logo do botão central (círculo laranja). Troque o arquivo em
+// mobile/assets/logo-menu-central.png e ajuste o tamanho aqui.
+const LOGO_MENU_CENTRAL = require("../assets/logo-menu-central.png");
+export const TAMANHO_LOGO_MENU = 35;
 
 const ORDEM = ["home", "noticias", "agenda"];
 
@@ -60,7 +65,11 @@ export function BarraAbas({
             accessibilityState={{ expanded: menuAberto }}
             style={estilos.circulo}
           >
-            <IconeGrade cor="#fff" tamanho={30} />
+            <Image
+              source={LOGO_MENU_CENTRAL}
+              style={{ width: TAMANHO_LOGO_MENU, height: TAMANHO_LOGO_MENU }}
+              resizeMode="contain"
+            />
           </Pressable>
         </View>
         {direita.map((rota) => (

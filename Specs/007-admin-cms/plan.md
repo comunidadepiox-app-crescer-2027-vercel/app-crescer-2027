@@ -27,6 +27,8 @@ O primeiro admin **não** nasce pela UI. Implementar o mecanismo escolhido em OP
 | `app/admin/cronograma/page.jsx` | lista/filtro por data |
 | `app/admin/destaques/page.jsx` | `siteContent` |
 | `app/admin/leads/page.jsx` | leads + status |
+| `app/admin/doacao/page.jsx` | percentual da oferta (spec 014) |
+| `lib/admin/doacao.js` | leitura e gravação de `siteContent/doacao` |
 | `app/api/upload/route.js` | assinatura Cloudinary (se secret) |
 | `lib/admin/news.js` | writes |
 | `lib/admin/program.js` | writes |

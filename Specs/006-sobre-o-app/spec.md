@@ -18,7 +18,7 @@ O fiel precisa de um lugar no app para saber o que é o aplicativo, quem o mant�
 
 ### Entra
 
-- `/sobre-o-app`, aberta pelo ícone de informação no header, à direita do botão PARTICIPAR
+- `/sobre-o-app`, aberta pelo ícone de informação no header, à direita do botão COLABORE
 - Título, texto de apresentação e texto de privacidade, vindos de `mobile/lib/sobreApp.js`
 - Espaço reservado no código para o texto final, que ainda vai ser elaborado pela comunidade
 - Atalhos para a Galeria e para o Sobre o Crescer

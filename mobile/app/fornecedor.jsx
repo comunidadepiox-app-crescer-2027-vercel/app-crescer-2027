@@ -47,7 +47,7 @@ export default function FornecedorScreen() {
           return (
             <View key={fornecedor.id} style={estilos.card}>
               <View style={estilos.marca}>
-                <Icone color={CORES.destaque} size={30} strokeWidth={1.8} />
+                <Icone color={CORES.roxoBotao} size={30} strokeWidth={1.8} />
               </View>
               <View style={estilos.textos}>
                 <Text style={estilos.titulo}>{fornecedor.titulo}</Text>

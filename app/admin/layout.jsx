@@ -13,6 +13,7 @@ const MENU = [
   { href: "/admin/noticias", label: "Notícias", icone: "noticias" },
   { href: "/admin/cronograma", label: "Cronograma", icone: "cronograma" },
   { href: "/admin/testemunhos", label: "Testemunhos", icone: "testimonials" },
+  { href: "/admin/doacao", label: "Colabore", icone: "colabore" },
 ];
 
 function ativo(pathname, href) {

@@ -11,9 +11,8 @@ import { Alert, Linking } from "react-native";
 export const LINK_BENFEITOR = "https://benfeitordafe.comunidadepiox.org.br/crescer";
 
 // TODO(participar): preencher com a página oficial de participação do
-// encontro. Enquanto estiver vazia, o botão PARTICIPAR e o atalho
-// Participar da folha central avisam que o endereço entra em breve.
-// Não trocar por um palpite.
+// encontro. Enquanto estiver vazia, o atalho Participar da folha
+// central avisa que o endereço entra em breve. Não trocar por um palpite.
 export const LINK_PARTICIPAR = "";
 
 const AVISO_PARTICIPAR = {

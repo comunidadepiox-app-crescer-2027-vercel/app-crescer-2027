@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import AudioLines from "lucide-react-native/icons/audio-lines";
 import Contact from "lucide-react-native/icons/contact";
+import HandHeart from "lucide-react-native/icons/hand-heart";
 import Handshake from "lucide-react-native/icons/handshake";
 import MapPinned from "lucide-react-native/icons/map-pinned";
 import UserGroup from "lucide-react-native/icons/user-group";
@@ -21,7 +22,7 @@ import { useRouter } from "expo-router";
 import { CORES, FONTES } from "../lib/tema";
 import { abreLinkExterno, LINK_PARTICIPAR } from "../lib/links";
 
-const terco = require("../assets/icons/icone-novo.webp");
+const terco = require("../assets/icons/icone-novo.png");
 const testemunhos = require("../assets/icons/icone-testemunhos.png");
 const { height: ALTURA_TELA } = Dimensions.get("window");
 
@@ -31,6 +32,7 @@ const { height: ALTURA_TELA } = Dimensions.get("window");
 const ITENS = [
   { rotulo: "Terço da Restauração das Famílias", imagem: terco, rota: "/terco-restauracao" },
   { rotulo: "Participar", Icone: Ticket, url: LINK_PARTICIPAR, avisar: true },
+  { rotulo: "Colabore", Icone: HandHeart, rota: "/colabore" },
   { rotulo: "Voluntário", Icone: Handshake },
   { rotulo: "Loja", Icone: ShoppingBag, url: "https://usedevotum.com.br/colecao-arte-piedosa/" },
   { rotulo: "Fornecedor", Icone: Contact, rota: "/fornecedor" },
@@ -158,7 +160,7 @@ export function MenuAtalhos({ aberto, onFechar, alturaBarra = 0 }) {
                     resizeMode="contain"
                   />
                 ) : (
-                  <Icone color={CORES.laranja} size={34} strokeWidth={2} />
+                  <Icone color={CORES.roxoBotao} size={34} strokeWidth={2} />
                 )}
               </View>
               <Text style={[estilos.rotulo, indisponivel && estilos.rotuloIndisponivel]}>{rotulo}</Text>

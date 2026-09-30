@@ -16,7 +16,7 @@ O fiel acessa o Crescer pelo app instalado sem criar credenciais. A sessão anô
 - Projeto Expo (React Native, JavaScript) em `mobile/`, usando expo-router
 - Todas as telas do fiel: Home, Notícias (lista e detalhe), Agenda (cronograma), Sobre o app, Galeria e Sobre
 - Benfeitor da Fé não é tela: a aba da barra inferior abre o site da campanha, ver [005](005-benfeitor-da-fe/spec.md)
-- Botão **PARTICIPAR** no header e o atalho Participar na folha central, com o endereço do site oficial reservado no código e ainda vazio, ver [002](002-navegacao-e-home/spec.md)
+- Botão **COLABORE** no header, abrindo a oferta pelo PIX, ver [014](014-doacao/spec.md). O atalho Participar permanece na folha central, com o endereço do site oficial reservado no código e ainda vazio, ver [002](002-navegacao-e-home/spec.md)
 - Splash de abertura com o vídeo oficial da logo sobre `#3e1c7a` (mesmo tom do fundo do vídeo no aparelho), wordmark branco e, no rodapé, as logos da Diocese de Campina Grande e da Comunidade de São Pio X
 - Mesmo Firestore e as mesmas regras de leitura do fiel, e o token de notificação em `deviceTokens`
 - Pedido único para ativar notificação quando a programação publicada do dia do recorte muda
@@ -44,7 +44,7 @@ O fiel acessa o Crescer pelo app instalado sem criar credenciais. A sessão anô
 
 | Tipo | Identificador |
 |---|---|
-| Pasta | `mobile/` (expo-router: `app/index` login, `app/(tabs)/{home,noticias,agenda}`, `app/noticia/[id]`, `app/galeria`, `app/sobre`, `app/sobre-o-app`, `app/terco-restauracao`, `app/fornecedor`, `app/testemunhos`). A barra mostra Home, Notícias, Agenda e Benfeitor, com o círculo de menu no centro. Benfeitor é link externo e não é `Tabs.Screen`. Sobre o app fica fora da barra e abre pelo ícone de informação do header. A folha abre o Terço da Restauração das Famílias, a coleção Arte Piedosa da Devotum e o Participar no navegador, a página visual de Fornecedor e o formulário de Testemunhos; Voluntário e Spotify continuam sem rota e Mapa do Evento fica indisponível |
+| Pasta | `mobile/` (expo-router: `app/index` login, `app/(tabs)/{home,noticias,agenda}`, `app/noticia/[id]`, `app/galeria`, `app/sobre`, `app/sobre-o-app`, `app/terco-restauracao`, `app/fornecedor`, `app/testemunhos`, `app/colabore`). A barra mostra Home, Notícias, Agenda e Benfeitor, com o círculo de menu no centro. Benfeitor é link externo e não é `Tabs.Screen`. Sobre o app fica fora da barra e abre pelo ícone de informação do header. A folha abre o Terço da Restauração das Famílias, a coleção Arte Piedosa da Devotum e o Participar no navegador, a oferta Colabore, a página visual de Fornecedor e o formulário de Testemunhos; Voluntário e Spotify continuam sem rota e Mapa do Evento fica indisponível |
 | Coleções Firestore | `users`, `news`, `programItems`, `lembretes` (subcoleção do uid), `deviceTokens` |
 | Papel necessário | `fiel` |
 
@@ -66,8 +66,8 @@ Persistência de sessão via AsyncStorage (token do Firebase Auth no aparelho). 
 - [ ] Splash mostra o vídeo da logo sobre o mesmo roxo da tela, as logos da diocese e de São Pio X no rodapé, e libera quando a sessão resolve
 - [ ] Sessão anônima é criada automaticamente e persiste ao reabrir
 - [ ] Home abre diretamente, sem tela de login ou cadastro
-- [ ] Home, Notícias, detalhe, Agenda, Sobre o app, Galeria, Sobre e Testemunhos funcionais
-- [ ] A aba Benfeitor abre o site da campanha e o header mostra **PARTICIPAR** com o ícone de informação ao lado
+- [ ] Home, Notícias, detalhe, Agenda, Sobre o app, Galeria, Sobre, Testemunhos e Colabore funcionais
+- [ ] A aba Benfeitor abre o site da campanha e o header mostra **COLABORE** com o ícone de informação ao lado
 - [ ] Identidade: roxo #3a1075, laranja #d68130, dourado, Geometric Slabserif nos títulos
 
 ## Anti-slop

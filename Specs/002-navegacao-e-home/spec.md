@@ -9,6 +9,8 @@
 
 > **O que mudou em 28/09/2026.** A barra inferior continua com quatro posições, mas Benfeitor deixou de ser rota e virou link externo para o site da campanha, ver [005](005-benfeitor-da-fe/spec.md). O header trocou INSCREVA-SE por **PARTICIPAR** e a engrenagem pelo ícone de informação, que abre a página do app, ver [006](006-sobre-o-app/spec.md). A folha central ganhou o atalho **Participar**. O destino do Participar é o site oficial do evento, e o endereço ainda não foi informado pela comunidade: o app tem a constante vazia e um aviso honesto enquanto isso. A folha ganhou também o atalho **Congresso**, visivelmente indisponível enquanto o destino não existir.
 
+> **O que mudou em 29/09/2026.** O botão do header passou a ser **COLABORE** e abre a oferta pelo PIX, ver [014](014-doacao/spec.md). **Participar** saiu do header e permanece na folha. A folha ganhou o atalho **Colabore**, logo depois de Participar.
+
 ## Problema
 
 Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do evento, as notícias recentes e um caminho fixo para as outras páginas.
@@ -20,8 +22,8 @@ Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do event
 - Shell autenticado com navegação persistente
 - Barra inferior: Home, Notícias, círculo de menu, Agenda, Benfeitor da Fé
 - Benfeitor é item de link externo na barra, não aba: abre `https://benfeitordafe.comunidadepiox.org.br/crescer` no navegador
-- Header com o botão **PARTICIPAR** e, à direita dele, o ícone de informação, que abre `/sobre-o-app` (spec 006)
-- Folha do círculo: Terço da Restauração das Famílias abre sua rota própria (011); Loja e Participar abrem endereço externo no navegador; Fornecedor abre a página visual `/fornecedor` (012); Testemunhos abre o formulário de envio do fiel (013); Voluntário e Spotify seguem só com ícone e rótulo nesta entrega; Mapa do Evento aparece indisponível, sem ação
+- Header com o botão **COLABORE**, que abre `/colabore` (spec 014), e, à direita dele, o ícone de informação, que abre `/sobre-o-app` (spec 006)
+- Folha do círculo: Terço da Restauração das Famílias abre sua rota própria (011); Loja e Participar abrem endereço externo no navegador; Colabore abre `/colabore` (014); Fornecedor abre a página visual `/fornecedor` (012); Testemunhos abre o formulário de envio do fiel (013); Voluntário e Spotify seguem só com ícone e rótulo nesta entrega; Mapa do Evento aparece indisponível, sem ação
 - Destinos extras (prompt: “outras que forem importantes”): Galeria, Sobre
 - `/home` com:
   - seção de notícias (até 4 publicadas, capa + título + data; escuta ao vivo)
@@ -45,7 +47,7 @@ Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do event
 3. Toca “ver cronograma” ou um horário → `/cronograma` (com âncora do dia, se já existir na 004).
 4. A barra leva a Home, Notícias e Agenda por rota. Benfeitor abre o site da campanha no navegador. O item ativo fica dourado, sem pílula.
 5. Toca no ícone de informação → `/sobre-o-app`. Nenhuma aba fica ativa, porque a página está fora do grupo de abas.
-6. O círculo abre a folha por cima da tela. Fecha ao tocar de novo no círculo, no fundo escuro ou ao arrastar para baixo. O Terço, o Fornecedor e os Testemunhos abrem suas rotas; Loja e Participar abrem endereço externo; Voluntário e Spotify não navegam. Mapa do Evento fica visivelmente indisponível e não responde ao toque.
+6. O círculo abre a folha por cima da tela. Fecha ao tocar de novo no círculo, no fundo escuro ou ao arrastar para baixo. O Terço, o Colabore, o Fornecedor e os Testemunhos abrem suas rotas; Loja e Participar abrem endereço externo; Voluntário e Spotify não navegam. Mapa do Evento fica visivelmente indisponível e não responde ao toque.
 
 ## Superfície do produto
 
@@ -74,7 +76,7 @@ Datas da edição: constante em `lib/event/edition.js` (5 a 9 de fevereiro de 20
 ## Regras de negócio
 
 - Nav sempre visível nas rotas do grupo `(app)`.
-- Nenhum item da barra sem destino. Na folha, somente Terço, Loja, Participar, Congresso, Fornecedor e Testemunhos são acionáveis nesta entrega; Mapa do Evento é uma exceção deliberada, exposta como controle desativado enquanto seu destino não estiver disponível.
+- Nenhum item da barra sem destino. Na folha, somente Terço, Loja, Participar, Colabore, Congresso, Fornecedor e Testemunhos são acionáveis nesta entrega; Mapa do Evento é uma exceção deliberada, exposta como controle desativado enquanto seu destino não estiver disponível.
 - Benfeitor é link externo e não é `Tabs.Screen`. Um item de link não fica ativo dourado, porque não existe rota para ele.
 - O destino do Participar vive em `mobile/lib/links.js`. Enquanto a constante estiver vazia, o toque mostra um aviso curto de que o endereço entra em breve, em vez de não fazer nada nem abrir uma página em branco.
 - Home não inventa estatística ("milhares de famílias").
@@ -89,11 +91,12 @@ Datas da edição: constante em `lib/event/edition.js` (5 a 9 de fevereiro de 20
 - [ ] Item ativo da barra é dourado, sem pílula. O círculo laranja do centro é o controle do menu
 - [ ] A barra mostra Home, Notícias, Agenda e Benfeitor, com o círculo no meio
 - [ ] Benfeitor abre o site da campanha no navegador e não pisca em branco ao toque
-- [ ] O header mostra **PARTICIPAR** e, à direita, o ícone de informação, que abre `/sobre-o-app`
-- [ ] A folha lista Terço, Participar, Congresso, Loja, Voluntário, Testemunhos, Fornecedor, Spotify e Mapa do Evento, e fecha no círculo, no fundo ou no arraste
+- [ ] O header mostra **COLABORE**, que abre `/colabore`, e, à direita, o ícone de informação, que abre `/sobre-o-app`
+- [ ] A folha lista Terço, Participar, Colabore, Congresso, Loja, Voluntário, Testemunhos, Fornecedor, Spotify e Mapa do Evento, e fecha no círculo, no fundo ou no arraste
 - [ ] Congresso aparece indisponível, com a mesma semântica do Mapa do Evento, e não responde ao toque
 - [ ] A grade da folha é de três colunas empacotadas pela esquerda: a linha cheia fica distribuída e a linha com sobras não abre vão no meio, com um item encostado no outro
 - [ ] Loja e Participar abrem endereço externo; com o Participar sem endereço, o toque avisa em vez de falhar em silêncio
+- [ ] Colabore na folha fecha o menu e abre `/colabore`
 - [ ] Mapa do Evento tem aparência e semântica de indisponível e não responde ao toque
 
 ## Anti-slop
