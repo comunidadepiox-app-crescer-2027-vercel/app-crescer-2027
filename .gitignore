@@ -5,7 +5,10 @@ out/
 .env.local
 .env*.local
 *firebase-adminsdk*.json
-google-services.json
+# Só o da raiz, que é o do pacote antigo com.piox.crescer e não serve para
+# nada. O google-services.json do app, em mobile/, é versionado de propósito:
+# o EAS Build só sobe arquivo rastreado pelo git, e sem ele o prebuild quebra.
+/google-services.json
 _extracao/
 npm-debug.log*
 .DS_Store

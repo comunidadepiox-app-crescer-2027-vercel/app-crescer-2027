@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "668542651129",
+    "project_id": "crescer-app-9abab",
+    "storage_bucket": "crescer-app-9abab.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668542651129:android:7d6ff401aaab7e35b4b028",
+        "android_client_info": {
+          "package_name": "br.org.piox.crescer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB80xUj1eeKawf2KBtJTkKTpRnrKxgZ9dM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

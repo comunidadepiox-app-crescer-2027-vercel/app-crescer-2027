@@ -18,6 +18,7 @@
     },
     "android": {
       "package": "br.org.piox.crescer",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "backgroundColor": "#3a1075",
         "foregroundImage": "./assets/android-icon-foreground.png",
