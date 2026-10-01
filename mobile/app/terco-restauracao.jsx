@@ -4,7 +4,7 @@ import { Redirect } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAuth } from "../lib/authProvider";
 import { Voltar } from "../components/Voltar";
-import { IconeSetaEsquerda } from "../components/Icones";
+import { BarraEtapas } from "../components/BarraEtapas";
 import { CORES, FONTES } from "../lib/tema";
 
 const RESTAURACOES = [
@@ -80,11 +80,12 @@ export default function TercoRestauracaoScreen() {
         ))}
       </View>
     </ScrollView>
-    <View style={[s.nav, { paddingBottom: Math.max(insets.bottom, 12) }]}>
-      <Seta rotulo="Etapa anterior" desabilitada={atual === 0} onPress={() => setAtual(atual - 1)} />
-      <Text accessibilityLiveRegion="polite" style={s.contador}>{`${atual + 1} de ${ETAPAS.length}`}</Text>
-      <Seta rotulo="Próxima etapa" direita desabilitada={atual === ETAPAS.length - 1} onPress={() => setAtual(atual + 1)} />
-    </View>
+    <BarraEtapas
+      total={ETAPAS.length}
+      atual={atual}
+      aoAnterior={() => setAtual(atual - 1)}
+      aoProxima={() => setAtual(atual + 1)}
+    />
   </View>;
 }
 
@@ -101,12 +102,6 @@ function Bloco({ tipo, texto, url, numero }) {
   return <Text style={estilo}>{tipo === "n" ? `${numero}. ${texto}` : texto}</Text>;
 }
 
-function Seta({ rotulo, direita, desabilitada, onPress }) {
-  return <Pressable accessibilityRole="button" accessibilityLabel={rotulo} accessibilityState={{ disabled: desabilitada }} disabled={desabilitada} onPress={onPress} hitSlop={10} style={[s.seta, desabilitada && s.desabilitada]}>
-    <View style={direita && s.direita}><IconeSetaEsquerda cor="#fff" tamanho={28} /></View>
-  </Pressable>;
-}
-
 const s = StyleSheet.create({
   tela: { flex: 1, backgroundColor: CORES.fundo }, 
   scroll: { paddingHorizontal: 20, paddingTop: 24 },
@@ -120,9 +115,4 @@ const s = StyleSheet.create({
   numerado: { fontFamily: FONTES.corpo, fontSize: 17, lineHeight: 26, color: CORES.texto },
   botaoLink: { backgroundColor: CORES.roxoBotao, paddingVertical: 12, paddingHorizontal: 16, borderRadius: 8, alignItems: "center", marginTop: 8 },
   textoLink: { fontFamily: FONTES.corpoSemi, fontSize: 16, color: "#fff", textAlign: "center" },
-  nav: { position: "absolute", left: 0, right: 0, bottom: 0, minHeight: 70, paddingHorizontal: 20, paddingTop: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: CORES.roxoBotao, borderTopWidth: 1, borderTopColor: CORES.roxo },
-  seta: { width: 44, height: 42, alignItems: "center", justifyContent: "center" }, 
-  desabilitada: { opacity: 0.32 }, 
-  direita: { transform: [{ rotate: "180deg" }] },
-  contador: { fontFamily: FONTES.corpoSemi, fontSize: 14, color: "#fff", textTransform: "uppercase", letterSpacing: 0.6 },
 });

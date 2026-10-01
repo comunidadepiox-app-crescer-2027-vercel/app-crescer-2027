@@ -5,6 +5,7 @@ out/
 .env.local
 .env*.local
 *firebase-adminsdk*.json
+google-services.json
 _extracao/
 npm-debug.log*
 .DS_Store

@@ -49,7 +49,7 @@
 
 ## Validação final
 
-- [ ] Aceite de `spec.md`: só falta o envio real do e-mail, porque a comissão ainda não informou o endereço
+- [ ] Aceite de `spec.md`: o destino do e-mail já foi informado; falta a `RESEND_API_KEY` em produção para o envio sair e ser conferido
 - [x] LGPD conferido
 - [x] Copy sem travessão
 - [x] Docs atualizados

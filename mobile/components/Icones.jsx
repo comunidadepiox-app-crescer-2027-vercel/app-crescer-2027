@@ -1,4 +1,5 @@
 // Ícones de linha do app, no traço único da identidade do Crescer.
+import { Image } from "react-native";
 import Svg, { Path, Rect, Circle } from "react-native-svg";
 
 function Base({ children, cor = "#fff", tamanho = 24 }) {
@@ -47,12 +48,24 @@ export function IconeCalendario(props) {
   );
 }
 
-export function IconeCoracaoChama(props) {
+// O Benfeitor da Fé tem arte própria, em linha, e vem em duas versões: a
+// branca para a aba em repouso e a dourada para a aba pressionada. A troca é
+// por arquivo, não por cor, porque a cor já está na arte.
+const ICONE_BENFEITOR = require("../assets/icons/icon-benfeitor.png");
+const ICONE_BENFEITOR_ATIVO = require("../assets/icons/icon-benfeitor-pressionado.png");
+
+// A arte é alta e estreita, 365 por 590. Ela entra um pouco mais alta que o
+// quadrado dos ícones de linha, e a largura sai da proporção da arte.
+const ALTURA_BENFEITOR = 28;
+const LARGURA_BENFEITOR = Math.round((ALTURA_BENFEITOR * 365) / 590);
+
+export function IconeBenfeitor({ focused }) {
   return (
-    <Base {...props}>
-      <Path d="M12 21c-4.8-3.8-8-6.9-8-10.6C4 7.6 6.2 6 8.4 6c1.5 0 2.8.7 3.6 1.9C12.8 6.7 14.1 6 15.6 6 17.8 6 20 7.6 20 10.4c0 3.7-3.2 6.8-8 10.6Z" />
-      <Path d="M12 2.5c.9 1 1.4 1.8 1.4 2.7A1.4 1.4 0 0 1 12 6.6a1.4 1.4 0 0 1-1.4-1.4c0-.9.5-1.7 1.4-2.7Z" />
-    </Base>
+    <Image
+      source={focused ? ICONE_BENFEITOR_ATIVO : ICONE_BENFEITOR}
+      style={{ width: LARGURA_BENFEITOR, height: ALTURA_BENFEITOR }}
+      resizeMode="contain"
+    />
   );
 }
 

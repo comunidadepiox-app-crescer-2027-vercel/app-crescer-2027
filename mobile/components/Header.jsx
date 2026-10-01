@@ -18,7 +18,7 @@ export function Header() {
       </Pressable>
       <View style={estilos.acoes}>
         <Botao
-          titulo="COLABORE"
+          titulo="FAÇA SUA DOAÇÃO"
           variante="roxo"
           onPress={() => router.push("/colabore")}
           style={{ alignSelf: "center", paddingVertical: 8, paddingHorizontal: 12 }}

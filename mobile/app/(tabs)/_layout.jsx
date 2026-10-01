@@ -11,7 +11,7 @@ import {
   IconeCasa,
   IconeJornal,
   IconeCalendario,
-  IconeCoracaoChama,
+  IconeBenfeitor,
 } from "../../components/Icones";
 import { CORES, FONTES } from "../../lib/tema";
 import { garantirCanalAviso } from "../../lib/notificacoes";
@@ -89,7 +89,7 @@ export default function TabsLayout() {
           name="benfeitor"
           options={{
             title: "Benfeitor",
-            tabBarIcon: ({ color }) => <IconeCoracaoChama cor={color} />,
+            tabBarIcon: ({ focused }) => <IconeBenfeitor focused={focused} />,
           }}
         />
       </Tabs>

@@ -9,11 +9,30 @@ const MINIMO_TEXTO = 20;
 
 // Firestore pelo Admin SDK, com a service account. É a única via de escrita
 // em testimonials, porque as rules rejeitam qualquer escrita do client.
+//
+// O try no JSON.parse é o que separa "a variável não está no servidor" de "a
+// variável está, mas colada com aspas em volta ou cortada no meio". Sem ele, o
+// segundo caso estoura a rota e a Vercel devolve 500 sem corpo nenhum, que não
+// diz nada de nada para quem tenta arrumar.
 function firestoreAdmin() {
   if (!getApps().length) {
     const json = process.env.FIREBASE_SERVICE_ACCOUNT;
     if (!json) return null;
-    initializeApp({ credential: cert(JSON.parse(json)) });
+    let conta;
+    try {
+      conta = JSON.parse(json);
+    } catch {
+      console.error(
+        "Crescer: FIREBASE_SERVICE_ACCOUNT não é um JSON válido. Colar o valor sem as aspas das pontas."
+      );
+      return null;
+    }
+    try {
+      initializeApp({ credential: cert(conta) });
+    } catch (erro) {
+      console.error("Crescer: a service account foi recusada.", erro?.message || erro);
+      return null;
+    }
   }
   return getFirestore();
 }
@@ -88,7 +107,17 @@ export async function POST(request) {
     return Response.json({ error: mensagemDeErro("indisponivel") }, { status: 500 });
   }
 
-  if (await jaEnviou(db, uid)) {
+  // A leitura da trava também pode cair, quando a credencial é recusada na
+  // hora de falar com o Firestore. Ela volta pelo mesmo caminho do resto.
+  let jaGravado;
+  try {
+    jaGravado = await jaEnviou(db, uid);
+  } catch (erro) {
+    console.error("Crescer: não foi possível ler os testemunhos do uid.", erro?.message || erro);
+    return Response.json({ error: mensagemDeErro("indisponivel") }, { status: 500 });
+  }
+
+  if (jaGravado) {
     return Response.json({ error: "Você já enviou um testemunho nesta edição." }, { status: 429 });
   }
 

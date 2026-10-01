@@ -1,6 +1,6 @@
 # Spec: 005-benfeitor-da-fe Benfeitor da Fé
 
-- Status: `in-progress` (página e formulário no app; o e-mail para a comissão fica sem envio até a comissão informar o endereço)
+- Status: `in-progress` (página e formulário no app; o destino do e-mail da comissão foi informado, falta a chave do Resend para o envio sair)
 - Complexidade: `alta`
 - Personas: `fiel`
 - Depende de: [001-autenticacao](../001-autenticacao/), [002-navegacao-e-home](../002-navegacao-e-home/), [008-app-react-native](../008-app-react-native/)
@@ -71,7 +71,7 @@ Variáveis de ambiente, todas no servidor:
 | Variável | Obrigatória | Nota |
 |---|---|---|
 | `RESEND_API_KEY` | para enviar | Chave da conta Resend. Sem ela o lead é gravado e o e-mail não sai |
-| `EMAIL_BENFEITOR_DESTINO` | para enviar | Endereço da comissão. A constante `DESTINO` em `lib/server/emailBenfeitor.js` é o lugar oficial; a variável sobrescreve |
+| `EMAIL_BENFEITOR_DESTINO` | para enviar | Endereço da comissão. A constante `DESTINO` em `lib/server/emailBenfeitor.js` é o lugar oficial e já está preenchido; a variável sobrescreve sem novo deploy |
 | `EMAIL_BENFEITOR_REMETENTE` | para enviar | Remetente verificado na Resend. Sem valor, a rota usa `Crescer <onboarding@resend.dev>` |
 
 ## Regras de negócio
@@ -95,7 +95,7 @@ Variáveis de ambiente, todas no servidor:
 - [x] Nome, e-mail, celular e CPF são validados no app e de novo na rota do servidor
 - [x] O consentimento de LGPD é obrigatório para gravar e para enviar
 - [x] Cada envio cria um documento em `benefactorLeads` com `status: novo`, `uid` da sessão e CPF só com dígitos
-- [ ] Cada envio chega por e-mail no endereço da comissão, com os dados do lead e o `reply_to` no e-mail do fiel. Pendente: a comissão ainda não informou o endereço, então `DESTINO` em `lib/server/emailBenfeitor.js` está vazio e o envio real não foi conferido
+- [ ] Cada envio chega por e-mail no endereço da comissão, com os dados do lead e o `reply_to` no e-mail do fiel. Pendente: o destino já está em `DESTINO`, mas o envio real não foi conferido porque a `RESEND_API_KEY` do servidor ainda não está em produção
 - [x] Sem `RESEND_API_KEY` ou sem destino, o lead continua gravado e a tela não promete o e-mail
 - [x] Reabrir a aba depois do envio mostra a confirmação, sem o formulário de novo
 - [x] `/admin/leads` continua lendo `benefactorLeads` sem alteração

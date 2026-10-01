@@ -17,6 +17,7 @@ import Handshake from "lucide-react-native/icons/handshake";
 import MapPinned from "lucide-react-native/icons/map-pinned";
 import UserGroup from "lucide-react-native/icons/user-group";
 import ShoppingBag from "lucide-react-native/icons/shopping-bag";
+import BookOpenText from "lucide-react-native/icons/book-open-text";
 import Ticket from "lucide-react-native/icons/ticket";
 import { useRouter } from "expo-router";
 import { CORES, FONTES } from "../lib/tema";
@@ -31,10 +32,11 @@ const { height: ALTURA_TELA } = Dimensions.get("window");
 // branco. indisponivel: o ícone aparece apagado e não responde ao toque.
 const ITENS = [
   { rotulo: "Terço da Restauração das Famílias", imagem: terco, rota: "/terco-restauracao" },
+  { rotulo: "Liturgia Diária", Icone: BookOpenText, rota: "/liturgia" },
   { rotulo: "Participar", Icone: Ticket, url: LINK_PARTICIPAR, avisar: true },
   { rotulo: "Faça sua Doação", Icone: HandHeart, rota: "/colabore" },
-  { rotulo: "Seja Voluntário", Icone: Handshake },
   { rotulo: "Loja", Icone: ShoppingBag, url: "https://usedevotum.com.br/colecao-arte-piedosa/" },
+  { rotulo: "Seja Voluntário", Icone: Handshake },
   { rotulo: "Seja Fornecedor", Icone: Contact, rota: "/fornecedor" },
   { rotulo: "Testemunhos", imagem: testemunhos, tamanhoImagem: 50, rota: "/testemunhos" },
   { rotulo: "Spotify", Icone: AudioLines },

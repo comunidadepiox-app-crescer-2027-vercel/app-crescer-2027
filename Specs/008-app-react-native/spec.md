@@ -44,7 +44,7 @@ O fiel acessa o Crescer pelo app instalado sem criar credenciais. A sessão anô
 
 | Tipo | Identificador |
 |---|---|
-| Pasta | `mobile/` (expo-router: `app/index` login, `app/(tabs)/{home,noticias,programacao,benfeitor}`, `app/noticia/[id]`, `app/galeria`, `app/sobre`, `app/sobre-o-app`, `app/terco-restauracao`, `app/fornecedor`, `app/testemunhos`, `app/colabore`). A barra mostra Home, Notícias, Programação e Benfeitor, com o círculo de menu no centro. Benfeitor voltou a ser `Tabs.Screen` em 01/10/2026, e Agenda virou Programação no mesmo dia, com o mesmo ícone de calendário. Sobre o app fica fora da barra e abre pelo ícone de informação do header. A folha abre o Terço da Restauração das Famílias, a coleção Arte Piedosa da Devotum e o Participar no navegador, a oferta Colabore, a página visual de Fornecedor e o formulário de Testemunhos; Voluntário e Spotify continuam sem rota e Mapa do Evento fica indisponível |
+| Pasta | `mobile/` (expo-router: `app/index` login, `app/(tabs)/{home,noticias,programacao,benfeitor}`, `app/noticia/[id]`, `app/galeria`, `app/sobre`, `app/sobre-o-app`, `app/terco-restauracao`, `app/liturgia`, `app/fornecedor`, `app/testemunhos`, `app/colabore`). A barra mostra Home, Notícias, Programação e Benfeitor, com o círculo de menu no centro. Benfeitor voltou a ser `Tabs.Screen` em 01/10/2026, e Agenda virou Programação no mesmo dia, com o mesmo ícone de calendário. Sobre o app fica fora da barra e abre pelo ícone de informação do header. A folha abre o Terço da Restauração das Famílias, a Liturgia Diária logo em seguida, a coleção Arte Piedosa da Devotum e o Participar no navegador, a oferta Colabore, a página visual de Fornecedor e o formulário de Testemunhos; Voluntário e Spotify continuam sem rota e Mapa do Evento fica indisponível |
 | Coleções Firestore | `users`, `news`, `programItems`, `lembretes` (subcoleção do uid), `deviceTokens` |
 | Papel necessário | `fiel` |
 
@@ -66,7 +66,7 @@ Persistência de sessão via AsyncStorage (token do Firebase Auth no aparelho). 
 - [ ] Splash mostra o vídeo da logo sobre o mesmo roxo da tela, as logos da diocese e de São Pio X no rodapé, e libera quando a sessão resolve
 - [ ] Sessão anônima é criada automaticamente e persiste ao reabrir
 - [ ] Home abre diretamente, sem tela de login ou cadastro
-- [ ] Home, Notícias, detalhe, Programação, Sobre o app, Galeria, Sobre, Testemunhos e Colabore funcionais
+- [ ] Home, Notícias, detalhe, Programação, Sobre o app, Galeria, Sobre, Testemunhos, Liturgia Diária e Colabore funcionais
 - [ ] A aba Benfeitor abre o site da campanha e o header mostra **COLABORE** com o ícone de informação ao lado
 - [ ] Identidade: roxo #3a1075, laranja #d68130, dourado, Geometric Slabserif nos títulos
 

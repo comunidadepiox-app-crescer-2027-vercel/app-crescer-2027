@@ -5,6 +5,12 @@ import { CORES, FONTES } from "../lib/tema";
 export const ALTURA_ABAS = 64;
 export const FOLGA_CIRCULO = 21;
 
+// Todo ícone da barra passa por uma caixa com a mesma altura, e é a caixa que
+// segura o alinhamento. Sem ela, a aba do Benfeitor, que tem arte alta, fica
+// com a coluna mais comprida que as outras e o rótulo dela desce.
+const TAMANHO_ICONE = 24;
+const ALTURA_ICONE = 28;
+
 // Logo do botão central (círculo laranja). Troque o arquivo em
 // mobile/assets/logo-menu-central.png e ajuste o tamanho aqui.
 const LOGO_MENU_CENTRAL = require("../assets/logo-menu-central.png");
@@ -102,7 +108,9 @@ function ItemAba({ rota, ativo, options, navigation, onFecharMenu }) {
       accessibilityLabel={rotulo}
       style={estilos.aba}
     >
-      {options.tabBarIcon?.({ color: cor, focused: ativo, size: 24 })}
+      <View style={estilos.icone}>
+        {options.tabBarIcon?.({ color: cor, focused: ativo, size: TAMANHO_ICONE })}
+      </View>
       {/* Shrink em vez de cortar: PROGRAMAÇÃO não cabe em tela estreita, e
           rótulo cortado com reticências fica pior que rótulo menor. */}
       <Text
@@ -140,6 +148,11 @@ const estilos = StyleSheet.create({
     justifyContent: "center",
     gap: 2,
     paddingHorizontal: 2,
+  },
+  icone: {
+    height: ALTURA_ICONE,
+    alignItems: "center",
+    justifyContent: "center",
   },
   rotulo: {
     fontFamily: FONTES.corpoSemi,
