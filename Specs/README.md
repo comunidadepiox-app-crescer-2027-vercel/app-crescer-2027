@@ -50,7 +50,7 @@ Pode ir direto ao código só se for **baixa** complexidade e **não** alterar c
 | [002-navegacao-e-home](002-navegacao-e-home/) | Nav, Home, recorte do dia, notícias em destaque, header e folha central | Alta |
 | [003-noticias](003-noticias/) | Lista e detalhe de notícias | Média |
 | [004-cronograma](004-cronograma/) | Programação por dia e espaço | Alta |
-| [005-benfeitor-da-fe](005-benfeitor-da-fe/) | Campanha no site da comunidade, com o formulário do app arquivado | Alta |
+| [005-benfeitor-da-fe](005-benfeitor-da-fe/) | Campanha no app, com envio do lead para o e-mail da comissão | Alta |
 | [006-sobre-o-app](006-sobre-o-app/) | Página de informação sobre o app, sem configuração | Média |
 | [007-admin-cms](007-admin-cms/) | Publicação de conteúdo | Alta |
 | [008-app-react-native](008-app-react-native/) | App do fiel em Expo/React Native (`mobile/`) | Alta |
@@ -71,9 +71,10 @@ As specs `011`, `012`, `013` e `014` entram depois da `008`. A `013` escreve em 
 
 | Antes | Agora | Motivo |
 |---|---|---|
+| `mobile/app/(tabs)/agenda.jsx` | `mobile/app/(tabs)/programacao.jsx` | A aba é Programação, o mesmo nome que a Home e a tela já usavam. Sem acento no arquivo: rota com acento vira acento na URL. O ícone de calendário continua o mesmo |
 | `006-configuracao` | `006-sobre-o-app` | A tela de Configuração saiu do app. A spec cobre a página de informação que a substituiu |
 | `010-aviso-saida` | `010-avisos-programacao` | Não há mais hora de sair nem trânsito. É contagem regressiva da programação |
-| `mobile/app/(tabs)/benfeitor.jsx` | `mobile/_arquivo/benfeitor/BenfeitorScreen.jsx` | A campanha é do site da comunidade; a tela ficou arquivada para recriação |
+| `mobile/app/(tabs)/benfeitor.jsx` | `mobile/_arquivo/benfeitor/BenfeitorScreen.jsx` | A campanha era do site da comunidade; a tela ficou arquivada de 28/09/2026 a 01/10/2026 |
 | `mobile/lib/benfeitor.js` | `mobile/_arquivo/benfeitor/benfeitorLib.js` | Mesma razão da tela |
 | `users/{uid}/queroIr` | `users/{uid}/lembretes` | A ação se chama Avise-me |
 | `trafficAlerts` | `lembreteAvisos` | Guarda só quais avisos já saíram, sem rota nem hora de sair |

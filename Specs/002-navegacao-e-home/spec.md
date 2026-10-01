@@ -9,6 +9,8 @@
 
 > **O que mudou em 28/09/2026.** A barra inferior continua com quatro posições, mas Benfeitor deixou de ser rota e virou link externo para o site da campanha, ver [005](005-benfeitor-da-fe/spec.md). O header trocou INSCREVA-SE por **PARTICIPAR** e a engrenagem pelo ícone de informação, que abre a página do app, ver [006](006-sobre-o-app/spec.md). A folha central ganhou o atalho **Participar**. O destino do Participar é o site oficial do evento, e o endereço ainda não foi informado pela comunidade: o app tem a constante vazia e um aviso honesto enquanto isso. A folha ganhou também o atalho **Congresso**, visivelmente indisponível enquanto o destino não existir.
 
+> **O que mudou em 01/10/2026.** Benfeitor voltou a ser aba de verdade e o item de link externo saiu da barra. O link externo no lugar da tela quebrava o app num link que fingia ser página. O CTA da Home abre `/benfeitor` em vez do site da campanha.
+
 > **O que mudou em 29/09/2026.** O botão do header passou a ser **COLABORE** e abre a oferta pelo PIX, ver [014](014-doacao/spec.md). **Participar** saiu do header e permanece na folha. A folha ganhou o atalho **Colabore**, logo depois de Participar.
 
 ## Problema
@@ -20,8 +22,8 @@ Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do event
 ### Entra
 
 - Shell autenticado com navegação persistente
-- Barra inferior: Home, Notícias, círculo de menu, Agenda, Benfeitor da Fé
-- Benfeitor é item de link externo na barra, não aba: abre `https://benfeitordafe.comunidadepiox.org.br/crescer` no navegador
+- Barra inferior: Home, Notícias, círculo de menu, Programação, Benfeitor da Fé
+- Benfeitor da Fé é aba de novo: abre a tela da campanha dentro do app (005)
 - Header com o botão **COLABORE**, que abre `/colabore` (spec 014), e, à direita dele, o ícone de informação, que abre `/sobre-o-app` (spec 006)
 - Folha do círculo: Terço da Restauração das Famílias abre sua rota própria (011); Loja e Participar abrem endereço externo no navegador; Colabore abre `/colabore` (014); Fornecedor abre a página visual `/fornecedor` (012); Testemunhos abre o formulário de envio do fiel (013); Voluntário e Spotify seguem só com ícone e rótulo nesta entrega; Mapa do Evento aparece indisponível, sem ação
 - Destinos extras (prompt: “outras que forem importantes”): Galeria, Sobre
@@ -45,7 +47,7 @@ Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do event
 1. Fiel autenticado cai em `/home`.
 2. Toca uma notícia → `/noticias/[id]`.
 3. Toca “ver cronograma” ou um horário → `/cronograma` (com âncora do dia, se já existir na 004).
-4. A barra leva a Home, Notícias e Agenda por rota. Benfeitor abre o site da campanha no navegador. O item ativo fica dourado, sem pílula.
+4. A barra leva a Home, Notícias, Programação e Benfeitor por rota. O item ativo fica dourado, sem pílula.
 5. Toca no ícone de informação → `/sobre-o-app`. Nenhuma aba fica ativa, porque a página está fora do grupo de abas.
 6. O círculo abre a folha por cima da tela. Fecha ao tocar de novo no círculo, no fundo escuro ou ao arrastar para baixo. O Terço, o Colabore, o Fornecedor e os Testemunhos abrem suas rotas; Loja e Participar abrem endereço externo; Voluntário e Spotify não navegam. Mapa do Evento fica visivelmente indisponível e não responde ao toque.
 
@@ -89,7 +91,7 @@ Datas da edição: constante em `lib/event/edition.js` (5 a 9 de fevereiro de 20
 - [ ] Fora das datas do evento, o aviso existe e não é um número hero
 - [ ] Sem sessão, `/home` redireciona (spec 001)
 - [ ] Item ativo da barra é dourado, sem pílula. O círculo laranja do centro é o controle do menu
-- [ ] A barra mostra Home, Notícias, Agenda e Benfeitor, com o círculo no meio
+- [ ] A barra mostra Home, Notícias, Programação e Benfeitor, com o círculo no meio
 - [ ] Benfeitor abre o site da campanha no navegador e não pisca em branco ao toque
 - [ ] O header mostra **COLABORE**, que abre `/colabore`, e, à direita, o ícone de informação, que abre `/sobre-o-app`
 - [ ] A folha lista Terço, Participar, Colabore, Congresso, Loja, Voluntário, Testemunhos, Fornecedor, Spotify e Mapa do Evento, e fecha no círculo, no fundo ou no arraste

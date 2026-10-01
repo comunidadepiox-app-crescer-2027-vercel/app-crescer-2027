@@ -2,7 +2,7 @@
 
 ## Funcionais
 
-- **RF-01** Fiel autenticado vê a barra com Home, Notícias, Agenda e Benfeitor da Fé, e o círculo de menu no centro. A Conta abre pela engrenagem do header. Galeria e Sobre continuam rotas do app.
+- **RF-01** Fiel autenticado vê a barra com Home, Notícias, Programação e Benfeitor da Fé, e o círculo de menu no centro. A Conta abre pela engrenagem do header. Galeria e Sobre continuam rotas do app.
 - **RF-02** `/home` exibe seção de notícias e seção de cronograma do dia.
 - **RF-03** Fora das datas da edição, a Home explica o recorte usado.
 - **RF-04** `/sobre` apresenta a comunidade e o encontro, com link de caravanas para o site oficial.

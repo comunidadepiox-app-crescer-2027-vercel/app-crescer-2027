@@ -32,19 +32,24 @@
   - Verifica: não afirma que o pagamento ocorreu; copy sem travessão.
   - Fora: boleto.
 
-- [x] **T8 — Link externo no lugar da aba**
+- [x] **T8 — Link externo no lugar da aba** (feito em 28/09/2026, desfeito em 01/10/2026 por T10)
   - Faz: constante `LINK_BENFEITOR` em `mobile/lib/links.js` e item de link externo em `BarraAbas`, depois da aba Agenda, com o mesmo ícone e o mesmo rótulo.
   - Verifica: tocar abre `https://benfeitordafe.comunidadepiox.org.br/crescer`; a `Tabs.Screen` de `benfeitor` saiu do `(tabs)/_layout.jsx`; nenhuma rota `/benfeitor` no bundle.
   - Fora: mudar a ordem da barra ou o desenho do item ativo.
 
-- [x] **T9 — Arquivo da página e da lib**
+- [x] **T9 — Arquivo da página e da lib** (feito em 28/09/2026, desfeito em 01/10/2026 por T10)
   - Faz: `mobile/app/(tabs)/benfeitor.jsx` e `mobile/lib/benfeitor.js` movidos para `mobile/_arquivo/benfeitor/`, com `README.md` registrando o que a tela fazia e o que falta para recriá-la.
-  - Verifica: nenhum import no app aponta para `lib/benfeitor`; a pasta não entra no bundle; `app/admin/leads` e `firestore.rules` sem alteração.
+  - Estado: a pasta saiu do repositório quando a tela voltou, em 01/10/2026.
   - Fora: apagar `benefactorLeads`, `/admin/leads` ou os leads já gravados.
+
+- [x] **T10 — Rota de volta, com envio para a comissão** (01/10/2026)
+  - Faz: `lib/server/emailBenfeitor.js` com o `DESTINO` vazio e o aviso do que falta; `app/api/lead-benfeitor/route.js` revalidando sessão, campos e consentimento; `mobile/lib/enviaLeadBenfeitor.js` falando com a rota pelo token; `mobile/app/(tabs)/benfeitor.jsx` e `mobile/lib/benfeitor.js` de volta; `Tabs.Screen` na `BarraAbas`, CTA da Home em `/benfeitor` e `LINK_BENFEITOR` fora do `links.js`; escrita do client fechada em `firestore.rules`; `.env.example` com as três variáveis.
+  - Verifica: a aba abre a tela dentro do app sem piscar em branco; cada envio grava um doc com `status: novo`, `uid` e CPF só com dígitos; o e-mail chega com os dados e o `reply_to` no e-mail do fiel; sem `RESEND_API_KEY` ou sem destino, o lead continua gravado e a confirmação não promete e-mail; `RESEND_API_KEY` e o destino não aparecem no bundle.
+  - Fora: pagamento, anexo, cópia oculta e segunda mensagem para o fiel.
 
 ## Validação final
 
-- [ ] Aceite de `spec.md`
+- [ ] Aceite de `spec.md`: só falta o envio real do e-mail, porque a comissão ainda não informou o endereço
 - [x] LGPD conferido
 - [x] Copy sem travessão
 - [x] Docs atualizados

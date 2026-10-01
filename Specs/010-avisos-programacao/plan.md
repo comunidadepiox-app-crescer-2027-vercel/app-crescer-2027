@@ -20,7 +20,7 @@ A gravação dos marcos é feita numa transação que relê o documento. Sem iss
 | Caminho | Responsabilidade |
 |---|---|
 | `mobile/components/ProgramaLista.jsx` | Ação Avise-me em cada item, com o rótulo Cancelar aviso |
-| `mobile/app/(tabs)/agenda.jsx` | Liga a ação na Agenda |
+| `mobile/app/(tabs)/programacao.jsx` | Liga a ação na aba Programação |
 | `mobile/app/(tabs)/home.jsx` | A mesma ação no recorte do dia |
 | `mobile/lib/avisoSaida.js` | `observarLembretes`, `marcarLembrete`, `desmarcarLembrete`, `useAviseMe` e o pedido de permissão de aviso |
 | `mobile/lib/notificacoes.js` | Canal Android `aviso` |

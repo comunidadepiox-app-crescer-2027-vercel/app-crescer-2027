@@ -72,15 +72,16 @@ service cloud.firestore {
     // lembreteAvisos não tem match de propósito. O cliente não lê nem
     // escreve os avisos que já saíram. O job usa o Admin SDK.
 
+    // Leads de Benfeitor da Fé. CPF e telefone são dados de LGPD, então a
+    // escrita é false de propósito: quem grava é o Route Handler
+    // app/api/lead-benfeitor, com o Admin SDK e a service account. As rules não
+    // valem para o Admin SDK, então ele é a única via de escrita. O fiel lê só
+    // o próprio doc, para a tela saber se o cadastro já foi feito.
     match /benefactorLeads/{leadId} {
-      allow create: if signedIn()
-        && request.resource.data.uid == request.auth.uid
-        && request.resource.data.lgpdConsent == true
-        && request.resource.data.status == 'novo';
       allow read: if isAdmin()
         || (signedIn() && resource.data.uid == request.auth.uid);
+      allow create, delete: if false;
       allow update: if isAdmin();
-      allow delete: if false;
     }
 
     // Testemunhos. O fiel não lê a coleção: o texto só é lido pela equipe, e a

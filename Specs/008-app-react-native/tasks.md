@@ -24,12 +24,12 @@
 - [x] **T8 — Notícias e detalhe**
   - Faz: lista com capa e data em `onSnapshot`; detalhe com parágrafos.
   - Verifica: só `published == true`.
-- [x] **T9 — Agenda**
+- [x] **T9 — Programação** (Agenda em 09/09/2026, renomeada em 01/10/2026)
   - Faz: abas de dias da edição, grupos por espaço, escuta ao vivo.
   - Verifica: dias 05–09/02/2027.
-- [x] **T10 — Benfeitor** (formulário arquivado em 28/09/2026, ver a spec 005)
-  - Estado: a tela e a lib foram movidas para `mobile/_arquivo/benfeitor/`, com README do que falta para recriá-las. A aba virou link externo para o site da campanha.
-  - Fora: pagamento e qualquer reativação do formulário no app.
+- [x] **T10 — Benfeitor** (formulário arquivado em 28/09/2026 e restaurado em 01/10/2026, ver a spec 005)
+  - Estado: a aba voltou a ser rota de verdade em `mobile/app/(tabs)/benfeitor.jsx`, e o item de link externo saiu da `BarraAbas`. O envio passa por `POST /api/lead-benfeitor` e o e-mail para a comissão sai no servidor.
+  - Fora: pagamento.
 - [x] **T11 — Conta, Galeria e Sobre** (Conta substituída em 28/09/2026, ver a spec 006)
   - Estado: editar nome e sair saíram com a tela de Configuração. Galeria e Sobre continuam, e o `Voltar` das duas aponta para `/sobre-o-app`.
   - Fora: edição de conta.
@@ -62,10 +62,14 @@
   - Verifica: o atalho Fornecedor abre a página, os cards são visuais e o retorno leva à Home.
   - Fora: links externos, CMS e detalhes individuais.
 
-- [x] **T18 — Benfeitor como link externo** (28/09/2026, spec 005)
-  - Faz: `mobile/lib/links.js` com `LINK_BENFEITOR`, item de link externo na `BarraAbas` e `Tabs.Screen` de `benfeitor` removida; tela e lib arquivadas em `mobile/_arquivo/benfeitor/`.
-  - Verifica: a aba abre `https://benfeitordafe.comunidadepiox.org.br/crescer`; nenhuma rota `/benfeitor` no bundle; `/admin/leads` e `benefactorLeads` sem alteração.
+- [x] **T18 — Benfeitor como link externo** (28/09/2026, desfeito em 01/10/2026, spec 005)
+  - Estado: `LINK_BENFEITOR`, o item de link externo da `BarraAbas` e o `mobile/_arquivo/benfeitor/` saíram do projeto quando a aba voltou a ser rota. Ver T21.
   - Fora: apagar leads já gravados.
+
+- [x] **T21 — Benfeitor como rota, com envio por e-mail** (01/10/2026, spec 005)
+  - Faz: `mobile/app/(tabs)/benfeitor.jsx` e `mobile/lib/benfeitor.js` de volta, `mobile/lib/enviaLeadBenfeitor.js`, `Tabs.Screen` de `benfeitor` na `BarraAbas` e CTA da Home abrindo `/benfeitor`. A escrita do client em `benefactorLeads` fecha nas rules.
+  - Verifica: a aba abre a tela sem piscar em branco; o lead chega gravado e por e-mail em `lib/server/emailBenfeitor.js`; sem chave ou sem destino, o lead continua gravado e a tela não promete e-mail.
+  - Fora: pagamento, anexo e cópia oculta.
 
 - [x] **T19 — PARTICIPAR e ícone de informação** (28/09/2026, specs 002 e 006)
   - Faz: botão **PARTICIPAR** no header e atalho Participar na folha central, com `LINK_PARTICIPAR` reservado no código; `IconeEngrenagem` trocada por `IconeInfo`; `conta.jsx` removido e `/sobre-o-app` criada com o texto em `mobile/lib/sobreApp.js`.

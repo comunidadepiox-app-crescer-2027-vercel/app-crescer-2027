@@ -46,6 +46,6 @@ Itens que o SDD registra, mas que ainda não têm decisão final. Não bloqueiam
 | Benfeitor | Formulário de lead, sem gateway de pagamento |
 | Caravanas | Link para o fluxo oficial, não é produto nesta fase |
 | Instituto Crescer | Fora. Não usar brandbook de `crescer.org.br` |
-| Benfeitor da Fé | A campanha é do site da comunidade. O app arquivou o formulário e a aba abre `https://benfeitordafe.comunidadepiox.org.br/crescer` |
+| Benfeitor da Fé | O formulário voltou ao app em 01/10/2026 e cada envio também chega por e-mail na comissão. O e-mail da comissão ainda não foi informado: a constante `DESTINO` em `lib/server/emailBenfeitor.js` é o lugar de escrever |
 | Quero ir | Virou **Avise-me**: sem localização, sem trânsito e sem hora de sair. Avisos em 30, 15, 10, 5 e 1 minuto, com cron de 5 em 5 e tolerância de 5 |
 | Testemunhos | Fila com pastas `aguardando` e `encerrados`, texto original lido pela equipe e decisão humana, sem IA e sem resumo automático |
