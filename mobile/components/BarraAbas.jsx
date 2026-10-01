@@ -1,7 +1,5 @@
 import { Image, Pressable, Text, View, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IconeCoracaoChama } from "./Icones";
-import { abreLinkExterno, LINK_BENFEITOR } from "../lib/links";
 import { CORES, FONTES } from "../lib/tema";
 
 export const ALTURA_ABAS = 64;
@@ -12,18 +10,11 @@ export const FOLGA_CIRCULO = 21;
 const LOGO_MENU_CENTRAL = require("../assets/logo-menu-central.png");
 export const TAMANHO_LOGO_MENU = 35;
 
-const ORDEM = ["home", "noticias", "agenda"];
-
-// Benfeitor não é rota: a campanha é do site da comunidade. Ele entra na
-// barra como link externo, desenhado no mesmo componente das abas para não
-// quebrar a linha de base nem o desenho do item ativo.
-const LINK_EXTERNO = {
-  nome: "benfeitor",
-  rotulo: "Benfeitor",
-  url: LINK_BENFEITOR,
-  Icone: IconeCoracaoChama,
-  descricao: "Benfeitor da Fé, no site da comunidade",
-};
+// Os nomes são os das rotas de mobile/app/(tabs). Benfeitor voltou para a
+// lista em 01/10/2026: antes disso ele era um link externo desenhado no mesmo
+// componente, e o item de link saiu junto com o LINK_BENFEITOR. Agenda é
+// programacao, sem acento, porque é assim que o arquivo se chama.
+const ORDEM = ["home", "noticias", "programacao", "benfeitor"];
 
 export function alturaBarra(insetoBaixo) {
   return ALTURA_ABAS + FOLGA_CIRCULO + insetoBaixo;
@@ -82,7 +73,6 @@ export function BarraAbas({
             onFecharMenu={onFecharMenu}
           />
         ))}
-        <ItemLinkExterno link={LINK_EXTERNO} onFecharMenu={onFecharMenu} />
       </View>
     </View>
   );
@@ -113,29 +103,15 @@ function ItemAba({ rota, ativo, options, navigation, onFecharMenu }) {
       style={estilos.aba}
     >
       {options.tabBarIcon?.({ color: cor, focused: ativo, size: 24 })}
-      <Text style={[estilos.rotulo, { color: cor }]} numberOfLines={1}>
+      {/* Shrink em vez de cortar: PROGRAMAÇÃO não cabe em tela estreita, e
+          rótulo cortado com reticências fica pior que rótulo menor. */}
+      <Text
+        style={[estilos.rotulo, { color: cor }]}
+        numberOfLines={1}
+        adjustsFontSizeToFit
+        minimumFontScale={0.8}
+      >
         {rotulo}
-      </Text>
-    </Pressable>
-  );
-}
-
-// Mesmo desenho do item de aba, sem estado ativo: um link externo não tem rota
-// para ficar selecionada, então nunca fica dourado.
-function ItemLinkExterno({ link, onFecharMenu }) {
-  return (
-    <Pressable
-      onPress={() => {
-        onFecharMenu();
-        abreLinkExterno(link.url);
-      }}
-      accessibilityRole="link"
-      accessibilityLabel={link.descricao || link.rotulo}
-      style={({ pressed }) => [estilos.aba, pressed && { opacity: 0.72 }]}
-    >
-      <link.Icone cor="#ffffff" tamanho={24} />
-      <Text style={[estilos.rotulo, { color: "#ffffff" }]} numberOfLines={1}>
-        {link.rotulo}
       </Text>
     </Pressable>
   );

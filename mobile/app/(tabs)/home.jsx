@@ -11,7 +11,6 @@ import { Botao, TituloSecao, Paragrafo } from "../../components/Ui";
 import { CORES, FONTES } from "../../lib/tema";
 import { useAuth } from "../../lib/authProvider";
 import { useAviseMe } from "../../lib/aviseMe";
-import { abreLinkExterno, LINK_BENFEITOR } from "../../lib/links";
 
 const foto = require("../../assets/brand/foto-evento.webp");
 
@@ -61,12 +60,12 @@ export default function HomeScreen() {
       <FundoRoxoPoligonal style={estilos.hero}>
         <Text style={estilos.edicao}>{EDICAO.nome}</Text>
         <Text style={estilos.slogan}>
-          Volte pra casa, ame sua família, encontre a paz.
+          Ame sua casa, ame sua família e encontre a paz
         </Text>
         <Text style={estilos.quando}>
           De {formataDataCurta(EDICAO.inicio)} a {formataDataCurta(EDICAO.fim)}, {EDICAO.local}.
         </Text>
-        <Botao titulo="Ver a programação" onPress={() => router.push("/agenda")} />
+        <Botao titulo="Ver a programação" onPress={() => router.push("/programacao")} />
         <Image source={foto} style={estilos.foto} />
       </FundoRoxoPoligonal>
 
@@ -97,7 +96,7 @@ export default function HomeScreen() {
           <TituloSecao>
             {recorte.posicao === "durante" ? "Hoje no evento" : "Programação"}
           </TituloSecao>
-          <Pressable onPress={() => router.push("/agenda")}>
+          <Pressable onPress={() => router.push("/programacao")}>
             <Text style={estilos.link}>Cronograma</Text>
           </Pressable>
         </View>
@@ -135,7 +134,7 @@ export default function HomeScreen() {
         <Botao
           titulo="Quero ser Benfeitor da Fé"
           variante="roxo"
-          onPress={() => abreLinkExterno(LINK_BENFEITOR)}
+          onPress={() => router.push("/benfeitor")}
         />
       </FundoLaranjaPoligonal>
     </ScrollView>

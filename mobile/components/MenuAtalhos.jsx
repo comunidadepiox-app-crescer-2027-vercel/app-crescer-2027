@@ -32,10 +32,10 @@ const { height: ALTURA_TELA } = Dimensions.get("window");
 const ITENS = [
   { rotulo: "Terço da Restauração das Famílias", imagem: terco, rota: "/terco-restauracao" },
   { rotulo: "Participar", Icone: Ticket, url: LINK_PARTICIPAR, avisar: true },
-  { rotulo: "Colabore", Icone: HandHeart, rota: "/colabore" },
-  { rotulo: "Voluntário", Icone: Handshake },
+  { rotulo: "Faça sua Doação", Icone: HandHeart, rota: "/colabore" },
+  { rotulo: "Seja Voluntário", Icone: Handshake },
   { rotulo: "Loja", Icone: ShoppingBag, url: "https://usedevotum.com.br/colecao-arte-piedosa/" },
-  { rotulo: "Fornecedor", Icone: Contact, rota: "/fornecedor" },
+  { rotulo: "Seja Fornecedor", Icone: Contact, rota: "/fornecedor" },
   { rotulo: "Testemunhos", imagem: testemunhos, tamanhoImagem: 50, rota: "/testemunhos" },
   { rotulo: "Spotify", Icone: AudioLines },
   { rotulo: "Mapa do Evento", Icone: MapPinned, indisponivel: true },

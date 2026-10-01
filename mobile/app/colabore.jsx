@@ -142,8 +142,6 @@ export default function ColaboreScreen() {
               a realizar o Crescer 2027. O pagamento é no aplicativo do banco.
             </Paragrafo>
 
-            {percent !== null ? <BarraProgresso percent={percent} /> : null}
-
             <View style={estilos.cartao}>
               <TituloSecao style={estilos.tituloBloco}>PIX</TituloSecao>
               <Paragrafo style={[estilos.textoBloco, { marginTop: 12 }]}>

@@ -8,7 +8,7 @@ import { ProgramaLista } from "../../components/ProgramaLista";
 import { TituloPagina, Paragrafo } from "../../components/Ui";
 import { CORES, FONTES } from "../../lib/tema";
 
-export default function AgendaScreen() {
+export default function ProgramacaoScreen() {
   const { user } = useAuth();
   const { ids, ocupado, alternar } = useAviseMe(user?.uid);
   const dias = useMemo(diasDaEdicao, []);
@@ -35,7 +35,7 @@ export default function AgendaScreen() {
 
   return (
     <ScrollView style={estilos.tela} contentContainerStyle={estilos.pagina}>
-      <TituloPagina>Cronograma</TituloPagina>
+      <TituloPagina>PROGRAMAÇÃO</TituloPagina>
       <Paragrafo style={{ marginTop: 8 }}>
         {EDICAO.nome}, {EDICAO.local}.
       </Paragrafo>

@@ -1,7 +1,11 @@
-// ARQUIVADO em 28/09/2026. Ver o README desta pasta antes de mexer.
-// A campanha passou a ser do site da comunidade e o app não grava mais lead.
-import { addDoc, collection, getDocs, limit, query, serverTimestamp, where } from "firebase/firestore";
-import { db } from "../../lib/firebase";
+// Regras puras do formulário de Benfeitor da Fé. Sem rede e sem Firebase, para
+// a validação ser testável e a tela não carregar nada desnecessário.
+//
+// A tela saiu do app em 28/09/2026, quando a campanha virou link externo para
+// o site da comunidade, e voltou em 01/10/2026 como rota de verdade, agora com
+// envio para a comissão por e-mail.
+
+export const LIMITE_NOME = 120;
 
 export function somenteDigitos(valor) {
   return String(valor || "").replace(/\D/g, "");
@@ -30,13 +34,13 @@ export function formataCpf(valor) {
 export function cpfValido(cpf) {
   const d = somenteDigitos(cpf);
   if (d.length !== 11 || /^(\d)\1{10}$/.test(d)) return false;
-  const calc = (fim) => {
+  const digito = (fim) => {
     let soma = 0;
     for (let i = 0; i < fim; i++) soma += Number(d[i]) * (fim + 1 - i);
     const resto = (soma * 10) % 11;
     return resto === 10 ? 0 : resto;
   };
-  return calc(9) === Number(d[9]) && calc(10) === Number(d[10]);
+  return digito(9) === Number(d[9]) && digito(10) === Number(d[10]);
 }
 
 export function celularValido(telefone) {
@@ -53,27 +57,6 @@ export function validaLead({ name, email, phone, cpf, lgpdConsent }) {
   return null;
 }
 
-export async function jaTemLead(uid) {
-  if (!db || !uid) return false;
-  const q = query(collection(db, "benefactorLeads"), where("uid", "==", uid), limit(1));
-  const snap = await getDocs(q);
-  return !snap.empty;
-}
-
-export async function submitLead({ uid, name, email, phone, cpf }) {
-  return addDoc(collection(db, "benefactorLeads"), {
-    uid,
-    name: name.trim(),
-    email: email.trim().toLowerCase(),
-    phone: somenteDigitos(phone),
-    cpf: somenteDigitos(cpf),
-    lgpdConsent: true,
-    lgpdConsentAt: serverTimestamp(),
-    status: "novo",
-    createdAt: serverTimestamp(),
-  });
-}
-
 export const WHATSAPP_COMUNIDADE = "https://wa.me/5583988977017";
 export const WHATSAPP_ROTULO = "(83) 98897-7017";
 
@@ -82,3 +65,12 @@ export function hrefWhatsappCadastro() {
     "Olá, acabei de me cadastrar como Benfeitor da Fé pelo aplicativo Crescer.";
   return `${WHATSAPP_COMUNIDADE}?text=${encodeURIComponent(texto)}`;
 }
+
+// A confirmação muda de frase conforme o que de fato aconteceu. O e-mail para
+// a comissão é a segunda via do cadastro: quando ele não sai, o lead continua
+// gravado, e o fiel precisa saber que a equipe ainda vai falar com ele.
+export const AVISO_EMAIL =
+  "A comissão recebe este cadastro por e-mail. Nada foi cobrado agora.";
+
+export const AVISO_SEM_EMAIL =
+  "A comissão recebe este cadastro pela mesa da equipe. Nada foi cobrado agora.";

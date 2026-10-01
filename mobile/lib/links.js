@@ -6,10 +6,6 @@
 
 import { Alert, Linking } from "react-native";
 
-// Campanha do Benfeitor da Fé, da Comunidade de São Pio X. A tela de campanha
-// saiu do app em 28/09/2026 e ficou arquivada em mobile/_arquivo/benfeitor/.
-export const LINK_BENFEITOR = "https://benfeitordafe.comunidadepiox.org.br/crescer";
-
 // TODO(participar): preencher com a página oficial de participação do
 // encontro. Enquanto estiver vazia, o atalho Participar da folha
 // central avisa que o endereço entra em breve. Não trocar por um palpite.

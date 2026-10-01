@@ -11,6 +11,7 @@ import {
   IconeCasa,
   IconeJornal,
   IconeCalendario,
+  IconeCoracaoChama,
 } from "../../components/Icones";
 import { CORES, FONTES } from "../../lib/tema";
 import { garantirCanalAviso } from "../../lib/notificacoes";
@@ -70,11 +71,25 @@ export default function TabsLayout() {
             tabBarIcon: ({ color }) => <IconeJornal cor={color} />,
           }}
         />
+        {/* Agenda virou Programação em 01/10/2026. O arquivo é
+            programacao.jsx, sem acento: rota com acento vira acento na URL e
+            quebra em parte do build. O rótulo continua com acento, e o ícone
+            é o mesmo calendário de sempre. */}
         <Tabs.Screen
-          name="agenda"
+          name="programacao"
           options={{
-            title: "Agenda",
+            title: "Programação",
             tabBarIcon: ({ color }) => <IconeCalendario cor={color} />,
+          }}
+        />
+        {/* Benfeitor da Fé voltou a ser rota de verdade em 01/10/2026. Antes
+            disso a aba abria o site da campanha, e link que finge ser tela
+            pisca em branco ao toque. */}
+        <Tabs.Screen
+          name="benfeitor"
+          options={{
+            title: "Benfeitor",
+            tabBarIcon: ({ color }) => <IconeCoracaoChama cor={color} />,
           }}
         />
       </Tabs>
