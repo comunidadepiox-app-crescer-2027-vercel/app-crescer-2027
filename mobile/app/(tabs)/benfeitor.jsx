@@ -134,13 +134,6 @@ export default function BenfeitorScreen() {
           </Text>
         </FundoRoxoPoligonal>
 
-        <Image
-          source={foto}
-          style={estilos.foto}
-          resizeMode="cover"
-          accessibilityLabel="Encontro da Comunidade de São Pio X"
-        />
-
         <View style={estilos.bloco}>
           <Paragrafo>{resultado.emailEnviado ? AVISO_EMAIL : AVISO_SEM_EMAIL}</Paragrafo>
 
