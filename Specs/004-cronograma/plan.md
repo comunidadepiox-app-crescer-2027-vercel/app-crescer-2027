@@ -17,6 +17,7 @@ Uma coleção plana `programItems` filtrada por `published` no Firestore e recor
 | `app/(app)/cronograma/page.jsx` | página |
 | `components/program/DaySwitcher.jsx` | troca de dia (não pílula) |
 | `components/program/SpaceSection.jsx` | bloco de um espaço |
+| `mobile/lib/programa.js` | espelho do enum, porque o app Expo não importa `lib/` do site |
 | `firestore.rules` | leitura autenticada de publicados |
 
 ## Firestore

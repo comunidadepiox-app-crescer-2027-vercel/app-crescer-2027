@@ -3,7 +3,7 @@
 ## Funcionais
 
 - **RF-01** Fiel vê a programação por dia e por espaço.
-- **RF-02** Os seis espaços do site oficial existem no enum.
+- **RF-02** Os oito espaços do site oficial existem no enum.
 - **RF-03** A Home reutiliza o recorte do dia.
 - **RF-04** Existe aviso de que horários podem mudar.
 

@@ -3,7 +3,7 @@
 ## Checklist
 
 - [x] **T1 — Enum de espaços**
-  - Faz: `spaces.js` com os seis espaços e rótulos do site.
+  - Faz: `spaces.js` com os oito espaços e rótulos do site.
   - Verifica: slugs estáveis; nenhum chip visual ainda.
   - Fora: UI.
 
@@ -26,6 +26,11 @@
   - Faz: seção do dia da 002 escuta a mesma coleção e filtra o dia.
   - Verifica: mesmo conjunto de itens.
   - Fora: mapa.
+
+- [x] **T6 — Estandes e Auditório do Espaço Cultural Shaolin**
+  - Faz: slugs `estandes` e `auditorio-shaolin` em `lib/program/spaces.js` e no espelho `mobile/lib/programa.js`.
+  - Verifica: os dois aparecem no seletor de Espaço de `/admin/cronograma`; item gravado com os slugs aparece no app com o rótulo escrito por extenso, na Home e em Programação.
+  - Fora: grupo novo na UI do app; o agrupamento continua por `space`, sem card vazio.
 
 ## Validação final
 

@@ -23,6 +23,8 @@ O encontro tem vários espaços no mesmo dia. O fiel precisa ver o que acontece 
   - Palestras Formativas
   - Espaço para Crianças
   - Espaço para Jovens
+  - Estandes
+  - Audítório do Espaço Cultural Shaolin
 - Cada item: horário, título, convidado/pregador (se houver), local
 - Aviso fixo: horários e convidados podem mudar sem aviso prévio
 - Home consome o recorte do dia definido na 002
@@ -65,7 +67,9 @@ Coleção `programItems/{id}`
 | `notes` | string | não | |
 | `published` | bool | sim | |
 
-Enum `space`: `palco-principal` | `palco-musical` | `autografos` | `palestras` | `criancas` | `jovens`
+Enum `space`: `palco-principal` | `palco-musical` | `autografos` | `palestras` | `criancas` | `jovens` | `estandes` | `auditorio-shaolin`
+
+O enum é a fonte única do contrato, mas o app Expo não importa `lib/` do site: `mobile/lib/programa.js` repete a mesma lista. Mudar um espaço exige alterar os dois arquivos no mesmo commit.
 
 `programDays` é opcional: `{ date, label, weekday }`. Se não existir, derivar os dias distintos de `programItems`.
 

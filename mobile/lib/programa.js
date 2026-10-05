@@ -43,6 +43,8 @@ export const ESPACOS = [
   { slug: "palestras", nome: "Palestras Formativas" },
   { slug: "criancas", nome: "Espaço para Crianças" },
   { slug: "jovens", nome: "Espaço para Jovens" },
+  { slug: "estandes", nome: "Estandes" },
+  { slug: "auditorio-shaolin", nome: "CONAFAM - Audítório do Espaço Cultural Shaolin" },
 ];
 
 export function nomeDoEspaco(slug) {

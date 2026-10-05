@@ -55,7 +55,7 @@ O app do fiel (Expo) tem login, Home, notícias, agenda, benfeitor, conta, galer
 |---|---|
 | Fiel | Usuário autenticado sem permissão de publicação |
 | Admin | Usuário com `role: admin` no documento `users` |
-| Espaço | Palco ou programação paralela (Palco Principal, Palco Musical, Autógrafos, Palestras Formativas, Espaço para Crianças, Espaço para Jovens) |
+| Espaço | Palco ou programação paralela (Palco Principal, Palco Musical, Autógrafos, Palestras Formativas, Espaço para Crianças, Espaço para Jovens, Estandes, Audítório do Espaço Cultural Shaolin) |
 | Item de programação | Um horário em um espaço, com título, convidado e local |
 | Lead Benfeitor | Cadastro de interesse; não é pagamento |
 | Edição | Ano/número do encontro (ex.: 30º Crescer). A edição oficial do app ainda está em [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md) |

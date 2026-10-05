@@ -40,6 +40,10 @@ export default function ProgramacaoScreen() {
         {EDICAO.nome}, {EDICAO.local}.
       </Paragrafo>
 
+      <Paragrafo style={{ marginTop: 8 }}>
+        PROGRAMAÇÃO E CONVIDADOS SUJEITO A ALTERAÇÃO SEM AVISO PRÉVIO.
+      </Paragrafo>
+
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
