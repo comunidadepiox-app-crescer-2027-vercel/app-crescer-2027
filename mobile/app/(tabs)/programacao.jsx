@@ -40,8 +40,8 @@ export default function ProgramacaoScreen() {
         {EDICAO.nome}, {EDICAO.local}.
       </Paragrafo>
 
-      <Paragrafo style={{ marginTop: 8 }}>
-        PROGRAMAÇÃO E CONVIDADOS SUJEITO A ALTERAÇÃO SEM AVISO PRÉVIO.
+      <Paragrafo style={{ marginTop: 8, color: "rgba(17, 28, 45, 0.5)" }}>
+        Programação e convidados sujeitos a alteração sem aviso prévio.
       </Paragrafo>
 
       <ScrollView
