@@ -51,13 +51,13 @@ Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do event
 3. Toca “ver cronograma” ou um horário → `/cronograma` (com âncora do dia, se já existir na 004).
 4. A barra leva a Home, Notícias, Programação e Benfeitor por rota. O item ativo fica dourado, sem pílula.
 5. Toca no ícone de informação → `/sobre-o-app`. Nenhuma aba fica ativa, porque a página está fora do grupo de abas.
-6. O círculo abre a folha por cima da tela. Fecha ao tocar de novo no círculo, no fundo escuro ou ao arrastar para baixo. O Terço, a Liturgia Diária, o Colabore, o Fornecedor e os Testemunhos abrem suas rotas; Loja e Participar abrem endereço externo; Voluntário e Spotify não navegam. Mapa do Evento fica visivelmente indisponível e não responde ao toque.
+6. O círculo abre a folha por cima da tela. Fecha ao tocar de novo no círculo, no fundo escuro ou ao arrastar para baixo. O Terço, a Liturgia Diária, o Colabore, o Fornecedor, o Fale Conosco e os Testemunhos abrem suas rotas; Loja e Participar abrem endereço externo; Voluntário e Spotify não navegam. Mapa do Evento fica visivelmente indisponível e não responde ao toque.
 
 ## Superfície do produto
 
 | Tipo | Identificador |
 |---|---|
-| Rotas | `/home`, `/galeria`, `/sobre`, `/sobre-o-app` |
+| Rotas | `/home`, `/galeria`, `/sobre`, `/sobre-o-app`, `/fale-conosco` |
 | Coleções lidas | `news`, `programItems` (e/ou `programDays`), `siteContent` |
 | Cloudinary | URLs de capa já gravadas na notícia |
 | Papel | `fiel` ou `admin` autenticado |

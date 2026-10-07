@@ -2,8 +2,8 @@
 //
 // ESTE É O ARQUIVO A TROCAR quando a Comunidade de São Pio X entregar uma
 // nova versão do texto. Troque o conteúdo dos vetores abaixo e nada mais
-// muda: a tela percorre TEXTO_SOBRE_APP e depois AVISO_DADOS, sem string
-// solta no componente.
+// muda: a tela percorre TEXTO_SOBRE_APP, depois AVISO_DADOS e por fim
+// CREDITOS, sem string solta no componente.
 //
 // Regras de escrita, das specs 005, 006 e 013:
 // - sem travessão em nenhum caractere da copy
@@ -20,6 +20,13 @@ export const TEXTO_SOBRE_APP = [
 export const AVISO_DADOS = [
   "A Comunidade São Pio X adota medidas para preservar a privacidade e a segurança das informações utilizadas no aplicativo oficial do Crescer 2027. O app busca coletar e tratar apenas os dados estritamente necessários ao funcionamento de suas funcionalidades, em conformidade com a legislação aplicável, especialmente a Lei Geral de Proteção de Dados Pessoais (LGPD). Algumas funcionalidades podem direcionar o usuário para serviços e plataformas externas, que possuem políticas próprias de privacidade e tratamento de dados.",
 ];
+
+// Créditos do aplicativo, no fim da página, depois do aviso de uso dos dados.
+export const CREDITOS = {
+  texto:
+    "Uma iniciativa da Comunidade São Pio X, desenvolvida com a colaboração voluntária da equipe de tecnologia do Crescer 2027.",
+  linhas: ["Desenvolvimento: Guilherme Truta", "Liderança técnica: Helton Medeiros"],
+};
 
 // Bloco administrativo. Só aparece para quem tem `role: admin` na mesa, e
 // explica que a mesa continua no site, porque o app não tem área de

@@ -53,6 +53,13 @@ Marcar `[x]` só depois de conferir o critério. Se o comportamento mudar no có
   - Verifica: nenhum documento ficou atrás do código.
   - Fora: reescrever spec que não mudou de comportamento.
 
+## Créditos do aplicativo (07/10/2026)
+
+- [x] **T10 — "Veja mais" sai, créditos entram**
+  - Faz: `CREDITOS` em `mobile/lib/sobreApp.js` e o bloco de créditos na tela, no lugar dos atalhos de Galeria e Sobre o Crescer; `Pressable`, `Text`, `useRouter` e os estilos de link fora do arquivo.
+  - Verifica: a página mostra iniciativa, colaboração, desenvolvimento e liderança técnica, sem travessão e sem link; busca por "Veja mais" não acha nada na tela.
+  - Fora: logo, cartão de autor e link para redes; as rotas `/galeria` e `/sobre`, que continuam no bundle sem atalho.
+
 ## Validação final
 
 - [ ] Aceite de `spec.md` (falta o texto final da comunidade)

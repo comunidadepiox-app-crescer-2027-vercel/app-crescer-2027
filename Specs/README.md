@@ -61,12 +61,13 @@ Pode ir direto ao código só se for **baixa** complexidade e **não** alterar c
 | [013-testimunhos](013-testimunhos/) | Testemunho do fiel no app e fila de leitura na mesa | Alta |
 | [014-doacao](014-doacao/) | Oferta pelo PIX no app e percentual na mesa | Média |
 | [015-liturgia-diaria](015-liturgia-diaria/) | Liturgia do dia no app, buscada de API pública, no padrão do Terço | Média |
+| [016-fale-conosco](016-fale-conosco/) | Canais oficiais de contato da Comunidade São Pio X, acionáveis por toque | Média |
 
 Ordem de implementação: `000` → `001` → `002` → (`003` e `004` em paralelo após a Home) → `005` → `006` → `007` → `008`.
 
 A spec `007` pode avançar o plan em paralelo, mas o CMS só entra depois das coleções de notícias e cronograma existirem.
 
-As specs `011`, `012`, `013`, `014` e `015` entram depois da `008`. A `013` escreve em coleção própria, com escrita só pelo Admin SDK, e por isso não depende de regra nova de leitura para o fiel. A `014` reusa `siteContent` da `007`. A `015` não usa Firestore: lê uma API pública de liturgia e reusa a barra de etapas extraída na `011`.
+As specs `011` a `016` entram depois da `008`. A `013` escreve em coleção própria, com escrita só pelo Admin SDK, e por isso não depende de regra nova de leitura para o fiel. A `014` reusa `siteContent` da `007`. A `015` não usa Firestore: lê uma API pública de liturgia e reusa a barra de etapas extraída na `011`.
 
 ## Renomeações
 

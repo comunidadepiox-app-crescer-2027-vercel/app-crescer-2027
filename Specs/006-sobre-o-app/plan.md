@@ -5,9 +5,11 @@
 
 ## Abordagem
 
-Uma página de leitura, no padrão do Sobre o Crescer já existente: fundo claro, uma coluna, título em maiúscula, parágrafos e atalhos como texto sublinhado. Sem card, sem toggle, sem campo.
+Uma página de leitura, no padrão do Sobre o Crescer já existente: fundo claro, uma coluna, título em maiúscula, parágrafos e a assinatura da comunidade. Sem card, sem toggle, sem campo.
 
-O texto vem de `mobile/lib/sobreApp.js`, um vetor de parágrafos mais o aviso de uso dos dados. A tela percorre o vetor e não tem string de conteúdo. Quando a comunidade entregar o texto final, a edição é nesse arquivo e a tela não muda.
+O texto vem de `mobile/lib/sobreApp.js`, um vetor de parágrafos mais o aviso de uso dos dados e o bloco de créditos. A tela percorre os vetores e não tem string de conteúdo. Quando a comunidade entregar o texto final, a edição é nesse arquivo e a tela não muda.
+
+O bloco "Veja mais" saiu em 07/10/2026 e foi substituído pelos créditos do aplicativo. Os atalhos de Galeria e Sobre o Crescer foram embora com ele: as rotas continuam no bundle, mas a página deixa de ser o caminho para elas.
 
 A tela de Configuração é removida junto com a `Tabs.Screen` de `conta`, que já estava com `href: null` e por isso não aparecia na barra. O ícone do header deixa de ser `IconeEngrenagem` e passa a ser `IconeInfo`, que já existia em `Icones.jsx` e só não era usado. `IconeEngrenagem` sai do arquivo de ícones, porque não sobrou tela de configuração para ele.
 
@@ -17,8 +19,8 @@ A tela de Configuração é removida junto com a `Tabs.Screen` de `conta`, que j
 
 | Caminho | Responsabilidade |
 |---|---|
-| `mobile/lib/sobreApp.js` | `TEXTO_SOBRE_APP` e `AVISO_DADOS`, com o marcador do texto final |
-| `mobile/app/sobre-o-app.jsx` | tela: título, parágrafos, aviso, atalhos e bloco do admin |
+| `mobile/lib/sobreApp.js` | `TEXTO_SOBRE_APP`, `AVISO_DADOS` e `CREDITOS`, com o marcador do texto final |
+| `mobile/app/sobre-o-app.jsx` | tela: título, parágrafos, aviso, créditos e bloco do admin |
 | `mobile/components/Header.jsx` | `IconeInfo` no lugar de `IconeEngrenagem`, abrindo `/sobre-o-app` |
 | `mobile/components/Icones.jsx` | `IconeEngrenagem` removido |
 | `mobile/app/galeria.jsx` | `Voltar` passa a apontar para `/sobre-o-app` |
@@ -55,6 +57,7 @@ Não.
 |---|---|
 | Texto final atrasado travar a entrega | o vetor nasce com texto provisário honesto e um comentário indicando o arquivo e o formato da troca |
 | Página virar tela de marketing | uma coluna, sem imagem grande, sem número e sem botão de destaque |
+| Créditos virarem vitrine de Autor, com logo e link | só `Paragrafo`, no mesmo estilo do resto da página |
 | Papel vazar antes do perfil carregar | o bloco só renderiza com `role == admin`, e o perfil ausente não é admin |
 | Rastro de rota morta | busca por `/conta` no bundle depois da remoção |
 

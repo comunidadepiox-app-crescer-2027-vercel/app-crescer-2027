@@ -1,14 +1,13 @@
-import { View, Text, ScrollView, Pressable, StyleSheet } from "react-native";
-import { Redirect, useRouter } from "expo-router";
+import { View, ScrollView, StyleSheet } from "react-native";
+import { Redirect } from "expo-router";
 import { useAuth } from "../lib/authProvider";
 import { Voltar } from "../components/Voltar";
 import { TituloPagina, TituloSecao, Paragrafo } from "../components/Ui";
-import { TEXTO_SOBRE_APP, AVISO_DADOS, TEXTO_ADMIN } from "../lib/sobreApp";
-import { CORES, FONTES } from "../lib/tema";
+import { TEXTO_SOBRE_APP, AVISO_DADOS, CREDITOS, TEXTO_ADMIN } from "../lib/sobreApp";
+import { CORES } from "../lib/tema";
 
 export default function SobreAppScreen() {
   const { user, loading, profile } = useAuth();
-  const router = useRouter();
 
   if (loading) return null;
   if (!user) return <Redirect href="/" />;
@@ -37,13 +36,13 @@ export default function SobreAppScreen() {
         </View>
 
         <View style={estilos.bloco}>
-          <TituloSecao>Veja mais</TituloSecao>
-          <Pressable onPress={() => router.push("/galeria")} style={estilos.link}>
-            <Text style={estilos.linkTexto}>Abrir galeria de fotos</Text>
-          </Pressable>
-          <Pressable onPress={() => router.push("/sobre")} style={estilos.link}>
-            <Text style={estilos.linkTexto}>Sobre o Crescer e contatos da comunidade</Text>
-          </Pressable>
+          <TituloSecao>Créditos do aplicativo</TituloSecao>
+          <Paragrafo style={estilos.paragrafo}>{CREDITOS.texto}</Paragrafo>
+          {CREDITOS.linhas.map((linha, i) => (
+            <Paragrafo key={`credito-${i}`} style={estilos.paragrafo}>
+              {linha}
+            </Paragrafo>
+          ))}
         </View>
 
         {profile?.role === "admin" ? (
@@ -72,14 +71,5 @@ const estilos = StyleSheet.create({
   },
   paragrafo: {
     marginTop: 12,
-  },
-  link: {
-    marginTop: 10,
-  },
-  linkTexto: {
-    fontFamily: FONTES.corpoSemi,
-    fontSize: 15,
-    color: CORES.destaque,
-    textDecorationLine: "underline",
   },
 });

@@ -8,7 +8,9 @@
 
 > **Superfície web retirada.** O site Next.js é só a mesa administrativa (`/admin`).
 
-> **O que mudou em 28/09/2026.** Não existe mais página de configuração no app, e a engrenagem do header saiu. O ícone agora é o de informação e abre `/sobre-o-app`, que é só um texto sobre o aplicativo, mais os caminhos de Galeria, Sobre o Crescer e da mesa administrativa. A edição de nome e o apagamento de localização saíram: o primeiro não tinha utilidade sem login e o segundo perde o sentido com o sistema de localização retirado na [010](010-aviso-saida/spec.md).
+> **O que mudou em 28/09/2026.** Não existe mais página de configuração no app, e a engrenagem do header saiu. O ícone agora é o de informação e abre `/sobre-o-app`, que é só um texto sobre o aplicativo, mais os créditos do aplicativo e o bloco da mesa administrativa. A edição de nome e o apagamento de localização saíram: o primeiro não tinha utilidade sem login e o segundo perde o sentido com o sistema de localização retirado na [010](010-aviso-saida/spec.md).
+
+> **O que mudou em 07/10/2026.** O bloco "Veja mais", com os atalhos para Galeria e Sobre o Crescer, saiu da página. No lugar dele entra o bloco **CRÉDITOS DO APLICATIVO**: iniciativa da Comunidade São Pio X, colaboração voluntária da equipe de tecnologia, desenvolvimento de Guilherme Truta e liderança técnica de Helton Medeiros. As rotas `/galeria` e `/sobre` continuam no bundle, mas sem atalho nesta página.
 
 ## Problema
 
@@ -21,7 +23,7 @@ O fiel precisa de um lugar no app para saber o que é o aplicativo, quem o mant�
 - `/sobre-o-app`, aberta pelo ícone de informação no header, à direita do botão COLABORE
 - Título, texto de apresentação e texto de privacidade, vindos de `mobile/lib/sobreApp.js`
 - Espaço reservado no código para o texto final, que ainda vai ser elaborado pela comunidade
-- Atalhos para a Galeria e para o Sobre o Crescer
+- Bloco de créditos do aplicativo: iniciativa, colaboração e as duas assinaturas
 - Bloco administrativo visível só para `role: admin`, explicando que a mesa continua no site
 
 ### Não entra
@@ -35,9 +37,8 @@ O fiel precisa de um lugar no app para saber o que é o aplicativo, quem o mant�
 ## Fluxos
 
 1. Fiel toca o ícone de informação no header e a página abre.
-2. Lê o texto do aplicativo e o aviso de uso dos dados.
-3. Toca em Galeria ou em Sobre o Crescer e sai para a página correspondente, ambas com o voltar para cá.
-4. Admin vê o bloco da mesa; o fiel não vê.
+2. Lê o texto do aplicativo, o aviso de uso dos dados e os créditos do aplicativo.
+3. Admin vê o bloco da mesa; o fiel não vê.
 
 ## Superfície do produto
 
@@ -52,7 +53,7 @@ O fiel precisa de um lugar no app para saber o que é o aplicativo, quem o mant�
 
 Esta spec **não cria contrato**. Ela lê `role` do documento do próprio uid, que já existe pela 001. Nenhum campo de `users` é escrito por esta tela depois da troca: `displayName` continua podendo ser escrito pelo app, mas nenhuma tela o edita.
 
-O texto da página vive em `mobile/lib/sobreApp.js`, em um vetor de parágrafos. É o único lugar a editar quando o texto final chegar da comunidade, e a tela não tem string de conteúdo espalhada pelo arquivo.
+O texto da página vive em `mobile/lib/sobreApp.js`, em um vetor de parágrafos. É o único lugar a editar quando o texto final chegar da comunidade, e a tela não tem string de conteúdo espalhada pelo arquivo. O bloco de créditos também vive nesse arquivo, como `CREDITOS`, com um parágrafo e as duas linhas de assinatura.
 
 ## Regras de negócio
 
@@ -60,6 +61,7 @@ O texto da página vive em `mobile/lib/sobreApp.js`, em um vetor de parágrafos.
 - O bloco administrativo aparece só quando `role == admin`, sem vazar informação quando o perfil ainda não carregou.
 - O aviso de uso dos dados é curto e está no mesmo idioma do formulário de Testemunhos: o app guarda a sessão anônima, o lembrete marcado com Avise-me e, se a pessoa escrever, o texto e o nome que ela digitou. Nada sai da Comunidade de São Pio X.
 - Não mostrar pílula de "plano Pro", status inventado nem número de versão em destaque.
+- Os créditos são texto corrido, sem logo, sem tarjetao e sem link externo para as redes de quem assina.
 
 ## Critérios de aceite
 
@@ -67,13 +69,13 @@ O texto da página vive em `mobile/lib/sobreApp.js`, em um vetor de parágrafos.
 - [ ] A página mostra título, texto de apresentação e aviso de uso dos dados
 - [ ] O texto vem de um vetor de parágrafos em `mobile/lib/sobreApp.js`, com comentário de onde trocar pelo texto final
 - [ ] Nenhum ajuste de conta, toggle ou campo editável na tela
-- [ ] Galeria e Sobre o Crescer abrem e voltam para esta página
+- [x] O bloco de créditos mostra iniciativa, colaboração, desenvolvimento e liderança técnica, sem travessão
 - [ ] Admin vê o caminho para a mesa web; fiel não vê
 - [ ] Aviso de uso dos dados existe e não usa travessão
 
 ## Anti-slop
 
-Não é settings de SaaS com dezenas de toggles, nem página de marketing com número grande. É uma folha de papel: título, texto, atalhos e a assinatura da comunidade.
+Não é settings de SaaS com dezenas de toggles, nem página de marketing com número grande. É uma folha de papel: título, texto e a assinatura da comunidade.
 
 ## Referências
 

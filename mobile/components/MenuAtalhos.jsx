@@ -14,6 +14,7 @@ import AudioLines from "lucide-react-native/icons/audio-lines";
 import Contact from "lucide-react-native/icons/contact";
 import HandHeart from "lucide-react-native/icons/hand-heart";
 import Handshake from "lucide-react-native/icons/handshake";
+import MessageCircle from "lucide-react-native/icons/message-circle";
 import MapPinned from "lucide-react-native/icons/map-pinned";
 import UserGroup from "lucide-react-native/icons/user-group";
 import ShoppingBag from "lucide-react-native/icons/shopping-bag";
@@ -38,6 +39,7 @@ const ITENS = [
   { rotulo: "Loja", Icone: ShoppingBag, url: "https://usedevotum.com.br/colecao-arte-piedosa/" },
   { rotulo: "Seja Voluntário", Icone: Handshake },
   { rotulo: "Seja Fornecedor", Icone: Contact, rota: "/fornecedor" },
+  { rotulo: "Fale Conosco", Icone: MessageCircle, rota: "/fale-conosco" },
   { rotulo: "Testemunhos", imagem: testemunhos, tamanhoImagem: 50, rota: "/testemunhos" },
   { rotulo: "Spotify", Icone: AudioLines },
   { rotulo: "Mapa do Evento", Icone: MapPinned, indisponivel: true },
