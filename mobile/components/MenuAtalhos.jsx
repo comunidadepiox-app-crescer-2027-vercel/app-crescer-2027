@@ -36,7 +36,7 @@ const ITENS = [
   { rotulo: "Liturgia Diária", Icone: BookOpenText, rota: "/liturgia" },
   { rotulo: "Participar", Icone: Ticket, url: LINK_PARTICIPAR, avisar: true },
   { rotulo: "Faça sua Doação", Icone: HandHeart, rota: "/colabore" },
-  { rotulo: "Loja", Icone: ShoppingBag, url: "https://usedevotum.com.br/colecao-arte-piedosa/" },
+  { rotulo: "Loja", Icone: ShoppingBag, url: "https://usedevotum.com.br/crescer/?ref=CRESCER" },
   { rotulo: "Seja Voluntário", Icone: Handshake },
   { rotulo: "Seja Fornecedor", Icone: Contact, rota: "/fornecedor" },
   { rotulo: "Fale Conosco", Icone: MessageCircle, rota: "/fale-conosco" },
