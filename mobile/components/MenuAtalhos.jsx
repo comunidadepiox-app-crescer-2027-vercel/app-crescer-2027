@@ -19,6 +19,7 @@ import MapPinned from "lucide-react-native/icons/map-pinned";
 import UserGroup from "lucide-react-native/icons/user-group";
 import ShoppingBag from "lucide-react-native/icons/shopping-bag";
 import BookOpenText from "lucide-react-native/icons/book-open-text";
+import CircleHelp from "lucide-react-native/icons/circle-question-mark";
 import Ticket from "lucide-react-native/icons/ticket";
 import { useRouter } from "expo-router";
 import { CORES, FONTES } from "../lib/tema";
@@ -39,6 +40,7 @@ const ITENS = [
   { rotulo: "Loja", Icone: ShoppingBag, url: "https://usedevotum.com.br/crescer/?ref=CRESCER" },
   { rotulo: "Seja Voluntário", Icone: Handshake, url: "https://form.jotform.com/262908510287057" },
   { rotulo: "Seja Fornecedor", Icone: Contact, rota: "/fornecedor" },
+  { rotulo: "FAQ", Icone: CircleHelp, rota: "/faq" },
   { rotulo: "Fale Conosco", Icone: MessageCircle, rota: "/fale-conosco" },
   { rotulo: "Testemunhos", imagem: testemunhos, tamanhoImagem: 50, rota: "/testemunhos" },
   { rotulo: "Spotify", Icone: AudioLines },

@@ -8,10 +8,6 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "backgroundColor": "#3e1c7a",
-    "androidNavigationBar": {
-      "backgroundColor": "#000000",
-      "barStyle": "light-content"
-    },
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "br.org.piox.crescer"
@@ -32,6 +28,13 @@
     "plugins": [
       "expo-router",
       "expo-status-bar",
+      [
+        "expo-navigation-bar",
+        {
+          "enforceContrast": false,
+          "style": "dark"
+        }
+      ],
       "expo-font",
       "expo-video",
       [
