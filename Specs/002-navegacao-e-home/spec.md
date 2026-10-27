@@ -27,7 +27,7 @@ Depois do login, o fiel precisa de um ponto de chegada que mostre o dia do event
 - Barra inferior: Home, Notícias, círculo de menu, Programação, Benfeitor da Fé
 - Benfeitor da Fé é aba de novo: abre a tela da campanha dentro do app (005)
 - Header com o botão **COLABORE**, que abre `/colabore` (spec 014), e, à direita dele, o ícone de informação, que abre `/sobre-o-app` (spec 006)
-- Folha do círculo: Terço da Restauração das Famílias abre sua rota própria (011); Liturgia Diária abre `/liturgia`, logo depois do Terço, com o texto do dia vindo de API pública (015); Loja e Participar abrem endereço externo no navegador; Colabore abre `/colabore` (014); Fornecedor abre a página visual `/fornecedor` (012); Testemunhos abre o formulário de envio do fiel (013); Voluntário abre a escolha de equipe e o formulário do Food Park (017); Spotify segue só com ícone e rótulo nesta entrega; Mapa do Evento aparece indisponível, sem ação
+- Folha do círculo: Terço da Restauração das Famílias abre sua rota própria (011); Liturgia Diária abre `/liturgia`, logo depois do Terço, com o texto do dia vindo de API pública (015); Loja e Participar abrem endereço externo no navegador; Colabore abre `/colabore` (014); Fornecedor abre a página visual `/fornecedor` (012); Testemunhos abre o formulário de envio do fiel (013); Voluntário abre o formulário oficial de inscrição de servos (017); Spotify segue só com ícone e rótulo nesta entrega; Mapa do Evento aparece indisponível, sem ação
 - Destinos extras (prompt: “outras que forem importantes”): Galeria, Sobre, Liturgia Diária
 - `/home` com:
   - seção de notícias (até 4 publicadas, capa + título + data; escuta ao vivo)
@@ -97,7 +97,7 @@ Datas da edição: constante em `lib/event/edition.js` (5 a 9 de fevereiro de 20
 - [ ] Benfeitor abre o site da campanha no navegador e não pisca em branco ao toque
 - [ ] O header mostra **COLABORE**, que abre `/colabore`, e, à direita, o ícone de informação, que abre `/sobre-o-app`
 - [ ] A folha lista Terço, Liturgia Diária, Participar, Colabore, Congresso, Loja, Voluntário, Testemunhos, Fornecedor, Spotify e Mapa do Evento, e fecha no círculo, no fundo ou no arraste
-- [ ] Voluntário abre `/voluntario`, mostra Food Park e Outros e leva ao formulário oficial do Food Park sem sair do app
+- [ ] Voluntário abre `/voluntario` com o formulário oficial de inscrição de servos, sem sair do app
 - [ ] Liturgia Diária aparece logo depois do Terço, com ícone de linha, e abre `/liturgia` fechando a folha
 - [ ] Congresso aparece indisponível, com a mesma semântica do Mapa do Evento, e não responde ao toque
 - [ ] A grade da folha é de três colunas empacotadas pela esquerda: a linha cheia fica distribuída e a linha com sobras não abre vão no meio, com um item encostado no outro

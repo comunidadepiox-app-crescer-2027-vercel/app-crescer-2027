@@ -50,4 +50,4 @@ Itens que o SDD registra, mas que ainda não têm decisão final. Não bloqueiam
 | Benfeitor da Fé | O formulário voltou ao app em 01/10/2026 e cada envio também chega por e-mail na comissão. O endereço da comissão foi informado e está na constante `DESTINO` de `lib/server/emailBenfeitor.js`, que não é versionada em spec por ser dado pessoal. Falta a `RESEND_API_KEY` para o envio sair |
 | Quero ir | Virou **Avise-me**: sem localização, sem trânsito e sem hora de sair. Avisos em 30, 15, 10, 5 e 1 minuto, com cron de 5 em 5 e tolerância de 5 |
 | Testemunhos | Fila com pastas `aguardando` e `encerrados`, texto original lido pela equipe e decisão humana, sem IA e sem resumo automático |
-| Voluntariado | Seja Voluntário abre `/voluntario`, com os cards Food Park e Outros; Food Park embute o JotForm oficial de inscrição de servos em WebView, e Outros fica reservado. Decidido em 26/10/2026 |
+| Voluntariado | Seja Voluntário abre `/voluntario` com o JotForm oficial de inscrição de servos em WebView, sem tela de escolha de equipe. A página de Fornecedor permanece como está. Corrigido em 27/10/2026 |
