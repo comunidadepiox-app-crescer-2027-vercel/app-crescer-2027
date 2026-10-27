@@ -24,6 +24,7 @@ Itens que o SDD registra, mas que ainda não têm decisão final. Não bloqueiam
 - [ ] `FIREBASE_SERVICE_ACCOUNT` presente em `.env`, porque a gravação de `testimonials` passa pelo Admin SDK na rota do servidor
 - [ ] **Development build do app, para o aviso com o app fechado.** O Expo Go não tem push remoto no Android desde o SDK 53, então a ativação de aviso e a contagem regressiva do Avise-me só funcionam no aplicativo instalado. O perfil `development` do `mobile/eas.json` já existe. Sem isso, o botão sempre recusa com o motivo `expo-go` e nada chega no aparelho
 - [ ] `FIREBASE_SERVICE_ACCOUNT` no secret do workflow **Avisos da programação**, que é o mesmo secret, e sem `TOMTOM_API_KEY`, que saiu em 28/09/2026
+- [ ] Aviso LGPD antes do formulário de voluntariado: o JotForm oficial já apresenta termo e avisos de privacidade; confirmar com a comunidade se o app precisa de uma frase própria antes do WebView
 - [ ] Conta Cloudinary (pasta `news/` usada pelo upload assinado)
 - [x] Destino do lead Benfeitor nesta entrega: só Firestore; a confirmação mostra o link do WhatsApp oficial `(83) 98897-7017` sem envio automático
 - [ ] Endereço do Participar para o site oficial do evento. A constante `LINK_PARTICIPAR` em `mobile/lib/links.js` está vazia e o toque avisa que o endereço entra em breve
@@ -49,3 +50,4 @@ Itens que o SDD registra, mas que ainda não têm decisão final. Não bloqueiam
 | Benfeitor da Fé | O formulário voltou ao app em 01/10/2026 e cada envio também chega por e-mail na comissão. O endereço da comissão foi informado e está na constante `DESTINO` de `lib/server/emailBenfeitor.js`, que não é versionada em spec por ser dado pessoal. Falta a `RESEND_API_KEY` para o envio sair |
 | Quero ir | Virou **Avise-me**: sem localização, sem trânsito e sem hora de sair. Avisos em 30, 15, 10, 5 e 1 minuto, com cron de 5 em 5 e tolerância de 5 |
 | Testemunhos | Fila com pastas `aguardando` e `encerrados`, texto original lido pela equipe e decisão humana, sem IA e sem resumo automático |
+| Voluntariado | Seja Voluntário abre `/voluntario`, com os cards Food Park e Outros; Food Park embute o JotForm oficial de inscrição de servos em WebView, e Outros fica reservado. Decidido em 26/10/2026 |

@@ -50,7 +50,7 @@ Só consumir `coverUrl` já salvo.
 
 ## App (barra atual)
 
-No Expo, a barra é Home, Notícias, círculo de menu, Programação e Benfeitor (`mobile/components/BarraAbas.jsx`). O header mostra **COLABORE** e o ícone de informação. A folha (`mobile/components/MenuAtalhos.jsx`) abre o Terço, a Liturgia Diária, Participar, Colabore, a coleção Arte Piedosa da Devotum e a página visual de Fornecedor. Voluntário e Spotify continuam informativos. Mapa do Evento ocupa um atalho desativado, até que exista destino aprovado.
+No Expo, a barra é Home, Notícias, círculo de menu, Programação e Benfeitor (`mobile/components/BarraAbas.jsx`). O header mostra **COLABORE** e o ícone de informação. A folha (`mobile/components/MenuAtalhos.jsx`) abre o Terço, a Liturgia Diária, Participar, Colabore, a coleção Arte Piedosa da Devotum, a página visual de Fornecedor e a escolha de equipe de Voluntário com o formulário do Food Park (017). Spotify continua informativo. Mapa do Evento ocupa um atalho desativado, até que exista destino aprovado.
 
 ## Atalhos externos e indisponíveis
 

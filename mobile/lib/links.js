@@ -1,4 +1,5 @@
-// Endereços que o app abre no navegador do aparelho.
+// Endereços externos do app. A maioria abre no navegador do aparelho; o
+// formulário de inscrição de servos abre dentro do app, em WebView.
 //
 // Nenhum item de link pode ficar sem destino. Quando a constante está vazia,
 // o toque mostra um aviso curto em vez de falhar em silêncio, que é o jeito
@@ -10,6 +11,8 @@ import { Alert, Linking } from "react-native";
 // encontro. Enquanto estiver vazia, o atalho Participar da folha
 // central avisa que o endereço entra em breve. Não trocar por um palpite.
 export const LINK_PARTICIPAR = "";
+
+export const LINK_INSCRICAO_SERVOS = "https://form.jotform.com/262908510287057";
 
 const AVISO_PARTICIPAR = {
   titulo: "Em breve",

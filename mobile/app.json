@@ -10,7 +10,11 @@
     "backgroundColor": "#3e1c7a",
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "br.org.piox.crescer"
+      "bundleIdentifier": "br.org.piox.crescer",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Permite tirar a foto de identificação exigida no formulário de inscrição de voluntários do Crescer 2027.",
+        "NSPhotoLibraryUsageDescription": "Permite escolher a foto de identificação exigida no formulário de inscrição de voluntários do Crescer 2027."
+      }
     },
     "android": {
       "package": "br.org.piox.crescer",
