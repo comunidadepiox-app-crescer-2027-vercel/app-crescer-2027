@@ -18,8 +18,7 @@ const CHAVE = "crescer.notificacao.pedido";
 // SDK 57 é explícita: notificação local continua funcionando, push remoto pede
 // development build. E o import de expo-notifications estoura o app no Expo Go,
 // então ele só acontece depois desta checagem.
-const expoGo =
-  Constants.appOwnership === "expo" || Constants.executionEnvironment === "storeClient";
+const expoGo = Constants.appOwnership === "expo" || Constants.expoGoConfig != null;
 
 // Motivos da recusa, para a tela falar a verdade em vez de dizer "não deu".
 export const MOTIVO = {

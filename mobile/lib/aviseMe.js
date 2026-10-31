@@ -34,7 +34,7 @@ export function observarLembretes(uid, onData, onError) {
 }
 
 export async function desmarcarLembrete(uid, itemId) {
-  if (!db) return;
+  if (!db) throw new Error("Firebase Firestore não configurado");
   await deleteDoc(doc(db, "users", uid, "lembretes", itemId));
 }
 
@@ -43,14 +43,28 @@ export async function desmarcarLembrete(uid, itemId) {
 // token, o retorno diz que o push não ficou pronto, e o app não pode deixar
 // ninguém achando que o aviso vai chegar.
 export async function marcarLembrete(uid, itemId) {
-  if (!db) return { ok: false, motivo: MOTIVO.ERRO };
+  if (!db) throw new Error("Firebase Firestore não configurado");
 
-  const aviso = await ativarNotificacao(uid);
+  await setDoc(doc(db, "users", uid, "lembretes", itemId), {
+    itemId,
+    createdAt: serverTimestamp(),
+  });
+
+  let aviso;
+  try {
+    aviso = await ativarNotificacao(uid);
+  } catch (erro) {
+    aviso = { ok: false, motivo: MOTIVO.ERRO };
+    if (__DEV__) console.warn("Crescer: falha ao ativar o aviso do item.", erro?.code || erro?.message || erro);
+  }
 
   if (!aviso.ok) {
-    const jaMostrou = await AsyncStorage.getItem(CHAVE);
+    let jaMostrou = true;
+    try {
+      jaMostrou = Boolean(await AsyncStorage.getItem(CHAVE));
+    } catch {}
     if (!jaMostrou) {
-      await AsyncStorage.setItem(CHAVE, "visto");
+      AsyncStorage.setItem(CHAVE, "visto").catch(() => {});
       Alert.alert(
         aviso.motivo === MOTIVO_SEM_RECURSO ? "Aviso indisponível aqui" : "Sem aviso no celular",
         `${AVISO_PUSH[aviso.motivo] || AVISO_PUSH[MOTIVO.ERRO]} O item ficou marcado.`
@@ -58,10 +72,6 @@ export async function marcarLembrete(uid, itemId) {
     }
   }
 
-  await setDoc(doc(db, "users", uid, "lembretes", itemId), {
-    itemId,
-    createdAt: serverTimestamp(),
-  });
   return { ok: true, push: aviso.ok, motivo: aviso.motivo };
 }
 
@@ -79,12 +89,31 @@ export function useAviseMe(uid) {
 
   async function alternar(item) {
     if (!uid || ocupado) return;
+    const marcado = ids.has(item.id);
     setOcupado(item.id);
+    setIds((atuais) => {
+      const proximos = new Set(atuais);
+      if (marcado) proximos.delete(item.id);
+      else proximos.add(item.id);
+      return proximos;
+    });
     try {
-      if (ids.has(item.id)) await desmarcarLembrete(uid, item.id);
+      if (marcado) await desmarcarLembrete(uid, item.id);
       else await marcarLembrete(uid, item.id);
-    } catch {
-      Alert.alert("Não foi possível salvar", "Tente de novo em instantes.");
+    } catch (erro) {
+      setIds((atuais) => {
+        const restaurados = new Set(atuais);
+        if (marcado) restaurados.add(item.id);
+        else restaurados.delete(item.id);
+        return restaurados;
+      });
+      if (__DEV__) console.warn("Crescer: falha ao salvar o lembrete.", erro?.code || erro?.message || erro);
+      Alert.alert(
+        "Não foi possível salvar",
+        erro?.code === "permission-denied"
+          ? "O Firebase bloqueou este lembrete. Verifique as regras do Firestore para users/{uid}/lembretes."
+          : "Tente de novo em instantes."
+      );
     } finally {
       setOcupado(null);
     }

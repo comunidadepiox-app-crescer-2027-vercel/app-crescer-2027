@@ -29,7 +29,8 @@ export function alturaBarra(insetoBaixo) {
 export function BarraAbas({
   state,
   descriptors,
-  navigation,
+  emitter,
+  navigateToTab,
   menuAberto,
   onAlternarMenu,
   onFecharMenu,
@@ -50,7 +51,8 @@ export function BarraAbas({
             rota={rota}
             ativo={nomeAtivo === rota.name}
             options={descriptors[rota.key].options}
-            navigation={navigation}
+            emitter={emitter}
+            navigateToTab={navigateToTab}
             onFecharMenu={onFecharMenu}
           />
         ))}
@@ -75,7 +77,8 @@ export function BarraAbas({
             rota={rota}
             ativo={nomeAtivo === rota.name}
             options={descriptors[rota.key].options}
-            navigation={navigation}
+            emitter={emitter}
+            navigateToTab={navigateToTab}
             onFecharMenu={onFecharMenu}
           />
         ))}
@@ -84,19 +87,19 @@ export function BarraAbas({
   );
 }
 
-function ItemAba({ rota, ativo, options, navigation, onFecharMenu }) {
+function ItemAba({ rota, ativo, options, emitter, navigateToTab, onFecharMenu }) {
   const cor = ativo ? CORES.dourado : "#ffffff";
   const rotulo = options.title ?? rota.name;
 
   function aoPressionar() {
     onFecharMenu();
-    const evento = navigation.emit({
+    const evento = emitter.emit({
       type: "tabPress",
       target: rota.key,
       canPreventDefault: true,
     });
     if (!ativo && !evento.defaultPrevented) {
-      navigation.navigate(rota.name, rota.params);
+      navigateToTab(rota.key);
     }
   }
 

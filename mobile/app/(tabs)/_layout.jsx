@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { View } from "react-native";
 import { Redirect, Tabs } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -14,17 +14,11 @@ import {
   IconeBenfeitor,
 } from "../../components/Icones";
 import { CORES, FONTES } from "../../lib/tema";
-import { garantirCanalAviso } from "../../lib/notificacoes";
 
 export default function TabsLayout() {
   const { user, loading } = useAuth();
   const insets = useSafeAreaInsets();
   const [menuAberto, setMenuAberto] = useState(false);
-
-  useEffect(() => {
-    if (!user?.uid) return;
-    garantirCanalAviso();
-  }, [user?.uid]);
 
   if (loading) return null;
   if (!user) return <Redirect href="/" />;
