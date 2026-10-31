@@ -1,26 +1,36 @@
 {
   "project_info": {
-    "project_number": "668542651129",
-    "project_id": "crescer-app-9abab",
-    "storage_bucket": "crescer-app-9abab.firebasestorage.app"
+    "project_number": "189943002781",
+    "project_id": "app-crescer-2027",
+    "storage_bucket": "app-crescer-2027.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:668542651129:android:7d6ff401aaab7e35b4b028",
+        "mobilesdk_app_id": "1:189943002781:android:cf7dcd23e4207d0ec98674",
         "android_client_info": {
           "package_name": "br.org.piox.crescer"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "189943002781-gg9qpu0d4dj0qsom0ojei6ej7u22n8n7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyB80xUj1eeKawf2KBtJTkKTpRnrKxgZ9dM"
+          "current_key": "AIzaSyDruf8jexRNTOm_i_2NvpW-HSw_cpYjK2Q"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "189943002781-gg9qpu0d4dj0qsom0ojei6ej7u22n8n7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
