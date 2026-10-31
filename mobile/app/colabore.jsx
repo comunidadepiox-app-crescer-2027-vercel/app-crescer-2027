@@ -1,7 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  Animated,
-  Easing,
   Image,
   ScrollView,
   StyleSheet,
@@ -12,94 +10,23 @@ import { Redirect } from "expo-router";
 import * as Clipboard from "expo-clipboard";
 import { useAuth } from "../lib/authProvider";
 import { Voltar } from "../components/Voltar";
-import { ColaboreAbertura } from "../components/ColaboreAbertura";
 import { FundoLaranjaPoligonal } from "../components/FundoPoligonal";
 import { Botao, Paragrafo, TituloSecao } from "../components/Ui";
 import { CORES, FONTES, RAIO } from "../lib/tema";
-import {
-  BENEFICIARIO,
-  PIX_COPIA_COLA,
-  observarPercentualDoacao,
-} from "../lib/doacao";
+import { BENEFICIARIO, PIX_COPIA_COLA } from "../lib/doacao";
 
 const logo = require("../assets/brand/logo-crescer-branca.png");
 const qrcode = require("../assets/qrcode-doacao.png");
 
-function BarraProgresso({ percent }) {
-  const largura = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.timing(largura, {
-      toValue: percent,
-      duration: 620,
-      easing: Easing.out(Easing.quad),
-      useNativeDriver: false,
-    }).start();
-  }, [largura, percent]);
-
-  return (
-    <View
-      style={estilos.progresso}
-      accessibilityRole="progressbar"
-      accessibilityValue={{ min: 0, max: 100, now: percent }}
-      accessibilityLabel={`${percent} por cento da meta do encontro`}
-    >
-      <Text style={estilos.percentual}>{percent}%</Text>
-      <View style={estilos.trilho}>
-        <Animated.View
-          style={[
-            estilos.preenchimento,
-            {
-              width: largura.interpolate({
-                inputRange: [0, 100],
-                outputRange: ["0%", "100%"],
-              }),
-            },
-          ]}
-        />
-      </View>
-      <Text style={estilos.progressoLegenda}>da meta do encontro</Text>
-    </View>
-  );
-}
-
 export default function ColaboreScreen() {
   const { user, loading } = useAuth();
-  const [percent, setPercent] = useState(null);
   const [copiado, setCopiado] = useState(false);
-  const [abertura, setAbertura] = useState(true);
-  const entrada = useRef(new Animated.Value(0)).current;
-  const subida = useRef(new Animated.Value(16)).current;
-
-  useEffect(() => {
-    return observarPercentualDoacao(setPercent);
-  }, []);
 
   useEffect(() => {
     if (!copiado) return undefined;
     const t = setTimeout(() => setCopiado(false), 2200);
     return () => clearTimeout(t);
   }, [copiado]);
-
-  useEffect(() => {
-    if (abertura) return;
-    entrada.setValue(0);
-    subida.setValue(16);
-    Animated.parallel([
-      Animated.timing(entrada, {
-        toValue: 1,
-        duration: 450,
-        easing: Easing.out(Easing.quad),
-        useNativeDriver: true,
-      }),
-      Animated.timing(subida, {
-        toValue: 0,
-        duration: 480,
-        easing: Easing.out(Easing.cubic),
-        useNativeDriver: true,
-      }),
-    ]).start();
-  }, [abertura, entrada, subida]);
 
   if (loading) return null;
   if (!user) return <Redirect href="/" />;
@@ -116,14 +43,11 @@ export default function ColaboreScreen() {
   return (
     <View style={estilos.tela}>
       <Voltar para="/home" rotulo="Colabore" />
-      <View style={estilos.folha}>
-        {abertura ? <ColaboreAbertura onFim={() => setAbertura(false)} /> : null}
-        {abertura ? null : (
-          <ScrollView
-            contentContainerStyle={estilos.scroll}
-            showsVerticalScrollIndicator={false}
-          >
-          <Animated.View style={{ opacity: entrada, transform: [{ translateY: subida }] }}>
+      <View style={{ flex: 1 }}>
+        <ScrollView
+          contentContainerStyle={estilos.scroll}
+          showsVerticalScrollIndicator={false}
+        >
           <FundoLaranjaPoligonal style={estilos.faixa}>
             <Text style={estilos.ponte}>
               Em 2027, o encontro continua se o mesmo cuidado vier.
@@ -186,9 +110,7 @@ export default function ColaboreScreen() {
               O aplicativo não recebe o pagamento e não guarda dados bancários.
             </Text>
           </View>
-          </Animated.View>
-          </ScrollView>
-        )}
+        </ScrollView>
       </View>
     </View>
   );
@@ -196,7 +118,6 @@ export default function ColaboreScreen() {
 
 const estilos = StyleSheet.create({
   tela: { flex: 1, backgroundColor: CORES.fundo },
-  folha: { flex: 1, position: "relative", overflow: "hidden" },
   scroll: { paddingBottom: 56 },
   ponte: {
     fontFamily: FONTES.titulo,
@@ -239,38 +160,6 @@ const estilos = StyleSheet.create({
     lineHeight: 27,
     textAlign: "center",
     alignSelf: "stretch",
-  },
-  progresso: {
-    marginTop: 30,
-    alignItems: "center",
-  },
-  trilho: {
-    width: "100%",
-    height: 12,
-    marginTop: 10,
-    borderRadius: RAIO.botao,
-    backgroundColor: CORES.linha,
-    overflow: "hidden",
-  },
-  preenchimento: {
-    height: "100%",
-    borderRadius: RAIO.botao,
-    backgroundColor: CORES.destaque,
-  },
-  percentual: {
-    fontFamily: FONTES.titulo,
-    fontSize: 34,
-    lineHeight: 38,
-    color: CORES.titulo,
-    textAlign: "center",
-  },
-  progressoLegenda: {
-    marginTop: 8,
-    fontFamily: FONTES.corpoMedio,
-    fontSize: 13,
-    color: CORES.texto,
-    opacity: 0.7,
-    textAlign: "center",
   },
   cartao: {
     marginTop: 28,

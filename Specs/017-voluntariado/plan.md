@@ -5,7 +5,7 @@
 
 ## Abordagem
 
-Uma tela interna no Expo Router, fora do grupo `(tabs)`, no mesmo padrão de `/fornecedor` e da página de notícia: cabeçalho laranja com `Voltar` e o formulário ocupando o restante da tela sobre `CORES.fundo`. Não há tela de escolha de equipe nem cards. A página de Fornecedor fica intocada.
+Uma tela interna no Expo Router, fora do grupo `(tabs)`, no mesmo padrão de `/fornecedor` e da página de notícia: cabeçalho laranja com `Voltar` e o formulário ocupando o restante da tela sobre `CORES.fundo`. Não há tela de escolha de equipe nem cards. O fluxo de fornecedores do Food Park fica na 018 e não altera esta tela.
 
 React Native não tem `iframe`. O formulário entra em `react-native-webview`, que já é dependência do app e já é usado em `CorpoNoticia`. A URL `https://form.jotform.com/262908510287057` é carregada diretamente. O script `jotformEmbedHandler` do trecho HTML é específico de navegador e não é necessário no WebView; a própria página do JotForm cuida da navegação e do redimensionamento do conteúdo. Carregar a URL direta também evita depender de `X-Frame-Options` e de altura fixa de iframe.
 
@@ -57,11 +57,11 @@ Não.
 | Links de e-mail ou telefone do formulário travarem dentro do WebView | interceptar esquemas que não são HTTP(S) e abrir com `Linking` |
 | O voltar físico do Android sair da tela no meio do formulário | `BackHandler` chama `webView.goBack()` enquanto houver histórico |
 | O formulário ser confundido com um formulário do app | a tela não replica campos nem grava dados; o WebView carrega a página oficial e a submissão vai direto para o JotForm |
-| A página ser confundida com a de Fornecedor | Voluntário tem só o formulário; a página `/fornecedor` e seus cards da 012 não mudam |
+| A página ser confundida com a de Fornecedor | Voluntário e Food Park usam cabeçalhos e URLs diferentes; o fluxo de fornecedor está na 018 |
 | A barra inferior aparecer na tela do formulário | manter a rota fora de `(tabs)`, como `/fornecedor` |
 | A nova tela ser confundida com uma quinta aba | não alterar `BarraAbas`; a entrada é pela folha central, como as demais páginas internas |
 | O formulário exigir dado pessoal e o app parecer responsável pela coleta | a tela não armazena nem registra nada; o termo e os avisos de privacidade são os do JotForm oficial |
 
 ## Fora deste plan
 
-Tela de escolha de equipe, cards de equipe, formulário nativo, gravação de inscrições no Firestore, outras equipes com formulário, alteração do JotForm, upload próprio, câmera customizada, notificações de status e login próprio.
+Tela de escolha de equipe, cards de equipe, formulário nativo, gravação de inscrições no Firestore, outras equipes com formulário, fluxo de fornecedores do Food Park (018), alteração do JotForm, upload próprio, câmera customizada, notificações de status e login próprio.

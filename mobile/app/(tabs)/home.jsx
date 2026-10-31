@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { View, Text, Image, ScrollView, Pressable, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { observarNoticiasPublicadas } from "../../lib/noticias";
-import { observarProgramaPublicado, itensDoDia, agrupaPorEspaco } from "../../lib/programa";
+import { observarProgramaPublicado, itensDoDia } from "../../lib/programa";
 import { EDICAO, resolveDiaRecorte, formataDataCurta } from "../../lib/edicao";
 import { NewsCard } from "../../components/NewsCard";
 import { ProgramaLista } from "../../components/ProgramaLista";
@@ -52,8 +52,6 @@ export default function HomeScreen() {
     };
   }, [recorte.date]);
 
-  const grupos = programa ? agrupaPorEspaco(programa) : null;
-
   return (
     <View style={{ flex: 1 }}>
     <ScrollView contentContainerStyle={estilos.pagina}>
@@ -93,9 +91,7 @@ export default function HomeScreen() {
 
       <View style={estilos.secao}>
         <View style={estilos.cabeca}>
-          <TituloSecao>
-            {recorte.posicao === "durante" ? "Hoje no evento" : "Programação"}
-          </TituloSecao>
+          <TituloSecao>Programação</TituloSecao>
           <Pressable onPress={() => router.push("/programacao")}>
             <Text style={estilos.link}>Cronograma</Text>
           </Pressable>
@@ -117,7 +113,7 @@ export default function HomeScreen() {
           </Paragrafo>
         ) : (
           <ProgramaLista
-            grupos={grupos}
+            itens={programa}
             lembretes={ids}
             ocupadoId={ocupado}
             onAlternarLembrete={alternar}

@@ -8,7 +8,7 @@ Marcar `[x]` só depois de conferir o critério. Se o comportamento mudar no có
 
 - [x] **T1 — Spec, plan e decisões**
   - Faz: registrar rota, fluxo, URL oficial, uso do WebView, tratamento de dados e limites da entrega.
-  - Verifica: `spec.md` e `plan.md` descrevem o que entra e o que não entra, inclusive a diferença entre WebView e iframe e a página de Fornecedor intocada.
+  - Verifica: `spec.md` e `plan.md` descrevem o que entra e o que não entra, inclusive a diferença entre WebView e iframe e o fluxo de fornecedores na 018.
   - Fora: qualquer código de produção.
 
 ## Implementação

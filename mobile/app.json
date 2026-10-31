@@ -12,8 +12,8 @@
       "supportsTablet": false,
       "bundleIdentifier": "br.org.piox.crescer",
       "infoPlist": {
-        "NSCameraUsageDescription": "Permite tirar a foto de identificação exigida no formulário de inscrição de voluntários do Crescer 2027.",
-        "NSPhotoLibraryUsageDescription": "Permite escolher a foto de identificação exigida no formulário de inscrição de voluntários do Crescer 2027."
+        "NSCameraUsageDescription": "Permite tirar a foto ou o documento exigido nos formulários de inscrição do Crescer 2027.",
+        "NSPhotoLibraryUsageDescription": "Permite escolher a foto ou o arquivo exigido nos formulários de inscrição do Crescer 2027."
       }
     },
     "android": {

@@ -1,106 +1,94 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
+import Heart from "lucide-react-native/icons/heart";
 import { CORES, FONTES } from "../lib/tema";
 import { nomeDoEspaco } from "../lib/programa";
 
-export function ProgramaLista({ grupos, lembretes, ocupadoId, onAlternarLembrete }) {
+export function ProgramaLista({ itens, lembretes, ocupadoId, onAlternarLembrete }) {
   return (
-    <View style={{ gap: 16 }}>
-      {[...grupos.entries()].map(([espaco, itens]) => (
-        <View key={espaco} style={estilos.bloco}>
-          <View style={estilos.cabeca}>
-            <Text style={estilos.espaco}>{nomeDoEspaco(espaco)}</Text>
-            {itens[0]?.location ? (
-              <Text style={estilos.local}>Local: {itens[0].location}</Text>
-            ) : null}
-          </View>
-          {itens.map((item, i) => (
-            <View
-              key={item.id}
-              style={[estilos.item, i < itens.length - 1 && estilos.itemLinha]}
-            >
-              <Text style={estilos.hora}>{item.time}</Text>
-              <View style={{ flex: 1 }}>
+    <View>
+      {itens.map((item, i) => {
+        const marcado = lembretes?.has(item.id);
+        return (
+          <View key={item.id} style={[estilos.item, i < itens.length - 1 && estilos.itemLinha]}>
+            <Text style={estilos.hora}>{item.time}</Text>
+            <View style={estilos.conteudo}>
+              <View style={estilos.cabeca}>
                 <Text style={estilos.titulo}>{item.title}</Text>
-                {item.guest ? <Text style={estilos.extra}>{item.guest}</Text> : null}
-                {item.notes ? <Text style={estilos.extra}>{item.notes}</Text> : null}
                 {onAlternarLembrete ? (
                   <Pressable
                     onPress={() => onAlternarLembrete(item)}
                     disabled={ocupadoId === item.id}
                     accessibilityRole="button"
-                    accessibilityLabel={`${item.title} às ${item.time}`}
+                    accessibilityLabel={`${marcado ? "Cancelar aviso para" : "Avisar-me sobre"} ${item.title} às ${item.time}`}
+                    accessibilityState={{ disabled: ocupadoId === item.id, selected: marcado }}
+                    hitSlop={8}
                   >
-                    <Text style={estilos.lembrete}>
-                      {lembretes?.has(item.id) ? "Cancelar aviso" : "Avise-me"}
-                    </Text>
+                    <Heart size={26} color={CORES.destaque} fill={marcado ? CORES.destaque : "transparent"} />
                   </Pressable>
                 ) : null}
               </View>
+              {item.space ? (
+                <Text style={estilos.espaco}>NO {nomeDoEspaco(item.space).toLocaleUpperCase("pt-BR")}</Text>
+              ) : null}
+              {item.guest ? <Text style={estilos.extra}>{item.guest}</Text> : null}
+              {item.location ? <Text style={estilos.extra}>{item.location}</Text> : null}
+              {item.notes ? <Text style={estilos.extra}>{item.notes}</Text> : null}
             </View>
-          ))}
-        </View>
-      ))}
+          </View>
+        );
+      })}
     </View>
   );
 }
 
 const estilos = StyleSheet.create({
-  bloco: {
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: CORES.linha,
-    backgroundColor: CORES.superficie,
-    overflow: "hidden",
-  },
-  cabeca: {
-    backgroundColor: CORES.roxoBotao,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-  },
-  espaco: {
-    fontFamily: FONTES.titulo,
-    fontSize: 17,
-    textTransform: "uppercase",
-    color: "#fff",
-  },
-  local: {
-    fontFamily: FONTES.corpo,
-    fontSize: 13,
-    color: "rgba(255,255,255,0.75)",
-    marginTop: 2,
-  },
   item: {
     flexDirection: "row",
-    gap: 16,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    gap: 14,
+    paddingVertical: 16,
   },
   itemLinha: {
     borderBottomWidth: 1,
     borderBottomColor: CORES.linha,
   },
   hora: {
-    width: 52,
+    width: 66,
+    paddingTop: 2,
     fontFamily: FONTES.corpoSemi,
-    fontSize: 14,
-    color: CORES.destaque,
-  },
-  titulo: {
-    fontFamily: FONTES.corpoMedio,
-    fontSize: 15,
+    fontSize: 16,
     color: CORES.texto,
   },
-  extra: {
-    fontFamily: FONTES.corpo,
-    fontSize: 13,
-    color: "rgba(17,28,45,0.7)",
-    marginTop: 2,
+  conteudo: { flex: 1, minWidth: 0 },
+  cabeca: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    gap: 8,
   },
-  lembrete: {
-    fontFamily: FONTES.corpoSemi,
+  titulo: {
+    flex: 1,
+    fontFamily: FONTES.corpoMedio,
+    fontSize: 17,
+    lineHeight: 23,
+    color: CORES.texto,
+  },
+  espaco: {
+    alignSelf: "flex-start",
+    marginTop: 7,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 5,
+    overflow: "hidden",
+    backgroundColor: CORES.roxoBotao,
+    fontFamily: FONTES.corpoMedio,
+    fontSize: 11,
+    color: "#fff",
+  },
+  extra: {
+    marginTop: 5,
+    fontFamily: FONTES.corpo,
     fontSize: 14,
-    color: CORES.destaque,
-    textDecorationLine: "underline",
-    marginTop: 8,
+    lineHeight: 19,
+    color: "rgba(17,28,45,0.7)",
   },
 });

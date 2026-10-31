@@ -1,5 +1,6 @@
-// Endereços externos do app. A maioria abre no navegador do aparelho; o
-// formulário de inscrição de servos abre dentro do app, em WebView.
+// Endereços externos do app. A maioria abre no navegador do aparelho; os
+// formulários de inscrição de servos e de fornecedores do Food Park abrem
+// dentro do app, em WebView.
 //
 // Nenhum item de link pode ficar sem destino. Quando a constante está vazia,
 // o toque mostra um aviso curto em vez de falhar em silêncio, que é o jeito
@@ -13,6 +14,9 @@ import { Alert, Linking } from "react-native";
 export const LINK_PARTICIPAR = "";
 
 export const LINK_INSCRICAO_SERVOS = "https://form.jotform.com/262908510287057";
+
+export const LINK_INSCRICAO_FORNECEDORES_FOOD_PARK =
+  "https://form.jotform.com/262965480631665";
 
 const AVISO_PARTICIPAR = {
   titulo: "Em breve",

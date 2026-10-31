@@ -1,11 +1,11 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { Redirect } from "expo-router";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Redirect, useRouter } from "expo-router";
 import Store from "lucide-react-native/icons/store";
 import Utensils from "lucide-react-native/icons/utensils";
-import { useAuth } from "../lib/authProvider";
-import { Voltar } from "../components/Voltar";
-import { IconeSetaEsquerda } from "../components/Icones";
-import { CORES, FONTES, RAIO } from "../lib/tema";
+import { useAuth } from "../../lib/authProvider";
+import { Voltar } from "../../components/Voltar";
+import { IconeSetaEsquerda } from "../../components/Icones";
+import { CORES, FONTES, RAIO } from "../../lib/tema";
 
 const FORNECEDORES = [
   {
@@ -13,19 +13,20 @@ const FORNECEDORES = [
     titulo: "Food Park",
     descricao: "Bancas de comidas e bebidas do Food Park do Crescer.",
     Icone: Utensils,
-    url: null,
+    rota: "/fornecedor/food-park",
   },
   {
     id: "outros",
     titulo: "Outros",
     descricao: "Lojas, estandes e serviços de outras entidades do encontro.",
     Icone: Store,
-    url: null,
+    rota: null,
   },
 ];
 
 export default function FornecedorScreen() {
   const { user, loading } = useAuth();
+  const router = useRouter();
 
   if (loading) return null;
   if (!user) return <Redirect href="/" />;
@@ -42,21 +43,42 @@ export default function FornecedorScreen() {
           encontro.
         </Text>
 
-        {FORNECEDORES.map((fornecedor) => {
-          const { Icone } = fornecedor;
-          return (
-            <View key={fornecedor.id} style={estilos.card}>
+        {FORNECEDORES.map(({ id, titulo, descricao, Icone, rota }) => {
+          const conteudo = (
+            <>
               <View style={estilos.marca}>
                 <Icone color={CORES.roxoBotao} size={30} strokeWidth={1.8} />
               </View>
               <View style={estilos.textos}>
-                <Text style={estilos.titulo}>{fornecedor.titulo}</Text>
-                <Text style={estilos.descricao}>{fornecedor.descricao}</Text>
+                <Text style={estilos.titulo}>{titulo}</Text>
+                <Text style={estilos.descricao}>{descricao}</Text>
               </View>
-              <View style={estilos.seta}>
-                <IconeSetaEsquerda cor={CORES.titulo} tamanho={20} />
+              {rota ? (
+                <View style={estilos.seta}>
+                  <IconeSetaEsquerda cor={CORES.titulo} tamanho={20} />
+                </View>
+              ) : null}
+            </>
+          );
+
+          if (!rota) {
+            return (
+              <View key={id} style={estilos.card}>
+                {conteudo}
               </View>
-            </View>
+            );
+          }
+
+          return (
+            <Pressable
+              key={id}
+              accessibilityRole="button"
+              accessibilityLabel={`Abrir ${titulo}`}
+              onPress={() => router.push(rota)}
+              style={({ pressed }) => [estilos.card, pressed && estilos.cardPressionado]}
+            >
+              {conteudo}
+            </Pressable>
           );
         })}
       </ScrollView>
@@ -91,6 +113,9 @@ const estilos = StyleSheet.create({
     borderWidth: 1,
     borderColor: CORES.linha,
     backgroundColor: CORES.superficie,
+  },
+  cardPressionado: {
+    opacity: 0.72,
   },
   marca: {
     width: 60,

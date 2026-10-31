@@ -35,7 +35,7 @@ const { height: ALTURA_TELA } = Dimensions.get("window");
 const ITENS = [
   { rotulo: "Terço da Restauração das Famílias", imagem: terco, rota: "/terco-restauracao" },
   { rotulo: "Liturgia Diária", Icone: BookOpenText, rota: "/liturgia" },
-  { rotulo: "Participar", Icone: Ticket, url: LINK_PARTICIPAR, avisar: true },
+  { rotulo: "Participar", Icone: Ticket, url: LINK_PARTICIPAR, avisar: true, oculto: true },
   { rotulo: "Faça sua Doação", Icone: HandHeart, rota: "/colabore" },
   { rotulo: "Loja", Icone: ShoppingBag, url: "https://usedevotum.com.br/crescer/?ref=CRESCER" },
   { rotulo: "Seja Voluntário", Icone: Handshake, rota: "/voluntario" },
@@ -43,9 +43,9 @@ const ITENS = [
   { rotulo: "FAQ", Icone: CircleHelp, rota: "/faq" },
   { rotulo: "Fale Conosco", Icone: MessageCircle, rota: "/fale-conosco" },
   { rotulo: "Testemunhos", imagem: testemunhos, tamanhoImagem: 50, rota: "/testemunhos" },
-  { rotulo: "Spotify", Icone: AudioLines },
-  { rotulo: "Mapa do Evento", Icone: MapPinned, indisponivel: true },
-  { rotulo: "Congresso", Icone: UserGroup, indisponivel: true },
+  { rotulo: "Spotify", Icone: AudioLines, oculto: true },
+  { rotulo: "Mapa do Evento", Icone: MapPinned, indisponivel: true, oculto: true },
+  { rotulo: "Congresso", Icone: UserGroup, indisponivel: true, oculto: true },
 ];
 
 export function MenuAtalhos({ aberto, onFechar, alturaBarra = 0 }) {
@@ -156,7 +156,7 @@ export function MenuAtalhos({ aberto, onFechar, alturaBarra = 0 }) {
         </View>
 
         <View style={estilos.grade}>
-          {ITENS.map(({ rotulo, Icone, imagem, tamanhoImagem, rota, url, indisponivel, avisar, descricao }) => {
+          {ITENS.filter((item) => !item.oculto).map(({ rotulo, Icone, imagem, tamanhoImagem, rota, url, indisponivel, avisar, descricao }) => {
             const conteudo = <>
               <View style={estilos.poco}>
                 {imagem ? (

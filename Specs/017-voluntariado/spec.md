@@ -25,7 +25,7 @@ O atalho Seja Voluntário da folha central abre hoje o JotForm no navegador do a
 ### Não entra
 
 - Tela de escolha de equipe, cards Food Park e Outros ou qualquer etapa antes do formulário
-- Alteração na página `/fornecedor`, que continua com os cards Food Park e Outros (012)
+- Alteração da página `/fornecedor`, que tem fluxo próprio na 018
 - Formulário nativo ou campos de inscrição dentro do app
 - Leitura, gravação ou interceptação de dados do formulário no Firestore ou em qualquer storage do app
 - Outras equipes com formulário próprio
@@ -69,7 +69,7 @@ O formulário coleta dados pessoais, entre eles nome, CPF, data de nascimento, e
 - Links de e-mail, telefone e outros aplicativos saem do WebView e abrem no aplicativo correspondente.
 - O botão físico de voltar do Android usa o histórico do WebView enquanto houver histórico; sem histórico, sai da tela.
 - A barra inferior não aparece nessa rota, porque ela fica fora do grupo `(tabs)`, como `/fornecedor`.
-- A página de Fornecedor permanece exatamente como está, com os cards Food Park e Outros da spec 012.
+- O fluxo de fornecedores do Food Park é tratado na 018 e não altera o formulário de voluntário.
 - Identidade: fundo claro, cabeçalho laranja e formulário em tela cheia. Sem gradiente, sem pílula e sem card de vidro.
 
 ## Critérios de aceite
@@ -91,6 +91,6 @@ Não é um formulário nativo clonado, nem uma tela de inscrição com campos pr
 
 ## Referências
 
-- Specs irmãs: 002 (folha central), 008 (rotas do app), 012 (Fornecedor, que não muda)
+- Specs irmãs: 002 (folha central), 008 (rotas do app), 012 (página de fornecedores) e 018 (formulário do Food Park)
 - [DESIGN.md](../DESIGN.md)
 - Formulário oficial: https://form.jotform.com/262908510287057

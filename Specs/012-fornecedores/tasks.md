@@ -3,13 +3,13 @@
 ## Checklist
 
 - [x] **T1 — Spec e contratos locais**
-  - Faz: registrar rota, assets, autenticação e URLs reservadas.
+  - Faz: registrar rota, autenticação, navegação do Food Park e reserva do Outros.
   - Verifica: spec e plan descrevem o comportamento antes do código.
   - Fora: dados externos.
 
 - [x] **T2 — Tela de fornecedores**
   - Faz: criar `/fornecedor` com cabeçalho, linha de apoio e dois cards grandes com ícone, título e descrição, sem fotos.
-  - Verifica: tela autenticada, retorno para Home, cards sem ação e identidade do app.
+  - Verifica: tela autenticada, retorno para Home, Food Park abrindo o formulário (018), Outros sem ação e identidade do app.
   - Fora: links e conteúdo administrativo.
 
 - [x] **T3 — Atalho do menu**
@@ -19,7 +19,7 @@
 
 - [x] **T4 — Validação**
   - Faz: executar verificação de bundle e revisar aceite visual.
-  - Verifica: `npx expo export --platform android` concluiu sem erro e incluiu as duas imagens.
+  - Verifica: `npx expo export --platform android` concluiu sem erro e incluiu as rotas.
   - Fora: teste manual em dispositivo sem abertura do ambiente.
 
 ## Validação final
