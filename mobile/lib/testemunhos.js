@@ -18,7 +18,10 @@ export function nomeNormalizado({ nome, anonimo }) {
   return soEspaco(nome).slice(0, LIMITE_NOME);
 }
 
-export function validaTestemunho({ nome, anonimo, texto }) {
+export function validaTestemunho({ nome, anonimo, texto, autorizouUsoPublico }) {
+  if (autorizouUsoPublico !== true) {
+    return "Marque a autorização para enviar seu testemunho.";
+  }
   const limpo = soEspaco(texto);
   if (!limpo) return "Escreva o seu testemunho antes de enviar.";
   if (limpo.length < MINIMO_TEXTO) {

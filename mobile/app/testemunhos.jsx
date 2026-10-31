@@ -32,7 +32,7 @@ const ENVIADO =
 
 export default function TestemunhosScreen() {
   const { user, loading } = useAuth();
-  const [form, setForm] = useState({ nome: "", anonimo: false, texto: "" });
+  const [form, setForm] = useState({ nome: "", anonimo: false, texto: "", autorizouUsoPublico: false });
   const [erro, setErro] = useState("");
   const [enviando, setEnviando] = useState(false);
   const [resultado, setResultado] = useState(null);
@@ -72,7 +72,7 @@ export default function TestemunhosScreen() {
 
   function recomecar() {
     setResultado(null);
-    setForm({ nome: "", anonimo: false, texto: "" });
+    setForm({ nome: "", anonimo: false, texto: "", autorizouUsoPublico: false });
   }
 
   return (
@@ -169,6 +169,21 @@ export default function TestemunhosScreen() {
                     {restantes(form.texto)} de {LIMITE_TEXTO} caracteres
                   </Text>
                 </View>
+
+                <Pressable
+                  onPress={() => atualiza("autorizouUsoPublico", !form.autorizouUsoPublico)}
+                  accessibilityRole="checkbox"
+                  accessibilityState={{ checked: form.autorizouUsoPublico }}
+                  accessibilityLabel="Declaro estar ciente de que meu testemunho será analisado pela equipe responsável e autorizo, caso seja aprovado, sua utilização pública durante o Crescer 2027, inclusive por meio de leitura durante o evento."
+                  style={estilos.check}
+                >
+                  <View style={[estilos.caixa, form.autorizouUsoPublico && estilos.caixaOn]}>
+                    {form.autorizouUsoPublico ? <Text style={estilos.marca}>{"✓"}</Text> : null}
+                  </View>
+                  <Text style={estilos.checkTexto}>
+                    Declaro estar ciente de que meu testemunho será analisado pela equipe responsável e autorizo, caso seja aprovado, sua utilização pública durante o Crescer 2027, inclusive por meio de leitura durante o evento.
+                  </Text>
+                </Pressable>
 
                 <TextoErro>{erro}</TextoErro>
 

@@ -33,7 +33,7 @@ async function tokenDaSessao() {
 
 // Devolve o ok ou o erro, e o id do documento gravado. A tela de confirmação
 // só precisa saber que o texto entrou na fila.
-export async function enviaTestemunho({ nome, anonimo, texto }) {
+export async function enviaTestemunho({ nome, anonimo, texto, autorizouUsoPublico }) {
   const padrao = "Não foi possível enviar agora. Tente novamente em instantes.";
   if (!BASE) {
     return {
@@ -60,6 +60,7 @@ export async function enviaTestemunho({ nome, anonimo, texto }) {
         nome: nomeNormalizado({ nome, anonimo }),
         anonimo,
         texto: soEspaco(texto).slice(0, LIMITE_TEXTO),
+        autorizouUsoPublico,
       }),
     });
   } catch {

@@ -1,44 +1,10 @@
-import { cert, getApps, initializeApp } from "firebase-admin/app";
-import { FieldValue, getFirestore } from "firebase-admin/firestore";
-
 import { tokenDoHeader, verificaUsuario } from "@/lib/server/verificaAdmin";
 import { enviaEmailBenfeitor } from "@/lib/server/emailBenfeitor";
+import { atualizarAvisoLead, criarDocumento, existeDocumentoComUid } from "@/lib/server/firestoreRest";
 
 const LIMITE_NOME = 120;
 
-// Firestore pelo Admin SDK, com a service account. É a única via de escrita em
-// benefactorLeads, porque as rules fecham qualquer escrita do client.
-//
-// O try no JSON.parse separa "a variável não está no servidor" de "a variável
-// está, mas colada com aspas em volta ou cortada no meio". Sem ele, o segundo
-// caso estoura a rota e a Vercel devolve 500 sem corpo nenhum.
-function firestoreAdmin() {
-  if (!getApps().length) {
-    const json = process.env.FIREBASE_SERVICE_ACCOUNT;
-    if (!json) return null;
-    let conta;
-    try {
-      conta = JSON.parse(json);
-    } catch {
-      console.error(
-        "Crescer: FIREBASE_SERVICE_ACCOUNT não é um JSON válido. Colar o valor sem as aspas das pontas."
-      );
-      return null;
-    }
-    try {
-      initializeApp({ credential: cert(conta) });
-    } catch (erro) {
-      console.error("Crescer: a service account foi recusada.", erro?.message || erro);
-      return null;
-    }
-  }
-  return getFirestore();
-}
-
-function agora() {
-  return FieldValue.serverTimestamp();
-}
-
+// A service account grava via REST porque o Admin SDK usa geração de código bloqueada no Workers.
 function soEspaco(valor) {
   return String(valor ?? "")
     .replace(/\s+/g, " ")
@@ -90,11 +56,6 @@ function mensagemDeErro(codigo) {
 
 // Uma sessão envia uma vez. O uid sobrevive ao fechar o app, então a trava pega
 // a reinstalação também. O índice de uid é automático, sem composto.
-async function jaEnviou(db, uid) {
-  const snap = await db.collection("benefactorLeads").where("uid", "==", uid).limit(1).get();
-  return !snap.empty;
-}
-
 export async function POST(request) {
   const uid = await verificaUsuario(tokenDoHeader(request));
   if (!uid) {
@@ -129,16 +90,11 @@ export async function POST(request) {
     return Response.json({ error: mensagemDeErro("cpf") }, { status: 400 });
   }
 
-  const db = firestoreAdmin();
-  if (!db) {
-    return Response.json({ error: mensagemDeErro("indisponivel") }, { status: 500 });
-  }
-
   // Reenvio não duplica: a resposta é de sucesso, porque para o fiel o cadastro
   // já existe. A tela abre a confirmação e não mostra erro.
   let jaGravado;
   try {
-    jaGravado = await jaEnviou(db, uid);
+    jaGravado = await existeDocumentoComUid("benefactorLeads", uid);
   } catch (erro) {
     console.error("Crescer: não foi possível ler os leads do uid.", erro?.message || erro);
     return Response.json({ error: mensagemDeErro("indisponivel") }, { status: 500 });
@@ -157,19 +113,16 @@ export async function POST(request) {
     phone: celular,
     cpf,
     lgpdConsent: true,
-    lgpdConsentAt: agora(),
     uid,
     status: "novo",
     origem: "app",
     emailAvisado: false,
     emailAvisadoEm: null,
-    createdAt: agora(),
   };
 
   let id;
   try {
-    const ref = await db.collection("benefactorLeads").add(documento);
-    id = ref.id;
+    id = await criarDocumento("benefactorLeads", documento, ["lgpdConsentAt", "createdAt"]);
   } catch {
     return Response.json({ error: mensagemDeErro("indisponivel") }, { status: 500 });
   }
@@ -191,10 +144,7 @@ export async function POST(request) {
   }
 
   try {
-    await db.collection("benefactorLeads").doc(id).update({
-      emailAvisado: emailEnviado,
-      emailAvisadoEm: emailEnviado ? agora() : null,
-    });
+    await atualizarAvisoLead(id, emailEnviado);
   } catch {
     // A gravação do lead já deu certo. Falhar só a anotagem do aviso não pode
     // devolver erro para o fiel, porque o cadastro está feito.

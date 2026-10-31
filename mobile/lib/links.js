@@ -18,6 +18,11 @@ export const LINK_INSCRICAO_SERVOS = "https://form.jotform.com/262908510287057";
 export const LINK_INSCRICAO_FORNECEDORES_FOOD_PARK =
   "https://form.jotform.com/262965480631665";
 
+export const LINK_PLANEJE_SUA_VIAGEM =
+  "https://encontrodafamiliacatolica.com.br/planejesuaviagem";
+export const LINK_CARAVANAS_E_GRUPOS =
+  "https://encontrodafamiliacatolica.com.br/caravanasegrupos";
+
 const AVISO_PARTICIPAR = {
   titulo: "Em breve",
   texto:

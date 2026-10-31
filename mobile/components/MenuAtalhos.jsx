@@ -21,6 +21,7 @@ import ShoppingBag from "lucide-react-native/icons/shopping-bag";
 import BookOpenText from "lucide-react-native/icons/book-open-text";
 import CircleHelp from "lucide-react-native/icons/circle-question-mark";
 import Ticket from "lucide-react-native/icons/ticket";
+import Briefcase from "lucide-react-native/icons/briefcase";
 import { useRouter } from "expo-router";
 import { CORES, FONTES } from "../lib/tema";
 import { abreLinkExterno, LINK_PARTICIPAR } from "../lib/links";
@@ -35,14 +36,15 @@ const { height: ALTURA_TELA } = Dimensions.get("window");
 const ITENS = [
   { rotulo: "Terço da Restauração das Famílias", imagem: terco, rota: "/terco-restauracao" },
   { rotulo: "Liturgia Diária", Icone: BookOpenText, rota: "/liturgia" },
-  { rotulo: "Participar", Icone: Ticket, url: LINK_PARTICIPAR, avisar: true, oculto: true },
-  { rotulo: "Faça sua Doação", Icone: HandHeart, rota: "/colabore" },
+  { rotulo: "Testemunhos", imagem: testemunhos, tamanhoImagem: 50, rota: "/testemunhos" },
   { rotulo: "Loja", Icone: ShoppingBag, url: "https://usedevotum.com.br/crescer/?ref=CRESCER" },
+  { rotulo: "Faça sua Doação", Icone: HandHeart, rota: "/colabore" },
+  { rotulo: "Planeje sua Viagem", Icone: Briefcase, rota: "/planeje-sua-viagem" },
   { rotulo: "Seja Voluntário", Icone: Handshake, rota: "/voluntario" },
   { rotulo: "Seja Fornecedor", Icone: Contact, rota: "/fornecedor" },
   { rotulo: "FAQ", Icone: CircleHelp, rota: "/faq" },
   { rotulo: "Fale Conosco", Icone: MessageCircle, rota: "/fale-conosco" },
-  { rotulo: "Testemunhos", imagem: testemunhos, tamanhoImagem: 50, rota: "/testemunhos" },
+  { rotulo: "Participar", Icone: Ticket, url: LINK_PARTICIPAR, avisar: true, oculto: true },
   { rotulo: "Spotify", Icone: AudioLines, oculto: true },
   { rotulo: "Mapa do Evento", Icone: MapPinned, indisponivel: true, oculto: true },
   { rotulo: "Congresso", Icone: UserGroup, indisponivel: true, oculto: true },
@@ -258,6 +260,8 @@ const estilos = StyleSheet.create({
     height: 75,
   },
   rotulo: {
+    width: "100%",
+    maxWidth: 180,
     fontFamily: FONTES.corpoMedio,
     fontSize: 11,
     letterSpacing: 0.6,
