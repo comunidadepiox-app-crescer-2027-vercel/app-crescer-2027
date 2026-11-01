@@ -44,6 +44,7 @@ export async function POST(request) {
   if (!tokens.length) return Response.json({ sent: 0 });
 
   let sent = 0;
+  const failures = {};
   for (let i = 0; i < tokens.length; i += 100) {
     const messages = tokens.slice(i, i + 100).map((to) => ({
       to,
@@ -58,13 +59,22 @@ export async function POST(request) {
         headers: { Accept: "application/json", "Content-Type": "application/json" },
         body: JSON.stringify(messages),
       });
-      if (!res.ok) throw new Error();
       const data = await res.json();
-      sent += (data.data || []).filter((ticket) => ticket.status === "ok").length;
+      if (!res.ok) {
+        const codes = [...new Set((data.errors || []).map((error) => error.code).filter(Boolean))];
+        return Response.json({ error: `O Expo recusou o envio${codes.length ? `: ${codes.join(", ")}` : "."}`, sent }, { status: 502 });
+      }
+      const tickets = Array.isArray(data.data) ? data.data : data.data ? [data.data] : [];
+      sent += tickets.filter((ticket) => ticket.status === "ok").length;
+      for (const ticket of tickets) {
+        if (ticket.status !== "error") continue;
+        const code = ticket.details?.error || "Erro sem código";
+        failures[code] = (failures[code] || 0) + 1;
+      }
     } catch {
       return Response.json({ error: "O servi\u00e7o de notifica\u00e7\u00e3o falhou durante o envio.", sent }, { status: 502 });
     }
   }
 
-  return Response.json({ sent, total: tokens.length });
+  return Response.json({ sent, total: tokens.length, failures });
 }

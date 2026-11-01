@@ -53,6 +53,7 @@
       [
         "expo-notifications",
         {
+          "icon": "./assets/notification-icon.png",
           "color": "#3a1075"
         }
       ]
@@ -60,14 +61,15 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "cecc641d-e929-4125-9098-206c512f809e"
+        "projectId": "aad5dd2a-5839-4ac9-af91-c35d783db3b5"
       }
     },
     "runtimeVersion": {
       "policy": "fingerprint"
     },
     "updates": {
-      "url": "https://u.expo.dev/cecc641d-e929-4125-9098-206c512f809e"
-    }
+      "url": "https://u.expo.dev/aad5dd2a-5839-4ac9-af91-c35d783db3b5"
+    },
+    "owner": "comunidade-sao-pio-x-cge"
   }
 }

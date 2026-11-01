@@ -25,8 +25,11 @@ export default function AdminNotificacoesPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "N\u00e3o foi poss\u00edvel enviar.");
+      const falhas = Object.entries(data.failures || {})
+        .map(([codigo, quantidade]) => `${quantidade} ${codigo}`)
+        .join(", ");
       setResultado(data.total
-        ? `Notifica\u00e7\u00e3o aceita pelo servi\u00e7o para ${data.sent} de ${data.total} aparelhos.`
+        ? `Notifica\u00e7\u00e3o aceita pelo servi\u00e7o para ${data.sent} de ${data.total} aparelhos.${falhas ? ` Recusas: ${falhas}.` : ""}`
         : "Nenhum aparelho com notifica\u00e7\u00f5es ativadas foi encontrado.");
       setTitle("");
       setBody("");
