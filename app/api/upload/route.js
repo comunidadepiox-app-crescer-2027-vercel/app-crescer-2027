@@ -1,16 +1,16 @@
 import crypto from "crypto";
 import { tokenDoHeader, verificaAdmin } from "@/lib/server/verificaAdmin";
 
-const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-const CLOUDINARY_KEY = process.env.CLOUDINARY_API_KEY;
-const CLOUDINARY_SECRET = process.env.CLOUDINARY_API_SECRET;
-
 const PASTAS = new Set(["news", "authors"]);
 const LIMITE_IMAGEM = 8 * 1024 * 1024;
 const LIMITE_VIDEO = 80 * 1024 * 1024;
 
 export async function POST(request) {
-  if (!CLOUD_NAME || !CLOUDINARY_KEY || !CLOUDINARY_SECRET) {
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const cloudinaryKey = process.env.CLOUDINARY_API_KEY;
+  const cloudinarySecret = process.env.CLOUDINARY_API_SECRET;
+
+  if (!cloudName || !cloudinaryKey || !cloudinarySecret) {
     return Response.json(
       { error: "Cloudinary não configurado no servidor." },
       { status: 500 }
@@ -45,18 +45,18 @@ export async function POST(request) {
   }
 
   const timestamp = Math.floor(Date.now() / 1000);
-  const toSign = `folder=${pasta}&timestamp=${timestamp}${CLOUDINARY_SECRET}`;
+  const toSign = `folder=${pasta}&timestamp=${timestamp}${cloudinarySecret}`;
   const signature = crypto.createHash("sha1").update(toSign).digest("hex");
 
   const upload = new FormData();
   upload.append("file", file);
-  upload.append("api_key", CLOUDINARY_KEY);
+  upload.append("api_key", cloudinaryKey);
   upload.append("timestamp", String(timestamp));
   upload.append("folder", pasta);
   upload.append("signature", signature);
 
   const res = await fetch(
-    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${recurso}/upload`,
+    `https://api.cloudinary.com/v1_1/${cloudName}/${recurso}/upload`,
     { method: "POST", body: upload }
   );
   if (!res.ok) {
