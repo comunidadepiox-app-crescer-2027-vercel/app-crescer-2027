@@ -15,6 +15,7 @@ const MENU = [
   { href: "/admin/notificacoes", label: "Notificações", icone: "notificacoes" },
   { href: "/admin/testemunhos", label: "Testemunhos", icone: "testimonials" },
   { href: "/admin/doacao", label: "Colabore", icone: "colabore" },
+  { href: "/admin/benfeitor", label: "Benfeitor", icone: "testimonials" },
 ];
 
 function ativo(pathname, href) {
