@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { tokenDoHeader, verificaAdmin } from "@/lib/server/verificaAdmin";
 
 const PASTAS = new Set(["news", "authors"]);
@@ -6,9 +7,12 @@ const LIMITE_IMAGEM = 8 * 1024 * 1024;
 const LIMITE_VIDEO = 80 * 1024 * 1024;
 
 export async function POST(request) {
-  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-  const cloudinaryKey = process.env.CLOUDINARY_API_KEY;
-  const cloudinarySecret = process.env.CLOUDINARY_API_SECRET;
+  const env = process.env.NODE_ENV === "development"
+    ? process.env
+    : getCloudflareContext().env;
+  const cloudName = env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const cloudinaryKey = env.CLOUDINARY_API_KEY;
+  const cloudinarySecret = env.CLOUDINARY_API_SECRET;
 
   if (!cloudName || !cloudinaryKey || !cloudinarySecret) {
     return Response.json(
