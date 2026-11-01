@@ -105,7 +105,7 @@ function registraDetalhe(motivo, detalhe) {
   return { ok: false, motivo, detalhe };
 }
 
-export async function ativarNotificacao(uid) {
+export async function ativarNotificacao(uid, pedirPermissao = true) {
   if (Platform.OS === "web") return { ok: false, motivo: MOTIVO.NAVEGADOR };
 
   const Notifications = await notificacoes();
@@ -120,6 +120,7 @@ export async function ativarNotificacao(uid) {
   const atual = await Notifications.getPermissionsAsync();
   let status = atual.status;
   if (status !== "granted") {
+    if (!pedirPermissao) return { ok: false, motivo: MOTIVO.NEGADO };
     const pedido = await Notifications.requestPermissionsAsync();
     status = pedido.status;
   }
@@ -143,4 +144,8 @@ export async function ativarNotificacao(uid) {
   await gravarToken(uid, token);
   await AsyncStorage.setItem(CHAVE, "aceito");
   return { ok: true };
+}
+
+export function sincronizarNotificacao(uid) {
+  return ativarNotificacao(uid, false);
 }

@@ -8,6 +8,7 @@ import {
   adiarPedido,
   ativarNotificacao,
   lerPedido,
+  sincronizarNotificacao,
 } from "../lib/notificacoes";
 import { alturaBarra } from "./BarraAbas";
 import { CORES, FONTES } from "../lib/tema";
@@ -23,7 +24,10 @@ export function PedidoNotificacao({ uid }) {
     lerPedido()
       .then((valor) => setAberto(!valor))
       .catch(() => setAberto(false));
-  }, []);
+    sincronizarNotificacao(uid).catch((erro) => {
+      if (__DEV__) console.warn("Crescer: falha ao sincronizar notifica\u00e7\u00e3o.", erro?.message || erro);
+    });
+  }, [uid]);
 
   if (!aberto) return null;
 
