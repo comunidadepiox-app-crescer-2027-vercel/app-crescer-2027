@@ -1,11 +1,11 @@
 import { tokenDoHeader, verificaUsuario } from "@/lib/server/verificaAdmin";
-import { criarDocumento, existeDocumentoComUid } from "@/lib/server/firestoreRest";
+import { criarDocumento } from "@/lib/server/firestoreRest";
 
 const LIMITE_NOME = 60;
 const LIMITE_TEXTO = 2000;
 const MINIMO_TEXTO = 20;
 
-// A service account grava via REST porque o Admin SDK usa geração de código bloqueada no Workers.
+// O Route Handler grava com o token Firebase da pessoa; as rules limitam a escrita ao próprio envio.
 function soEspaco(valor) {
   return String(valor ?? "")
     .replace(/\s+/g, " ")
@@ -34,11 +34,11 @@ function mensagemDeErro(codigo) {
   return "Não foi possível enviar agora. Tente novamente em instantes.";
 }
 
-// Uma sessão anônima envia uma vez. O uid sobrevive ao fechar o app, então a
-// trava pega a reinstallação também. O limite é do Firestore: o índice de
-// uid é automático, sem composto.
+// Uma sessão anônima envia uma vez. O uid vira o id do documento e a precondição
+// exists:false impede duplicatas sem precisar ler o texto enviado.
 export async function POST(request) {
-  const uid = await verificaUsuario(tokenDoHeader(request));
+  const idToken = tokenDoHeader(request);
+  const uid = await verificaUsuario(idToken);
   if (!uid) {
     return Response.json({ error: "Sessão inválida." }, { status: 401 });
   }
@@ -65,20 +65,6 @@ export async function POST(request) {
     return Response.json({ error: "Escreva o nome ou marque a opção de anônimo." }, { status: 400 });
   }
 
-  // A leitura da trava também pode cair, quando a credencial é recusada na
-  // hora de falar com o Firestore. Ela volta pelo mesmo caminho do resto.
-  let jaGravado;
-  try {
-    jaGravado = await existeDocumentoComUid("testimonials", uid);
-  } catch (erro) {
-    console.error("Crescer: não foi possível ler os testemunhos do uid.", erro?.message || erro);
-    return Response.json({ error: mensagemDeErro("indisponivel") }, { status: 500 });
-  }
-
-  if (jaGravado) {
-    return Response.json({ error: "Você já enviou um testemunho nesta edição." }, { status: 429 });
-  }
-
   // Nada é recusado na entrada. Depreciação, ansiedade, perda, abuso e
   // adoecimento mental chegam inteiros, e a decisão é da equipe na mesa.
   const documento = {
@@ -96,9 +82,16 @@ export async function POST(request) {
   };
 
   try {
-    const id = await criarDocumento("testimonials", documento, ["createdAt", "updatedAt"]);
+    const id = await criarDocumento("testimonials", documento, ["createdAt", "updatedAt"], {
+      id: uid,
+      idToken,
+    });
     return Response.json({ ok: true, id });
-  } catch {
+  } catch (erro) {
+    if (erro?.code === "ALREADY_EXISTS" || erro?.code === "FAILED_PRECONDITION") {
+      return Response.json({ error: "Você já enviou um testemunho nesta edição." }, { status: 429 });
+    }
+    console.error("Crescer: não foi possível gravar o testemunho.", erro?.code || erro?.message || erro);
     return Response.json({ error: mensagemDeErro("indisponivel") }, { status: 500 });
   }
 }

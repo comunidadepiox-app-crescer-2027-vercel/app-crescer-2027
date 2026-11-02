@@ -23,7 +23,7 @@ Durante o encontro, o público quer compartilhar o que mudou em sua vida, e o ap
 - Campo de texto com limite de 2000 caracteres e contador visível
 - Aviso curto de uso dos dados, no mesmo formato do aviso já usado no formulário do Benfeitor
 - Uma tela de confirmação depois do envio, com a possibilidade de escrever outro testemunho
-- Grava o documento por um Route Handler, usando a service account
+- Grava o documento por um Route Handler com o token Firebase da sessão; as rules validam os campos e permitem uma criação por uid
 - Aba Testemunhos na mesa, com leitura paginada por setas e dois botões de decisão
 - Abas Aguardando e Encerrados, para separar o que ainda exige decisão do que já foi decidido
 - Botões Testemunho lido e Não aceitar, que tiram o item da lista sem recarregar a página
@@ -45,7 +45,7 @@ Durante o encontro, o público quer compartilhar o que mudou em sua vida, e o ap
 1. Fiel abre a folha central e toca em Testemunhos. A folha fecha e `/testemunhos` abre.
 2. Fiel preenche o nome ou marca a opção de anônimo, escreve o testemunho e toca em Enviar.
 3. O app chama a rota do servidor com o token da sessão anônima.
-4. O servidor grava em `testimonials` com `status: novo`. A tela de confirmação abre na hora, sem esperar resposta da equipe.
+4. A rota grava com esse token em `testimonials/{uid}`; as rules validam os campos e `exists:false` impede reenvio. A tela confirma após a gravação.
 5. Admin abre Testemunhos na mesa. Vê os aguardando do mais antigo para o mais recente e navega entre as páginas com as setas.
 6. Admin lê o texto. Se puder ler no palco, toca em Testemunho lido. Se for pesado demais, toca em Não aceitar. O item sai da aba e o contador cai.
 7. Admin volta a Testemunhos em qualquer momento e encontra o que já foi decidido na aba Encerrados.

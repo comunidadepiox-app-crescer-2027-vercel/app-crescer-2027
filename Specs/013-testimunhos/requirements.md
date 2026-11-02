@@ -43,7 +43,7 @@
 ## Dependências
 
 - Specs que precisam estar `planned` ou `in-progress`: [007-admin-cms](../007-admin-cms/), [008-app-react-native](../008-app-react-native/), [002-navegacao-e-home](../002-navegacao-e-home/)
-- Contas / secrets: nenhuma além de `FIREBASE_SERVICE_ACCOUNT`, que já está no projeto. Sem chave de IA
+- Contas / secrets: o envio usa o token da sessão Firebase e não precisa de `FIREBASE_SERVICE_ACCOUNT`. Sem chave de IA
 
 ## Fora
 

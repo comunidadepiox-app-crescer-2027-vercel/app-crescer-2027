@@ -21,7 +21,7 @@ Itens que o SDD registra, mas que ainda não têm decisão final. Não bloqueiam
 - [ ] Projeto Firebase, domínios autorizados do Google OAuth (web) e variáveis de ambiente (preencher `.env.local` a partir de `.env.example` e publicar `firestore.rules` no console)
 - [ ] Publicar `firestore.indexes.json` com o índice composto de `testimonials` (`pasta` + `createdAt`) e as rules da spec 013. Sem isso a aba da mesa dá `failed-precondition`
 - [ ] `EXPO_PUBLIC_API_BASE` no `mobile/.env` com a URL pública do site, sem barra no fim, para o app falar com a rota de testemunhos. Sem ela a tela avisa que o serviço está fora do ar
-- [ ] `FIREBASE_SERVICE_ACCOUNT` presente em `.env`, porque a gravação de `testimonials` passa pelo Admin SDK na rota do servidor
+- [ ] `FIREBASE_SERVICE_ACCOUNT` configurada no servidor para leads e configuração Benfeitor; o envio de testemunhos usa o token Firebase do fiel
 - [ ] **Development build do app, para o aviso com o app fechado.** O Expo Go não tem push remoto no Android desde o SDK 53, então a ativação de aviso e a contagem regressiva do Avise-me só funcionam no aplicativo instalado. O perfil `development` do `mobile/eas.json` já existe. Sem isso, o botão sempre recusa com o motivo `expo-go` e nada chega no aparelho
 - [ ] `FIREBASE_SERVICE_ACCOUNT` no secret do workflow **Avisos da programação**, que é o mesmo secret, e sem `TOMTOM_API_KEY`, que saiu em 28/09/2026
 - [ ] Aviso LGPD antes dos formulários de voluntariado e de fornecedores do Food Park: os JotForms oficiais já apresentam termo e avisos de privacidade; confirmar com a comunidade se o app precisa de uma frase própria antes do WebView

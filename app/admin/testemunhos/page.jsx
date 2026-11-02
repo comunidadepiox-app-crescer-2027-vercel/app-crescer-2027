@@ -38,8 +38,8 @@ function dataCurta(timestamp) {
 }
 
 export default function AdminTestemunhosPage() {
-  const { profile } = useAuth();
-  const adminUid = profile?.uid || null;
+  const { user } = useAuth();
+  const adminUid = user?.uid || null;
 
   const [pasta, setPasta] = useState("aguardando");
   const [pagina, setPagina] = useState(1);

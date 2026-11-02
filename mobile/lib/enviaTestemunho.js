@@ -1,5 +1,5 @@
 // Envio do testemunho. O app não grava nada: ele fala com a rota do servidor,
-// que valida a sessão e grava no Firestore pelo Admin SDK. Não existe IA no
+// que valida a sessão e grava no Firestore com o token Firebase do fiel. Não existe IA no
 // caminho, e o texto chega na mesa como a pessoa escreveu. A base vem de
 // EXPO_PUBLIC_API_BASE, porque o app roda no aparelho e a mesa roda na web.
 

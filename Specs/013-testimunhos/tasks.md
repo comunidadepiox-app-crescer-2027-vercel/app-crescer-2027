@@ -12,8 +12,8 @@ Marcar `[x]` só depois de conferir o critério. Se o comportamento mudar no có
   - Fora: qualquer código de produção.
 
 - [x] **T2 — Rules e índices da coleção**
-  - Faz: incluir `match /testimonials/{id}` com leitura só de admin e escrita `false`, e os compostos de `status` com `createdAt` em `firestore.indexes.json`.
-  - Verifica: fiel autenticado não lê a coleção; nada além do Admin SDK escreve.
+  - Faz: incluir `match /testimonials/{id}` com leitura só de admin, criação validada no id do uid e decisão restrita ao admin.
+  - Verifica: fiel não lê testemunhos e só cria um documento próprio; admin lê e decide.
   - Fora: publish das rules no console, que é operação do responsável.
 
 - [x] **T3 — Sessão anônima no servidor**
@@ -27,14 +27,13 @@ Marcar `[x]` só depois de conferir o critério. Se o comportamento mudar no có
   - Fora: qualquer SDK de IA instalado no projeto.
 
 - [x] **T5 — Rota do servidor**
-  - Faz: `app/api/testemunhos/route.js` validando sessão, teto de 2000, corpo vazio, envio duplicado e gravação com Admin SDK.
-  - Verifica: 401 sem sessão, 400 fora do contrato, 200 com `status: novo`, e segundo envio da mesma sessão não cria documento.
+  - Faz: `app/api/testemunhos/route.js` validando sessão e conteúdo; grava com o token do fiel em `testimonials/{uid}`.
+  - Verifica: 401 sem sessão, 400 fora do contrato, 200 com `status: novo`, e `exists:false` impede segundo envio.
   - Fora: aceitar `status` ou `resumo` enviados pelo cliente.
 
 - [x] **T6 — Dependência e ambiente**
-  - Faz: `firebase-admin` no `package.json`, `FIREBASE_SERVICE_ACCOUNT` no `.env.example` e `.env.local`, e `.env` e `.env.local` no `.gitignore`.
-  - Verifica: a service account não aparece em nenhum arquivo versionado nem no bundle do app.
-  - Fora: criar a conta de serviço, que é operação do responsável.
+  - Estado: o envio de testemunhos não usa `firebase-admin` nem `FIREBASE_SERVICE_ACCOUNT`.
+  - Verifica: o app não contém service account; as rules aplicam autorização por token Firebase.
 
 - [x] **T7 — Lib do app**
   - Faz: `mobile/lib/testemunhos.js` com `nomeNormalizado`, `validaTestemunho` e o teto de 2000.

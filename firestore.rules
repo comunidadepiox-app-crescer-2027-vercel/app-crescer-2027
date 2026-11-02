@@ -1,0 +1,151 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    function isFiel() {
+      return signedIn()
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'fiel';
+    }
+
+    function origemOk() {
+      return !('origem' in request.resource.data)
+        || request.resource.data.origem == null
+        || (
+          request.resource.data.origem.keys().hasOnly(['lat', 'lng', 'updatedAt'])
+          && request.resource.data.origem.lat is number
+          && request.resource.data.origem.lng is number
+          && request.resource.data.origem.lat >= -90
+          && request.resource.data.origem.lat <= 90
+          && request.resource.data.origem.lng >= -180
+          && request.resource.data.origem.lng <= 180
+          && request.resource.data.origem.updatedAt is timestamp
+        );
+    }
+
+    match /users/{userId} {
+      allow get: if signedIn() && (request.auth.uid == userId || isAdmin());
+      allow list: if isAdmin();
+      allow create: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.data.role == 'fiel';
+      allow update: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.data.role == resource.data.role
+        && (
+          (!('email' in request.resource.data) && !('email' in resource.data))
+          || request.resource.data.email == resource.data.email
+        )
+        && origemOk();
+      allow delete: if false;
+
+      match /lembretes/{itemId} {
+        allow read: if signedIn() && request.auth.uid == userId;
+        allow create: if signedIn()
+          && request.auth.uid == userId
+          && request.resource.data.keys().hasOnly(['itemId', 'createdAt'])
+          && request.resource.data.itemId == itemId
+          && request.resource.data.createdAt is timestamp;
+        allow update: if false;
+        allow delete: if signedIn() && request.auth.uid == userId;
+      }
+    }
+
+    match /news/{newsId} {
+      allow read: if signedIn() && (resource.data.published == true || isAdmin());
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /programItems/{itemId} {
+      allow read: if signedIn() && (resource.data.published == true || isAdmin());
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /siteContent/{docId} {
+      allow read: if signedIn();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /deviceTokens/{id} {
+      allow create: if signedIn()
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.token is string
+        && request.resource.data.token.size() > 0
+        && request.resource.data.token.size() < 400;
+      allow update: if signedIn()
+        && resource.data.uid == request.auth.uid
+        && request.resource.data.uid == request.auth.uid;
+      allow delete: if signedIn() && resource.data.uid == request.auth.uid;
+      allow read: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
+    }
+
+    // trafficAlerts e mapsUsage não têm match de propósito.
+    // O cliente não lê nem escreve. O job usa o Admin SDK.
+
+    match /benefactorLeads/{leadId} {
+      allow create: if signedIn()
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.lgpdConsent == true
+        && request.resource.data.status == 'novo';
+      allow read: if isAdmin()
+        || (signedIn() && resource.data.uid == request.auth.uid);
+      allow update: if isAdmin();
+      allow delete: if false;
+    }
+
+    match /testimonials/{testimonialId} {
+      allow read: if isAdmin();
+      allow create: if isFiel()
+        && testimonialId == request.auth.uid
+        && request.resource.data.keys().hasOnly([
+          'nome', 'anonimo', 'texto', 'autorizouUsoPublico', 'status', 'pasta',
+          'uid', 'origem', 'lidoAt', 'decididoAt', 'decididoPor', 'createdAt', 'updatedAt'
+        ])
+        && request.resource.data.keys().hasAll([
+          'nome', 'anonimo', 'texto', 'autorizouUsoPublico', 'status', 'pasta',
+          'uid', 'origem', 'lidoAt', 'decididoAt', 'decididoPor', 'createdAt', 'updatedAt'
+        ])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.nome is string
+        && request.resource.data.nome.size() <= 60
+        && request.resource.data.anonimo is bool
+        && (request.resource.data.anonimo
+          ? request.resource.data.nome == ''
+          : request.resource.data.nome.matches('.*\\S.*'))
+        && request.resource.data.texto is string
+        && request.resource.data.texto.size() >= 20
+        && request.resource.data.texto.size() <= 2000
+        && request.resource.data.texto.matches('.*\\S.*')
+        && request.resource.data.autorizouUsoPublico == true
+        && request.resource.data.status == 'novo'
+        && request.resource.data.pasta == 'aguardando'
+        && request.resource.data.origem == 'app'
+        && request.resource.data.lidoAt == null
+        && request.resource.data.decididoAt == null
+        && request.resource.data.decididoPor == null
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+      allow update: if isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'status', 'pasta', 'lidoAt', 'decididoAt', 'decididoPor', 'updatedAt'
+        ])
+        && request.resource.data.status in ['lido', 'nao_aceito']
+        && request.resource.data.pasta == 'encerrados'
+        && request.resource.data.decididoAt == request.time
+        && request.resource.data.decididoPor == request.auth.uid
+        && request.resource.data.updatedAt == request.time
+        && ((request.resource.data.status == 'lido' && request.resource.data.lidoAt == request.time)
+          || (request.resource.data.status == 'nao_aceito' && request.resource.data.lidoAt == null));
+      allow delete: if false;
+    }
+  }
+}
