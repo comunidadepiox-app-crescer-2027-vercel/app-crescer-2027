@@ -14,14 +14,14 @@ import {
 
 const OPCOES = [
   {
-    titulo: "Planeje sua Viagem",
-    descricao: "Passagens, hotéis e traslados",
+    titulo: "Pacotes de Viagem",
+    descricao: "Passagens, hotéis e traslados com condições especiais.",
     Icone: Plane,
     url: LINK_PLANEJE_SUA_VIAGEM,
   },
   {
     titulo: "Caravanas e Grupos de Todo o Brasil",
-    descricao: "Excursões com saídas de várias cidades",
+    descricao: "Excursões com roteiros especiais, incluindo o evento e João Pessoa/PB.",
     Icone: Bus,
     url: LINK_CARAVANAS_E_GRUPOS,
   },

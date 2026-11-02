@@ -165,6 +165,10 @@ function Etapa({ etapa }) {
         </Text>
       ) : null}
 
+      {etapa.id === "celebracao" && etapa.blocos?.length ? (
+        <Text style={estilos.titulo}>Primeira leitura</Text>
+      ) : null}
+
       <View style={estilos.conteudo}>
         {(etapa.blocos || []).map((bloco, indice) => (
           <Bloco key={`${etapa.id}-${indice}`} bloco={bloco} />
@@ -199,9 +203,11 @@ function Bloco({ bloco }) {
       <View style={estilos.grupo}>
         {titulo ? <Text style={estilos.subtitulo}>{titulo}</Text> : null}
         {bloco.blocos.map((interno, indice) => (
-          <Text key={indice} style={interno.tipo === "refrão" ? estilos.refrão : estilos.corpo}>
-            {interno.texto}
-          </Text>
+          <TextoComVersiculos
+            key={indice}
+            texto={interno.texto}
+            style={interno.tipo === "refrão" ? estilos.refrão : estilos.corpo}
+          />
         ))}
       </View>
     );
@@ -210,9 +216,34 @@ function Bloco({ bloco }) {
   return (
     <View style={estilos.grupo}>
       {titulo ? <Text style={estilos.subtitulo}>{titulo}</Text> : null}
-      <Text style={bloco.tipo === "oracao" ? estilos.oracao : estilos.corpo}>{bloco.texto}</Text>
+      {bloco.tipo === "leitura" ? (
+        <TextoComVersiculos texto={bloco.texto} style={estilos.corpo} />
+      ) : (
+        <Text style={bloco.tipo === "oracao" ? estilos.oracao : estilos.corpo}>{bloco.texto}</Text>
+      )}
     </View>
   );
+}
+
+function TextoComVersiculos({ texto, style }) {
+  const partes = [];
+  const marcador = /(^|[\s"“”.,;:!?])(\d+[ab]?)(?=$|[\s"“”.,;:!?])/gi;
+  let inicio = 0;
+  let match;
+
+  while ((match = marcador.exec(texto))) {
+    const inicioNumero = match.index + match[1].length;
+    partes.push(texto.slice(inicio, inicioNumero));
+    partes.push(
+      <Text key={inicioNumero} style={estilos.numeroVersiculo}>
+        {match[2]}
+      </Text>
+    );
+    inicio = inicioNumero + match[2].length;
+  }
+  partes.push(texto.slice(inicio));
+
+  return <Text style={style}>{partes}</Text>;
 }
 
 const estilos = StyleSheet.create({
@@ -274,9 +305,13 @@ const estilos = StyleSheet.create({
     textTransform: "uppercase",
   },
   corpo: {
-    fontFamily: FONTES.corpo,
+    fontFamily: FONTES.corpoLeve,
     fontSize: 17,
     lineHeight: 26,
+    color: "#526071",
+  },
+  numeroVersiculo: {
+    fontFamily: FONTES.corpoSemi,
     color: CORES.texto,
   },
   oracao: {

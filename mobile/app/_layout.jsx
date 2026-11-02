@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { View, ActivityIndicator, StyleSheet } from "react-native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useFonts, Outfit_400Regular, Outfit_500Medium, Outfit_600SemiBold } from "@expo-google-fonts/outfit";
+import { useFonts, Outfit_300Light, Outfit_400Regular, Outfit_500Medium, Outfit_600SemiBold } from "@expo-google-fonts/outfit";
 import * as SplashScreen from "expo-splash-screen";
 import { AuthProvider } from "../lib/authProvider";
 import { Splash } from "../components/Splash";
@@ -15,6 +15,7 @@ export default function RootLayout() {
     "GeometricSlab-500": require("../assets/fonts/geometric-slabserif-500.ttf"),
     "GeometricSlab-700": require("../assets/fonts/geometric-slabserif-700.ttf"),
     ArcaneNine: require("../assets/fonts/arcane-nine-400.ttf"),
+    Outfit_300Light,
     Outfit_400Regular,
     Outfit_500Medium,
     Outfit_600SemiBold,

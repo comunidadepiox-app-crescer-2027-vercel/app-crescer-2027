@@ -37,7 +37,7 @@ O app não tem um caminho para a liturgia do dia. Durante o encontro, e também 
 
 1. O fiel abre a folha central e toca em Liturgia Diária. A folha fecha e `/liturgia` abre.
 2. A tela pede a liturgia de hoje. Enquanto a resposta não chega, ela mostra o carregamento no mesmo lugar do texto, sem tela de erro.
-3. Com a resposta, a primeira etapa mostra a celebração do dia: o nome do santo ou da festa, a cor litúrgica e a data por extenso.
+3. Com a resposta, a primeira etapa mostra a celebração do dia e a primeira leitura; a celebração inclui o nome do santo ou da festa, a cor litúrgica e a data por extenso.
 4. O fiel lê a etapa e avança pelas setas inferiores, que ficam travadas na primeira e na última etapa.
 5. O fiel também pode arrastar o texto na horizontal para ir à etapa seguinte ou voltar. O gesto só vale quando ele é claramente horizontal, para não competir com a rolagem do texto.
 6. Se a API falhar ou vier vazia, a tela diz o que aconteceu e oferece tentar de novo.
@@ -79,7 +79,7 @@ Sobre o último ponto: em dias de festa a mesma seção vem com duas formas da m
 - A API aceita a data no caminho, no formato `DD-MM-AAAA`. Query string é ignorada pelo serviço, então não é usada.
 - Uma requisição por abertura. O resultado fica em memória na própria tela e some quando ela é desmontada. Sem disco, sem revalidação em segundo plano.
 - A liturgia do dia não fica gravada no repositório. Se a API cair, a tela avisa, sem texto de reserva.
-- A resposta é normalizada em etapas numeradas, na ordem: celebração, primeira leitura, salmo, segunda leitura, evangelho, orações.
+- A primeira leitura aparece junto à celebração na primeira etapa. As etapas seguintes aparecem na ordem: salmo, segunda leitura, evangelho e orações.
 - Etapas sem conteúdo não entram na lista. O contador da barra inferior conta só as etapas que existem.
 - Seção com mais de um item mostra todos os itens e um aviso curto de que o dia tem mais de uma opção. Nenhum item é escolhido nem escondido pelo app.
 - As leituras trazem o versículo colado ao texto, com o número grudado na palavra ("21Piedade"). A tela separa o número do texto para a linha ficar legível.
@@ -96,7 +96,7 @@ Sobre o último ponto: em dias de festa a mesma seção vem com duas formas da m
 - [ ] A data da requisição é o dia de hoje em `America/Recife`, sem parâmetro na rota
 - [ ] Nenhum texto de liturgia está escrito no repositório
 - [ ] A primeira etapa mostra a celebração do dia, a cor litúrgica e a data, quando a API devolver
-- [ ] As etapas aparecem na ordem celebración, primeira leitura, salmo, segunda leitura, evangelho e orações
+- [ ] A primeira etapa mostra a celebração e a primeira leitura; as etapas seguintes aparecem na ordem salmo, segunda leitura, evangelho e orações
 - [ ] Dia sem segunda leitura não cria a etapa, e o contador não conta uma etapa que não existe
 - [ ] Seção com duas formas da mesma leitura mostra as duas e avisa que existe mais de uma opção
 - [ ] A tela não mostra "Não há segunda leitura hoje!" nem qualquer texto de aviso da API

@@ -25,6 +25,7 @@ export const FONTES = {
   titulo: "GeometricSlab-700",
   tituloMedia: "GeometricSlab-500",
   arcane: "ArcaneNine",
+  corpoLeve: "Outfit_300Light",
   corpo: "Outfit_400Regular",
   corpoMedio: "Outfit_500Medium",
   corpoSemi: "Outfit_600SemiBold",

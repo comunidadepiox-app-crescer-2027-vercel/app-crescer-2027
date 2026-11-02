@@ -76,7 +76,7 @@ function blocoDeSalmo(salmo) {
 // Separa com um espaço para a linha não ficar com a palavra espremida contra o
 // número, que é como a leitura fica difícil num aparelho.
 export function separaVersiculos(corpo) {
-  return String(corpo).replace(/(\d+)(?=[A-Za-zÀ-ÿ“”])/g, "$1 ");
+  return String(corpo).replace(/(\d+[ab]?)(?=[A-Za-zÀ-ÿ“”])/g, "$1 ");
 }
 
 // Em dias de festa a API traz a mesma leitura em duas formas, ou duas escolhas
@@ -100,16 +100,17 @@ function etapaDeLeituras(leituras) {
 
 // A etapa da celebração abre a liturgia. Sem o nome do santo ou da festa, ela
 // ainda vale com a data e a cor, porque a data sempre vem.
-function etapaCelebracao(dados) {
+function etapaCelebracao(dados, primeiraLeitura) {
   const celebracao = texto(dados?.liturgia);
   const cor = texto(dados?.cor);
-  if (!celebracao && !cor) return null;
+  if (!celebracao && !cor) return primeiraLeitura || null;
   return {
     id: "celebracao",
     titulo: "Celebração do dia",
     celebracao,
     cor,
-    blocos: [],
+    opcoes: primeiraLeitura?.opcoes,
+    blocos: primeiraLeitura?.blocos || [],
   };
 }
 
@@ -131,7 +132,9 @@ function etapaDeOracoes(oracoes) {
 export function normalizaLiturgia(dados) {
   if (!dados || typeof dados !== "object") return [];
 
-  const etapas = [etapaCelebracao(dados), ...etapaDeLeituras(dados.leituras), ...etapaDeOracoes(dados.oracoes)];
+  const leituras = etapaDeLeituras(dados.leituras);
+  const primeiraLeitura = leituras[0]?.id === "primeira" ? leituras.shift() : null;
+  const etapas = [etapaCelebracao(dados, primeiraLeitura), ...leituras, ...etapaDeOracoes(dados.oracoes)];
   return etapas.filter(Boolean);
 }
 

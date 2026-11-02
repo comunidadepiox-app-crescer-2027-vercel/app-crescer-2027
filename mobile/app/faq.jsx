@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { Linking, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { Redirect } from "expo-router";
 import ChevronDown from "lucide-react-native/icons/chevron-down";
 import ChevronUp from "lucide-react-native/icons/chevron-up";
@@ -64,6 +64,15 @@ const CATEGORIAS = [
 ];
 
 const normaliza = (texto) => texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("pt-BR");
+const LINK = /(?<![@\w.-])((?:https?:\/\/|www\.)?[a-z0-9-]+(?:\.[a-z0-9-]+)+(?:\/[a-z0-9/_-]*)?)/gi;
+
+function Resposta({ texto }) {
+  return texto.split(LINK).map((parte, indice) => {
+    if (indice % 2 === 0) return parte;
+    const url = /^https?:\/\//i.test(parte) ? parte : `https://${parte}`;
+    return <Text key={indice} accessibilityRole="link" style={estilos.link} onPress={() => Linking.openURL(url).catch(() => {})}>{parte}</Text>;
+  });
+}
 
 export default function FAQScreen() {
   const { user, loading } = useAuth();
@@ -124,7 +133,7 @@ export default function FAQScreen() {
                         ? <ChevronUp size={20} color={CORES.destaque} />
                         : <ChevronDown size={20} color={CORES.destaque} />}
                     </Pressable>
-                    {expandida ? <Text style={estilos.resposta}>{resposta}</Text> : null}
+                    {expandida ? <Text style={estilos.resposta}><Resposta texto={resposta} /></Text> : null}
                   </View>
                 );
               })}
@@ -161,5 +170,6 @@ const estilos = StyleSheet.create({
   pergunta: { minHeight: 56, paddingHorizontal: 16, paddingVertical: 14, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12 },
   textoPergunta: { flex: 1, fontFamily: FONTES.corpoMedio, fontSize: 15, lineHeight: 21, color: CORES.titulo },
   resposta: { paddingHorizontal: 16, paddingBottom: 16, fontFamily: FONTES.corpo, fontSize: 15, lineHeight: 23, color: CORES.texto },
+  link: { color: CORES.destaque, textDecorationLine: "underline" },
   vazio: { paddingTop: 28, fontFamily: FONTES.corpo, fontSize: 15, lineHeight: 23, color: CORES.texto },
 });

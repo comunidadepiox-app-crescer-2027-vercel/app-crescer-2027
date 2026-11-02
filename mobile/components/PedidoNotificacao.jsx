@@ -4,8 +4,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   AVISO_PUSH,
   MOTIVO,
-  MOTIVO_SEM_RECURSO,
-  adiarPedido,
   ativarNotificacao,
   lerPedido,
   sincronizarNotificacao,
@@ -18,15 +16,15 @@ export function PedidoNotificacao({ uid }) {
   const [aberto, setAberto] = useState(false);
   const [aviso, setAviso] = useState("");
   const [ocupado, setOcupado] = useState(false);
-  const [semRecurso, setSemRecurso] = useState(false);
 
   useEffect(() => {
-    lerPedido()
-      .then((valor) => setAberto(!valor))
-      .catch(() => setAberto(false));
-    sincronizarNotificacao(uid).catch((erro) => {
-      if (__DEV__) console.warn("Crescer: falha ao sincronizar notifica\u00e7\u00e3o.", erro?.message || erro);
-    });
+    Promise.all([
+      lerPedido().catch(() => null),
+      sincronizarNotificacao(uid).catch((erro) => {
+        if (__DEV__) console.warn("Crescer: falha ao sincronizar notifica\u00e7\u00e3o.", erro?.message || erro);
+        return null;
+      }),
+    ]).then(([valor, res]) => setAberto(valor !== "aceito" && !res?.ok));
   }, [uid]);
 
   if (!aberto) return null;
@@ -41,8 +39,6 @@ export function PedidoNotificacao({ uid }) {
         return;
       }
       setAviso(AVISO_PUSH[res.motivo] || AVISO_PUSH[MOTIVO.ERRO]);
-      // Quando o ambiente não tem push, insistir é inútil. A tela oferece sair.
-      if (res.motivo === MOTIVO_SEM_RECURSO) setSemRecurso(true);
     } catch (erro) {
       setAviso(AVISO_PUSH[MOTIVO.ERRO]);
       if (__DEV__) console.warn("Crescer: falha ao ativar o aviso.", erro?.message || erro);
@@ -51,33 +47,19 @@ export function PedidoNotificacao({ uid }) {
     }
   }
 
-  async function sair() {
-    await adiarPedido();
-    setAberto(false);
-  }
-
   return (
     <View pointerEvents="box-none" style={StyleSheet.absoluteFill}>
       <View style={[estilos.cartao, { bottom: alturaBarra(insets.bottom) + 12 }]}>
-        <Text style={estilos.titulo}>Ative as notificações</Text>
+        <Text style={estilos.titulo}>Ative as notifica&#231;&#245;es</Text>
         <Text style={estilos.texto}>
-          Quando a programação de hoje mudar, o aviso chega mesmo com o app fechado.
+          Quando a programa&#231;&#227;o de hoje mudar, o aviso chega mesmo com o app fechado.
         </Text>
         {aviso ? <Text style={estilos.aviso}>{aviso}</Text> : null}
         <View style={estilos.acoes}>
-          {semRecurso ? (
-            <Pressable onPress={sair} style={estilos.principal}>
-              <Text style={estilos.principalTexto}>Entendi</Text>
-            </Pressable>
-          ) : (
-            <Pressable onPress={ativar} disabled={ocupado} style={estilos.principal}>
-              <Text style={estilos.principalTexto}>
-                {ocupado ? "Ativando" : "Ativar notificações"}
-              </Text>
-            </Pressable>
-          )}
-          <Pressable onPress={sair} disabled={ocupado}>
-            <Text style={estilos.depois}>{semRecurso ? "Agora não" : "Depois"}</Text>
+          <Pressable onPress={ativar} disabled={ocupado} style={estilos.principal}>
+            <Text style={estilos.principalTexto}>
+              {ocupado ? "Ativando" : "Ativar notifica\u00e7\u00f5es"}
+            </Text>
           </Pressable>
         </View>
       </View>
@@ -130,11 +112,5 @@ const estilos = StyleSheet.create({
     fontSize: 13,
     color: "#fff",
     textTransform: "uppercase",
-  },
-  depois: {
-    fontFamily: FONTES.corpoSemi,
-    fontSize: 13,
-    color: CORES.texto,
-    textDecorationLine: "underline",
   },
 });

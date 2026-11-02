@@ -68,10 +68,6 @@ export async function lerPedido() {
   return AsyncStorage.getItem(CHAVE);
 }
 
-export async function adiarPedido() {
-  await AsyncStorage.setItem(CHAVE, "depois");
-}
-
 async function gravarToken(uid, token) {
   if (!db) return;
   const q = query(collection(db, "deviceTokens"), where("uid", "==", uid));
