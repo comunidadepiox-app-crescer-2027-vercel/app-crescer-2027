@@ -58,7 +58,7 @@ export default function HomeScreen() {
       <FundoRoxoPoligonal style={estilos.hero}>
         <Text style={estilos.edicao}>{EDICAO.nome}</Text>
         <Text style={estilos.slogan}>
-          Ame sua casa, ame sua família e encontre a paz
+          AME SUA FAMÍLIA E ENCONTRE A PAZ
         </Text>
         <Text style={estilos.quando}>
           De {formataDataCurta(EDICAO.inicio)} a {formataDataCurta(EDICAO.fim)}, {EDICAO.local}.
@@ -150,8 +150,8 @@ const estilos = StyleSheet.create({
   slogan: {
     marginTop: 8,
     fontFamily: FONTES.titulo,
-    fontSize: 28,
-    lineHeight: 32,
+    fontSize: 39,
+    lineHeight: 40,
     textTransform: "uppercase",
     color: "#fff",
   },

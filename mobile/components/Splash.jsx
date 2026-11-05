@@ -15,7 +15,6 @@ const ALTURA_MARCA = 72;
 
 const video = require("../assets/brand/splash-crescer.mp4");
 const wordmark = require("../assets/brand/wordmark-crescer-branca.png");
-const diocese = require("../assets/brand/diocese.png");
 const logoPiox = require("../assets/brand/logo-piox.png");
 
 export function Splash() {
@@ -93,12 +92,6 @@ export function Splash() {
       </View>
       <View style={[estilos.rodape, { paddingBottom: insets.bottom + 40 }]}>
         <Image
-          source={diocese}
-          resizeMode="contain"
-          accessibilityLabel="Diocese de Campina Grande"
-          style={{ width: ALTURA_MARCA * (219 / 256), height: ALTURA_MARCA }}
-        />
-        <Image
           source={logoPiox}
           resizeMode="contain"
           accessibilityLabel="Comunidade de São Pio X"
@@ -128,10 +121,8 @@ const estilos = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    gap: 28,
     paddingHorizontal: 24,
   },
 });
