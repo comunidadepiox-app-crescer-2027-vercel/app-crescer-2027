@@ -9,10 +9,12 @@ import {
   View,
 } from "react-native";
 import { WebView } from "react-native-webview";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Botao } from "./Ui";
 import { CORES, FONTES, RAIO } from "../lib/tema";
 
 export function FormularioJotform({ url }) {
+  const insets = useSafeAreaInsets();
   const webRef = useRef(null);
   const [podeVoltar, setPodeVoltar] = useState(false);
   const [erro, setErro] = useState(false);
@@ -43,7 +45,7 @@ export function FormularioJotform({ url }) {
   }
 
   return (
-    <View style={estilos.caixa}>
+    <View style={[estilos.caixa, { paddingBottom: insets.bottom }]}>
       <WebView
         ref={webRef}
         source={{ uri: url }}
@@ -72,7 +74,7 @@ export function FormularioJotform({ url }) {
         }}
       />
       {erro ? (
-        <View style={estilos.erroFundo}>
+        <View style={[estilos.erroFundo, { bottom: insets.bottom }]}>
           <View style={estilos.erroCartao}>
             <Text style={estilos.erroTitulo}>Não foi possível carregar o formulário</Text>
             <Text style={estilos.erroTexto}>

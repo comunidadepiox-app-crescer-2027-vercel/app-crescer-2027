@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { View, ActivityIndicator, StyleSheet } from "react-native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts, Outfit_300Light, Outfit_400Regular, Outfit_500Medium, Outfit_600SemiBold } from "@expo-google-fonts/outfit";
 import * as SplashScreen from "expo-splash-screen";
 import { AuthProvider } from "../lib/authProvider";
@@ -25,25 +26,25 @@ export default function RootLayout() {
     if (fontesOk) SplashScreen.hideAsync().catch(() => {});
   }, [fontesOk]);
 
-  if (!fontesOk) {
-    return (
-      <View style={estilos.carregando}>
-        <ActivityIndicator color="#fff" />
-      </View>
-    );
-  }
-
   return (
-    <AuthProvider>
-      <StatusBar style="light" />
-      <Splash />
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          contentStyle: { backgroundColor: CORES.fundo },
-        }}
-      />
-    </AuthProvider>
+    <SafeAreaProvider>
+      {!fontesOk ? (
+        <View style={estilos.carregando}>
+          <ActivityIndicator color="#fff" />
+        </View>
+      ) : (
+        <AuthProvider>
+          <StatusBar style="light" />
+          <Splash />
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              contentStyle: { backgroundColor: CORES.fundo },
+            }}
+          />
+        </AuthProvider>
+      )}
+    </SafeAreaProvider>
   );
 }
 
