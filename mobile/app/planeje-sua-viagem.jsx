@@ -20,7 +20,7 @@ const OPCOES = [
     url: LINK_PLANEJE_SUA_VIAGEM,
   },
   {
-    titulo: "Caravanas e Grupos de Todo o Brasil",
+    titulo: "Excursões e Grupos de Todo o Brasil",
     descricao: "Excursões com roteiros especiais, incluindo o evento e João Pessoa/PB.",
     Icone: Bus,
     url: LINK_CARAVANAS_E_GRUPOS,
