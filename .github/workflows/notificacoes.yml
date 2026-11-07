@@ -1,0 +1,28 @@
+name: Notificações agendadas
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: notificacoes-agendadas
+  cancel-in-progress: false
+
+jobs:
+  enviar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: jobs/lembrete-aviso/package-lock.json
+      - run: npm ci
+        working-directory: jobs/lembrete-aviso
+      - run: node notificacoes.js
+        working-directory: jobs/lembrete-aviso
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}

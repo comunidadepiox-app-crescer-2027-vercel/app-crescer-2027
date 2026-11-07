@@ -1,15 +1,26 @@
-import { View, Image, Pressable, StyleSheet } from "react-native";
+import { useEffect, useState } from "react";
+import { View, Image, Pressable, StyleSheet, Text } from "react-native";
 import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CORES } from "../lib/tema";
+import { abreLinkExterno, LINK_PARTICIPAR } from "../lib/links";
 import { Botao } from "./Ui";
-import { IconeInfo } from "./Icones";
+import { IconeInfo, IconeSino } from "./Icones";
+import { useAuth } from "../lib/authProvider";
+import { observarNotificacoes } from "../lib/caixaNotificacoes";
 
 const logo = require("../assets/brand/logo-crescer-branca.png");
 
 export function Header() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
+  const { user } = useAuth();
+  const [naoLidas, setNaoLidas] = useState(0);
+
+  useEffect(() => {
+    if (!user?.uid) return;
+    return observarNotificacoes(user.uid, (lista) => setNaoLidas(lista.filter((item) => !item.lida).length), () => setNaoLidas(0));
+  }, [user?.uid]);
 
   return (
     <View style={[estilos.barra, { paddingTop: insets.top + 8 }]}>
@@ -18,17 +29,27 @@ export function Header() {
       </Pressable>
       <View style={estilos.acoes}>
         <Botao
-          titulo="FAÇA SUA DOAÇÃO"
+          titulo="PARTICIPAR"
           variante="roxo"
-          onPress={() => router.push("/colabore")}
+          onPress={() => abreLinkExterno(LINK_PARTICIPAR)}
           style={{ alignSelf: "center", paddingVertical: 8, paddingHorizontal: 12 }}
         />
         <Pressable
+          onPress={() => router.push("/notificacoes")}
+          hitSlop={4}
+          accessibilityRole="button"
+          accessibilityLabel={naoLidas ? `Notificações, ${naoLidas} não lidas` : "Notificações"}
+          style={estilos.info}
+        >
+          <IconeSino cor="#fff" tamanho={24} />
+          {naoLidas > 0 ? <View style={estilos.badge}><Text style={estilos.badgeTexto}>{naoLidas > 9 ? "9+" : naoLidas}</Text></View> : null}
+        </Pressable>
+        <Pressable
           onPress={() => router.push("/sobre-o-app")}
-          hitSlop={8}
+          hitSlop={4}
           accessibilityRole="button"
           accessibilityLabel="Sobre o aplicativo"
-          style={estilos.info}
+          style={[estilos.info, estilos.infoProximo]}
         >
           <IconeInfo cor="#fff" tamanho={24} />
         </Pressable>
@@ -66,4 +87,9 @@ const estilos = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  infoProximo: {
+    marginLeft: -8,
+  },
+  badge: { position: "absolute", top: 3, right: 1, minWidth: 17, height: 17, paddingHorizontal: 3, borderRadius: 9, backgroundColor: "#b42318", alignItems: "center", justifyContent: "center" },
+  badgeTexto: { color: "#fff", fontSize: 10, fontWeight: "700" },
 });

@@ -52,3 +52,4 @@ Itens que o SDD registra, mas que ainda não têm decisão final. Não bloqueiam
 | Testemunhos | Fila com pastas `aguardando` e `encerrados`, texto original lido pela equipe e decisão humana, sem IA e sem resumo automático |
 | Voluntariado | Seja Voluntário abre `/voluntario` com o JotForm oficial de inscrição de servos em WebView, sem tela de escolha de equipe. A página de Fornecedor tem fluxo próprio na 018. Corrigido em 27/10/2026 |
 | Fornecedor Food Park | O card Food Park da página `/fornecedor` abre `/fornecedor/food-park` com o JotForm oficial de fornecedores em WebView. O card Outros permanece informativo. Decidido em 27/10/2026 |
+| CONAFAM | O atalho da folha central deixa de abrir o link de ingressos diretamente e passa a abrir `/conafam`, com a logo oficial, a apresentação do congresso e dois destinos: Site Oficial (`conafam.com.br`) e Adquira já seu ingresso (Agenda Católica). Decidido em 06/11/2026 |

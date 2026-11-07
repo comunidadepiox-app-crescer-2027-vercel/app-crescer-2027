@@ -6,18 +6,18 @@
     "@expo-google-fonts/outfit": "^0.4.3",
     "@react-native-async-storage/async-storage": "2.2.0",
     "babel-preset-expo": "~58.0.23",
-    "expo": "~58.0.22",
+    "expo": "~58.0.23",
     "expo-clipboard": "~58.0.4",
-    "expo-constants": "~58.0.14",
+    "expo-constants": "~58.0.15",
     "expo-crypto": "~58.0.7",
     "expo-font": "~58.0.11",
-    "expo-linking": "~58.0.15",
+    "expo-linking": "~58.0.16",
     "expo-navigation-bar": "~58.0.4",
-    "expo-notifications": "~58.1.7",
-    "expo-router": "~58.0.29",
-    "expo-splash-screen": "~58.0.12",
+    "expo-notifications": "~58.1.8",
+    "expo-router": "~58.0.30",
+    "expo-splash-screen": "~58.0.13",
     "expo-status-bar": "~58.0.4",
-    "expo-updates": "~58.0.19",
+    "expo-updates": "~58.0.21",
     "expo-video": "~58.0.13",
     "expo-web-browser": "~58.0.7",
     "firebase": "^12.18.0",
@@ -53,6 +53,7 @@
     "minimatch": "11.0.1"
   },
   "devDependencies": {
+    "react-native-svg-transformer": "^1.5.3",
     "wawoff2": "^2.0.1"
   }
 }

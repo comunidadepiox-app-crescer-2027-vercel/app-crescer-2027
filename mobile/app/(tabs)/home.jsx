@@ -11,6 +11,7 @@ import { Botao, TituloSecao, Paragrafo } from "../../components/Ui";
 import { CORES, FONTES } from "../../lib/tema";
 import { useAuth } from "../../lib/authProvider";
 import { useAviseMe } from "../../lib/aviseMe";
+import { abreLinkExterno, LINK_PARTICIPAR } from "../../lib/links";
 
 const foto = require("../../assets/brand/foto-evento.webp");
 
@@ -63,7 +64,8 @@ export default function HomeScreen() {
         <Text style={estilos.quando}>
           De {formataDataCurta(EDICAO.inicio)} a {formataDataCurta(EDICAO.fim)}, {EDICAO.local}.
         </Text>
-        <Botao titulo="Ver a programação" onPress={() => router.push("/programacao")} />
+        <Botao titulo="GARANTE SUA PARTICIPAÇÃO" onPress={() => abreLinkExterno(LINK_PARTICIPAR)} />
+        <Text style={estilos.inscricao}>Inscrição gratuita</Text>
         <Image source={foto} style={estilos.foto} />
       </FundoRoxoPoligonal>
 
@@ -161,6 +163,13 @@ const estilos = StyleSheet.create({
     fontFamily: FONTES.corpo,
     fontSize: 14,
     color: "rgba(255,255,255,0.85)",
+  },
+  inscricao: {
+    marginTop: 8,
+    fontFamily: FONTES.corpo,
+    fontSize: 13,
+    color: "rgba(255,255,255,0.30)",
+    marginLeft: 50
   },
   foto: {
     width: "100%",

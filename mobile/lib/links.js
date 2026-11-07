@@ -8,10 +8,12 @@
 
 import { Alert, Linking } from "react-native";
 
-// TODO(participar): preencher com a página oficial de participação do
-// encontro. Enquanto estiver vazia, o atalho Participar da folha
-// central avisa que o endereço entra em breve. Não trocar por um palpite.
-export const LINK_PARTICIPAR = "";
+export const LINK_PARTICIPAR = "https://evento.agendacatolica.com/crescer-2027";
+
+export const LINK_CONAFAM_SITE = "https://conafam.com.br/";
+
+export const LINK_CONAFAM_INGRESSO =
+  "https://evento.agendacatolica.com/conafam-2027";
 
 export const LINK_INSCRICAO_SERVOS = "https://form.jotform.com/262908510287057";
 

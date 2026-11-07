@@ -21,6 +21,7 @@ O fiel acessa o Crescer pelo app instalado sem criar credenciais. A sessão anô
 - Mesmo Firestore e as mesmas regras de leitura do fiel, e o token de notificação em `deviceTokens`
 - Pedido único para ativar notificação quando a programação publicada do dia do recorte muda
 - Ativação de aviso com motivo honesto: em ambiente sem push, o app diz qual é o motivo e deixa a pessoa sair, em vez de insistir num botão que nunca vai funcionar
+- Sino no header com contagem de não lidas e página `/notificacoes` com a caixa de avisos enviados pela organização, ver [020](../020-notificacoes/spec.md)
 - Identidade visual completa: paleta 000, fontes oficiais (convertidas para TTF), ícones da marca
 - Sessão anônima automática via Firebase Anonymous Auth, persistida com AsyncStorage
 
@@ -44,8 +45,8 @@ O fiel acessa o Crescer pelo app instalado sem criar credenciais. A sessão anô
 
 | Tipo | Identificador |
 |---|---|
-| Pasta | `mobile/` (expo-router: `app/index` login, `app/(tabs)/{home,noticias,programacao,benfeitor}`, `app/noticia/[id]`, `app/galeria`, `app/sobre`, `app/sobre-o-app`, `app/terco-restauracao`, `app/liturgia`, `app/fornecedor`, `app/fornecedor/food-park`, `app/voluntario`, `app/fale-conosco`, `app/testemunhos`, `app/colabore`). A barra mostra Home, Notícias, Programação e Benfeitor, com o círculo de menu no centro. Benfeitor voltou a ser `Tabs.Screen` em 01/10/2026, e Agenda virou Programação no mesmo dia, com o mesmo ícone de calendário. Sobre o app fica fora da barra e abre pelo ícone de informação do header. A folha abre o Terço da Restauração das Famílias, a Liturgia Diária logo em seguida, a coleção Arte Piedosa da Devotum e o Participar no navegador, a oferta Colabore, a página visual de Fornecedor com o formulário de fornecedores do Food Park, o formulário de Voluntário em WebView, os canais oficiais de contato em Fale Conosco e o formulário de Testemunhos; Spotify continua sem rota e Mapa do Evento fica indisponível |
-| Coleções Firestore | `users`, `news`, `programItems`, `lembretes` (subcoleção do uid), `deviceTokens` |
+| Pasta | `mobile/` (expo-router: `app/index` login, `app/(tabs)/{home,noticias,programacao,benfeitor}`, `app/noticia/[id]`, `app/galeria`, `app/sobre`, `app/sobre-o-app`, `app/notificacoes`, `app/terco-restauracao`, `app/liturgia`, `app/fornecedor`, `app/fornecedor/food-park`, `app/conafam`, `app/voluntario`, `app/fale-conosco`, `app/testemunhos`, `app/colabore`). A barra mostra Home, Notícias, Programação e Benfeitor, com o círculo de menu no centro. Benfeitor voltou a ser `Tabs.Screen` em 01/10/2026, e Agenda virou Programação no mesmo dia, com o mesmo ícone de calendário. Sobre o app fica fora da barra e abre pelo ícone de informação do header. O sino ao lado do ícone de informação abre `/notificacoes`. A folha abre o Terço da Restauração das Famílias, a Liturgia Diária logo em seguida, a coleção Arte Piedosa da Devotum e o Participar no navegador, a oferta Colabore, a página visual de Fornecedor com o formulário de fornecedores do Food Park, a página do CONAFAM com os destinos oficiais, o formulário de Voluntário em WebView, os canais oficiais de contato em Fale Conosco e o formulário de Testemunhos; Spotify continua sem rota e Mapa do Evento fica indisponível |
+| Coleções Firestore | `users`, `news`, `programItems`, `lembretes` (subcoleção do uid), `users/{uid}/notifications` (caixa do fiel), `deviceTokens` |
 | Papel necessário | `fiel` |
 
 ## Dados
@@ -57,6 +58,7 @@ Persistência de sessão via AsyncStorage (token do Firebase Auth no aparelho). 
 - Cadastro anônimo sempre cria `role: 'fiel'` (mesma regra da web; rules do Firestore continuam valendo)
 - O app não oferece login, cadastro, Google, recuperação de senha ou logout
 - O mesmo UID anônimo é usado por dados, lembretes e notificações
+- A caixa `users/{uid}/notifications` é lida só pelo próprio UID; tocar em um aviso grava `lida` e `lidaAt`, e o sino reflete a contagem sem recarregar
 - Endereços externos vivem em `mobile/lib/links.js`, e nenhum item de link fica sem destino: com a constante vazia, o toque avisa
 - Datas e recorte "hoje" seguem `lib/event/edition` (timezone America/Recife): antes do evento e no dia 5 mostra 5/02; depois da meia-noite do dia 5 mostra 6/02, e assim até 9/02
 
@@ -66,7 +68,8 @@ Persistência de sessão via AsyncStorage (token do Firebase Auth no aparelho). 
 - [ ] Splash mostra o vídeo da logo sobre o mesmo roxo da tela, as logos da diocese e de São Pio X no rodapé, e libera quando a sessão resolve
 - [ ] Sessão anônima é criada automaticamente e persiste ao reabrir
 - [ ] Home abre diretamente, sem tela de login ou cadastro
-- [ ] Home, Notícias, detalhe, Programação, Sobre o app, Galeria, Sobre, Testemunhos, Liturgia Diária e Colabore funcionais
+- [ ] Home, Notícias, detalhe, Programação, Sobre o app, Galeria, Sobre, Notificações, Testemunhos, Liturgia Diária, Colabore e CONAFAM funcionais
+- [ ] O sino mostra a contagem de não lidas e abre `/notificacoes`
 - [ ] A aba Benfeitor abre o site da campanha e o header mostra **COLABORE** com o ícone de informação ao lado
 - [ ] Identidade: roxo #3a1075, laranja #d68130, dourado, Geometric Slabserif nos títulos
 

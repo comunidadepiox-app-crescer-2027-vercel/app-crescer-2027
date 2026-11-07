@@ -64,12 +64,14 @@ Pode ir direto ao código só se for **baixa** complexidade e **não** alterar c
 | [016-fale-conosco](016-fale-conosco/) | Canais oficiais de contato da Comunidade São Pio X, acionáveis por toque | Média |
 | [017-voluntariado](017-voluntariado/) | Formulário oficial de inscrição de servos embutido no app | Média |
 | [018-fornecedor-food-park](018-fornecedor-food-park/) | Formulário oficial de fornecedores do Food Park embutido no app | Média |
+| [019-conafam](019-conafam/) | Página do CONAFAM com apresentação e destinos oficiais | Média |
+| [020-notificacoes](020-notificacoes/) | Caixa de notificações no app e painel de envios da mesa | Alta |
 
 Ordem de implementação: `000` → `001` → `002` → (`003` e `004` em paralelo após a Home) → `005` → `006` → `007` → `008`.
 
 A spec `007` pode avançar o plan em paralelo, mas o CMS só entra depois das coleções de notícias e cronograma existirem.
 
-As specs `011` a `018` entram depois da `008`. A `013` escreve em coleção própria, com escrita só pelo Admin SDK, e por isso não depende de regra nova de leitura para o fiel. A `014` reusa `siteContent` da `007`. A `015` não usa Firestore: lê uma API pública de liturgia e reusa a barra de etapas extraída na `011`. A `017` também não usa Firestore: embute o JotForm oficial em WebView. A `018` reusa o componente da `017` para o formulário de fornecedores do Food Park.
+As specs `011` a `020` entram depois da `008`. A `013` escreve em coleção própria, com escrita só pelo Admin SDK, e por isso não depende de regra nova de leitura para o fiel. A `014` reusa `siteContent` da `007`. A `015` não usa Firestore: lê uma API pública de liturgia e reusa a barra de etapas extraída na `011`. A `017` também não usa Firestore: embute o JotForm oficial em WebView. A `018` reusa o componente da `017` para o formulário de fornecedores do Food Park. A `019` reusa o desenho de cards da `012` e não usa Firestore: a página apenas apresenta o congresso e abre os dois endereços oficiais. A `020` usa a subcoleção `users/{uid}/notifications`, as coleções de programação e envio da mesa e o job de agendamentos; as regras precisam ser publicadas antes de o sino funcionar.
 
 ## Renomeações
 

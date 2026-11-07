@@ -25,6 +25,7 @@ import Briefcase from "lucide-react-native/icons/briefcase";
 import { useRouter } from "expo-router";
 import { CORES, FONTES } from "../lib/tema";
 import { abreLinkExterno, LINK_PARTICIPAR } from "../lib/links";
+import IconeConafam from "../assets/icons/CONAFAM.svg";
 
 const terco = require("../assets/icons/icone-novo.png");
 const testemunhos = require("../assets/icons/icone-testemunhos.png");
@@ -34,17 +35,18 @@ const { height: ALTURA_TELA } = Dimensions.get("window");
 // pela comunidade, então o toque mostra o aviso em vez de abrir uma página em
 // branco. indisponivel: o ícone aparece apagado e não responde ao toque.
 const ITENS = [
-  { rotulo: "Terço da Restauração das Famílias", imagem: terco, rota: "/terco-restauracao" },
+  { rotulo: "Terço em Restauração das Famílias", imagem: terco, rota: "/terco-restauracao" },
   { rotulo: "Liturgia Diária", Icone: BookOpenText, rota: "/liturgia" },
   { rotulo: "Testemunhos", imagem: testemunhos, tamanhoImagem: 50, rota: "/testemunhos" },
   { rotulo: "Loja", Icone: ShoppingBag, url: "https://usedevotum.com.br/crescer/?ref=CRESCER" },
   { rotulo: "Faça sua Doação", Icone: HandHeart, rota: "/colabore" },
   { rotulo: "Planeje sua Viagem", Icone: Briefcase, rota: "/planeje-sua-viagem" },
+  { rotulo: "CONAFAM", Svg: IconeConafam, rota: "/conafam" },
   { rotulo: "Seja Voluntário", Icone: Handshake, rota: "/voluntario" },
   { rotulo: "Seja Fornecedor", Icone: Contact, rota: "/fornecedor" },
   { rotulo: "FAQ", Icone: CircleHelp, rota: "/faq" },
   { rotulo: "Fale Conosco", Icone: MessageCircle, rota: "/fale-conosco" },
-  { rotulo: "Participar", Icone: Ticket, url: LINK_PARTICIPAR, avisar: true, oculto: true },
+  { rotulo: "Participar", Icone: Ticket, url: LINK_PARTICIPAR, avisar: true },
   { rotulo: "Spotify", Icone: AudioLines, oculto: true },
   { rotulo: "Mapa do Evento", Icone: MapPinned, indisponivel: true, oculto: true },
   { rotulo: "Congresso", Icone: UserGroup, indisponivel: true, oculto: true },
@@ -158,10 +160,12 @@ export function MenuAtalhos({ aberto, onFechar, alturaBarra = 0 }) {
         </View>
 
         <View style={estilos.grade}>
-          {ITENS.filter((item) => !item.oculto).map(({ rotulo, Icone, imagem, tamanhoImagem, rota, url, indisponivel, avisar, descricao }) => {
+          {ITENS.filter((item) => !item.oculto).map(({ rotulo, Icone, Svg, imagem, tamanhoImagem, rota, url, indisponivel, avisar, descricao }) => {
             const conteudo = <>
               <View style={estilos.poco}>
-                {imagem ? (
+                {Svg ? (
+                  <Svg width={60} height={53} />
+                ) : imagem ? (
                   <Image
                     source={imagem}
                     style={[estilos.terco, tamanhoImagem ? { width: tamanhoImagem, height: tamanhoImagem } : null]}
@@ -180,7 +184,7 @@ export function MenuAtalhos({ aberto, onFechar, alturaBarra = 0 }) {
               // avisar: a URL ainda não foi informada pela comunidade. O toque
               // mostra o aviso em vez de abrir uma página em branco.
               const abrir = avisar
-                ? () => abreLinkExterno(url)
+                ? () => { onFechar(); abreLinkExterno(url); }
                 : () => { onFechar(); Linking.openURL(url).catch(() => {}); };
               return <Pressable key={rotulo} accessibilityRole="link" accessibilityLabel={descricao || rotulo} onPress={abrir} style={({ pressed }) => [estilos.item, pressed && { opacity: 0.72 }]}>{conteudo}</Pressable>;
             }

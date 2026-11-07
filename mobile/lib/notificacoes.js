@@ -94,6 +94,12 @@ export async function garantirCanalAviso(Notifications) {
     name: "Avise-me",
     importance: modulo.AndroidImportance.HIGH,
   });
+  await modulo.setNotificationChannelAsync("aviso-silencioso", {
+    name: "Avisos silenciosos",
+    importance: modulo.AndroidImportance.DEFAULT,
+    sound: null,
+    enableVibrate: false,
+  });
 }
 
 function registraDetalhe(motivo, detalhe) {

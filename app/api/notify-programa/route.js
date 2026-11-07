@@ -1,5 +1,6 @@
 import { resolveDiaRecorte } from "@/lib/event/edition";
 import { tokenDoHeader, verificaAdmin } from "@/lib/server/verificaAdmin";
+import { criarDocumento } from "@/lib/server/firestoreRest";
 
 const PROJECT_ID = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
 
@@ -18,11 +19,11 @@ async function listarTokens(idToken) {
     const data = await res.json();
     for (const documento of data.documents || []) {
       const token = documento.fields?.token?.stringValue;
-      if (token) tokens.push(token);
+      if (token) tokens.push({ token, uid: documento.fields?.uid?.stringValue, silenciado: documento.fields?.silenciado?.booleanValue === true });
     }
     pageToken = data.nextPageToken || "";
   } while (pageToken);
-  return tokens;
+  return [...new Map(tokens.map((item) => [item.token, item])).values()];
 }
 
 export async function POST(request) {
@@ -44,12 +45,12 @@ export async function POST(request) {
     return Response.json({ error: err.message }, { status: 502 });
   }
 
-  const mensagens = tokens.map((to) => ({
-    to,
+  const usuariosNotificados = new Set();
+  const mensagens = tokens.map(({ token, silenciado }) => ({
+    to: token,
     title: "Crescer",
     body: "A programação de hoje mudou. Abra a Agenda para ver os horários.",
-    sound: "default",
-    channelId: "programa",
+    ...(silenciado ? { channelId: "aviso-silencioso" } : { sound: "default", channelId: "programa" }),
   }));
 
   for (let i = 0; i < mensagens.length; i += 100) {
@@ -65,7 +66,21 @@ export async function POST(request) {
     if (!res.ok) {
       return Response.json({ error: "O serviço de notificação recusou o envio." }, { status: 502 });
     }
+    const data = await res.json();
+    const tickets = Array.isArray(data.data) ? data.data : data.data ? [data.data] : [];
+    for (let j = 0; j < tickets.length; j++) {
+      if (tickets[j]?.status === "ok" && tokens[i + j]?.uid) usuariosNotificados.add(tokens[i + j].uid);
+    }
   }
 
-  return Response.json({ sent: tokens.length });
+  const caixas = await Promise.allSettled([...usuariosNotificados].map((userId) => criarDocumento(`users/${userId}/notifications`, {
+    title: "Crescer", body: "A programação de hoje mudou. Abra a Agenda para ver os horários.", lida: false,
+  }, ["createdAt"], { idToken } )));
+
+  return Response.json({
+    sent: tokens.length,
+    aviso: caixas.some((item) => item.status === "rejected")
+      ? "O push saiu, mas parte da caixa de notificações não foi gravada. Confira se as regras do Firestore estão publicadas."
+      : undefined,
+  });
 }

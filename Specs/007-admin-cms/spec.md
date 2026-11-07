@@ -21,6 +21,7 @@ A equipe de comunicação precisa publicar notícias, ajustar a programação e 
 - CRUD de `news` com editor TipTap: folha de escrita (título em slab, barra agrupada por ícones, menu na seleção, menu no parágrafo vazio, recuo por botão e por Tab, colar ou soltar imagem), coluna com autor, capa e publicação, e pré-visualização antes de publicar
 - CRUD de `programItems` (abas só dos dias da edição; lista não depende de índice composto)
 - Aviso push quando a programação publicada do dia do recorte muda (spec 004 e 008)
+- Painel de notificações com envio imediato, agendamento único, recorrência diária e histórico, ver [020](../020-notificacoes/spec.md)
 - Fiel que abrir `/admin` vê recusa (sem vazar dados) e pode sair
 - `/` redireciona para `/admin`. O site não tem as telas do fiel
 - `/admin/doacao` grava o percentual da oferta do app, ver [014](../014-doacao/spec.md)
@@ -45,9 +46,9 @@ A equipe de comunicação precisa publicar notícias, ajustar a programação e 
 
 | Tipo | Identificador |
 |---|---|
-| Rotas da mesa | `/admin`, `/admin/noticias`, `/admin/noticias/[id]`, `/admin/cronograma`, `/admin/testemunhos`, `/admin/doacao` |
+| Rotas da mesa | `/admin`, `/admin/noticias`, `/admin/noticias/[id]`, `/admin/cronograma`, `/admin/notificacoes`, `/admin/testemunhos`, `/admin/doacao` |
 | Rotas fora do menu | `/admin/destaques`, `/admin/leads` |
-| Coleções | `news`, `programItems`, `deviceTokens`, `siteContent`, `benefactorLeads`, `testimonials`, `users` (leitura do próprio role) |
+| Coleções | `news`, `programItems`, `deviceTokens`, `siteContent`, `benefactorLeads`, `testimonials`, `notificationSchedules`, `notificationHistory`, `users` (leitura do próprio role e escrita da caixa do fiel pela rota de envio) |
 | Cloudinary | `news/`, `authors/` |
 | Papel | `admin` |
 
@@ -86,6 +87,9 @@ Chaves iniciais: `home`, `about`, `benfeitor` (se a campanha deixar de ser só e
 - [ ] O início mostra o estado real de notícias e cronograma, sem número hero nem gráfico
 - [ ] UI admin sóbria, sem dashboard de métricas inventadas
 - [ ] Colabore aparece no menu da mesa e abre `/admin/doacao`
+- [ ] Notificações aparece no menu da mesa e abre `/admin/notificacoes`
+- [ ] O envio imediato grava o aviso na caixa do fiel e no histórico
+- [ ] Agendamento e recorrência ficam salvos com status e podem ser pausados ou desabilitados
 
 ## Anti-slop
 
